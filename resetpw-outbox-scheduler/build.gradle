@@ -1,0 +1,64 @@
+buildscript {
+    ext {
+        flywayVersion = '7.10.0'
+        shedlockVersion = '4.24.0'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.5.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'org.flywaydb.flyway' version "${flywayVersion}"
+}
+
+group = 'io.beaniejoy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    // main sender
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    implementation 'com.h2database:h2'
+
+    // shedlock
+    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:${shedlockVersion}"
+
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configurations {
+    all {
+        // log4j2 적용을 위해 기존 spring boot에서 제공하는 logging exclude
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
