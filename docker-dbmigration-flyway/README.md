@@ -1,5 +1,6 @@
 # Flyway DB migration docker compose
 
+## Directory Structure
 ```
 project
 ├── env
@@ -13,6 +14,17 @@ project
 └── docker-compose.yml (docker compose 설정)
 ```
 
+## Run Docker Compose
+
 ```bash
 $ docker-compose up --build
+```
+
+## Flyway Configuration
+
+- [flyway official page (config file)](https://flywaydb.org/documentation/configuration/configfile)
+
+```conf
+# data encoding
+flyway.encoding=UTF-8
 ```
