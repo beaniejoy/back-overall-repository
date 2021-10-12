@@ -13,10 +13,15 @@ project
     └── mysql.env (mysql 도커 환경변수)
 ├── flyway 
     ├── conf
-    	└── flyway_main.conf (migration 관련 flyway 설정내용)
+        ├── flyway_main.conf (migration 관련 flyway 설정내용)
+    	└── flyway_seed.conf (seed 관련 flyway 설정내용)
     └── db-migration
-    	├── V001_Create_table_name.sql (migration 대상 sql 파일들)
-    	└── ...
+    	├── main
+            ├── V001_Create_table_name.sql (migration 대상 sql 파일들)
+            └── ...
+        └── seed
+            ├── R__Seed_cafe.sql (seed 대상 sql 파일들)
+            └── ...
     ├── docker-entrypoint.sh (dockerize를 통한 mysql, migration 순차 실행 shell script)
     └── Dockerfile (flyway, dockerize docker 설정 내용)
 └── docker-compose.yml (docker compose 설정)
