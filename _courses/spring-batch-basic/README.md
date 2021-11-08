@@ -163,3 +163,41 @@ return stepBuilderFactory.get("chunkBaseStep")
   - List 인자의 크기는 `chunk([chunk 개수])` 여기서 결정
   - **reader, processor 거쳐서 데이터를 하나씩 받아서 List 인자에 담고 chunk 크기에 도달하면 일괄처리**
 - tasklet 기반으로도 chunk 처럼 배치실행할 수 있으나 복잡하고 chunk 방식이 깔끔하다.
+
+## JobParmeters
+
+- JobParameters를 이용해서 기존의 chunkSize에 하드코딩으로 넣었던 값을 유연하게 변경 가능
+
+### 첫 번째 방법
+```java
+StepExecution stepExecution = contribution.getStepExecution();
+JobParameters jobParameters = stepExecution.getJobParameters();
+
+String value = jobParameters.getString("chunkSize", "10");
+int chunkSize = StringUtils.isNotEmpty(value) ? Integer.parseInt(value) : 10;
+```
+- StepExecution에서 JobParameters 객체를 가져옴
+- 여기에 parameter로 지정된 내용을 가져온다.
+
+```shell
+-chunkSize=20 --job.name=chunkProcessingJob
+```
+- 실행시 `chunkSize` key 이름으로 옵션을 넣어준다.
+
+### 두 번째 방법
+- SpEL 사용 (**Sp**ring **E**xpression **L**anguage)
+- `@Value` (springframework.beans) 사용
+- `@JobScope` 어노테이션 있어야 jobParameters 인식
+```java
+@Bean
+@JobScope
+public Step chunkBaseStep(@Value("#{jobParameters[chunkSize]}") String chunkSize) {
+    // 100개 데이터를 10개씩 chunk로 나눠서 실행
+    return stepBuilderFactory.get("chunkBaseStep")
+            .<String, String>chunk(StringUtils.isNotEmpty(chunkSize) ? Integer.parseInt(chunkSize) : 10)
+            .reader(itemReader())
+            .processor(itemProcessor())
+            .writer(itemWriter())
+            .build();
+}
+```

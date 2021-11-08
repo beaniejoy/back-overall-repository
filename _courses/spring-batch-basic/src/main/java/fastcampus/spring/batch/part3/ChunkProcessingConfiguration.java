@@ -1,10 +1,13 @@
 package fastcampus.spring.batch.part3;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -13,6 +16,7 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,15 +40,16 @@ public class ChunkProcessingConfiguration {
         return jobBuilderFactory.get("chunkProcessingJob")
                 .incrementer(new RunIdIncrementer())
                 .start(taskBaseStep())
-                .next(chunkBaseStep())
+                .next(chunkBaseStep(null))
                 .build();
     }
 
     @Bean
-    public Step chunkBaseStep() {
+    @JobScope
+    public Step chunkBaseStep(@Value("#{jobParameters[chunkSize]}") String chunkSize) {
         // 100개 데이터를 10개씩 chunk로 나눠서 실행
         return stepBuilderFactory.get("chunkBaseStep")
-                .<String, String>chunk(10)
+                .<String, String>chunk(StringUtils.isNotEmpty(chunkSize) ? Integer.parseInt(chunkSize) : 10)
                 .reader(itemReader())
                 .processor(itemProcessor())
                 .writer(itemWriter())
@@ -62,8 +67,8 @@ public class ChunkProcessingConfiguration {
     }
 
     private ItemWriter<String> itemWriter() {
-//        return items -> log.info("chunk item size : {}", items.size());
-        return items -> items.forEach(log::info);
+        return items -> log.info("chunk item size : {}", items.size());
+//        return items -> items.forEach(log::info);
     }
 
     @Bean
@@ -78,8 +83,10 @@ public class ChunkProcessingConfiguration {
         List<String> items = getItems();
         return (contribution, chunkContext) -> {
             StepExecution stepExecution = contribution.getStepExecution();
+            JobParameters jobParameters = stepExecution.getJobParameters();
 
-            int chunkSize = 10;
+            String value = jobParameters.getString("chunkSize", "10");
+            int chunkSize = StringUtils.isNotEmpty(value) ? Integer.parseInt(value) : 10;
             int fromIndex = stepExecution.getReadCount();
             int toIndex = fromIndex + chunkSize;
 
