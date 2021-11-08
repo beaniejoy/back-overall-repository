@@ -16,7 +16,8 @@ public class HelloConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
-    public HelloConfiguration(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
+    public HelloConfiguration(JobBuilderFactory jobBuilderFactory,
+                              StepBuilderFactory stepBuilderFactory) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
     }
@@ -32,9 +33,10 @@ public class HelloConfiguration {
     @Bean
     public Step helloStep() {
         return stepBuilderFactory.get("helloStep")
-                .tasklet(((contribution, chunkContext) -> {
+                .tasklet((contribution, chunkContext) -> {
                     log.info("hello spring batch!");
                     return RepeatStatus.FINISHED;
-                })).build();
+                })
+                .build();
     }
 }

@@ -96,3 +96,70 @@ spring:
   - `embedded`(개발/h2 같은 인메모리)
   - `never`(운영 환경일 때 추천, 테이블이 적용안되어있으면 직접 `schema.sql`을 실행해야함)
 - default 값은 `embedded`
+
+### Batch 관련 메타데이터 테이블
+- `BATCH_JOB_INSTANCE`
+  - job이 실행되고 생성되는 최상위 계층 테이블
+  - job_name, job_key 기준으로 하나의 row 생성
+  - 같은 job_name, job_key가 저장될 수 없다.
+  - `incrementer`에 `RunIdIncrementer`를 지정하면 같은 내용이어도 새로 instance 생성
+  - `JobInstance` 클래스와 매핑
+- `BATCH_JOB_EXECUTION`
+  - job 실행되는 동안 시작/종료 시간 job 상태 등 관리
+  - `JobExecution` 클래스와 매핑
+- `BATCH_JOB_EXECUTION_PARAMS`
+  - job 실행을 위해 주입된 param 정보 저장
+  - `JobParameters` 클래스와 매핑
+- `BATCH_JOB_EXECUTION_CONTEXT`
+  - job이 실행되며 공유해야할 데이터 직렬화 저장
+  - job 안의 모든 step들이 공유해서 사용 가능
+  - `ExecutionContext` 클래스와 매핑
+- `BATCH_STEP_EXECUTION`
+  - step이 실행되는 동안 필요한 데이터 또는 실행된 결과 저장
+- `BATCH_STEP_EXECUTION_CONTEXT`
+  - step이 실행되며 공유해야할 데이터 직렬화 저장
+  - 같은 step 안에서 공유해서 사용 가능(다른 step에서는 공유 X)
+
+## ExecutionContext
+
+```java
+@Bean
+public Step shareStep(){
+        return stepBuilderFactory.get("shareStep")
+          .tasklet((contribution,chunkContext)->{
+            StepExecution stepExecution=contribution.getStepExecution();
+            ExecutionContext stepExecutionContext=stepExecution.getExecutionContext();
+    
+            JobExecution jobExecution=stepExecution.getJobExecution();
+            JobInstance jobInstance=jobExecution.getJobInstance();
+            JobParameters jobParameters=jobExecution.getJobParameters();
+            ExecutionContext jobExecutionContext=jobExecution.getExecutionContext();
+            
+            return RepeatStatus.FINISHED;
+          })
+          .build();
+        }
+```
+- `Tasklet` interface의 execute 메서드에서 `contribution(StepContribution)`  인자를 통해 Context 객체를 가져온다.
+- `StepContribution` -> `StepExecution` -> `ExecutionContext`(Step)
+- `StepExecution` -> `JobExecution` -> `JobInstance`, `JobParameters`, `ExecutionContext`(Job)
+
+## Chunk
+```java
+return stepBuilderFactory.get("chunkBaseStep")
+  .<String, String>chunk(10)
+  .reader(itemReader())
+  .processor(itemProcessor())
+  .writer(itemWriter())
+.build();
+```
+- chunk step은 `ItemReader` -> `ItemProcessor` -> `ItemWriter` 순서로 진행
+- reader에서 `null`을 return 할 때까지 Step 반복
+- reader, processor는 item을 한 개씩 받아서 진행
+- `<INPUT, OUTPUT>chunk([chunk 개수])`: INPUT, OUTPUT 제네릭 타입을 지정할 수 있다.
+- `ItemReader` : `read()` -> return INPUT 타입
+- `ItemProcessor` : `process(INPUT)` -> return OUTPUT 타입
+- **`ItemWriter`** : `write(List<OUTPUT>)` -> 처리
+  - List 인자의 크기는 `chunk([chunk 개수])` 여기서 결정
+  - **reader, processor 거쳐서 데이터를 하나씩 받아서 List 인자에 담고 chunk 크기에 도달하면 일괄처리**
+- tasklet 기반으로도 chunk 처럼 배치실행할 수 있으나 복잡하고 chunk 방식이 깔끔하다.
