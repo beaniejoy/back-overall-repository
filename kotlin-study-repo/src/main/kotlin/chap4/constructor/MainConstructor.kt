@@ -22,4 +22,6 @@ class Example(val name: String) {
 // age 에 대해서 default 값 부여
 // 코틀린에서는 Example2("beanie") 처럼 한 개 인자를 가진 생성자 사용 가능
 // 자바코드에서는 new Example2("beanie") 처럼 name 하나에 대한 생성자 제공 X
+// (자바에서는 코틀린의 default 값 부여에 대한 기능 제공 X)
 class Example2(val name: String, val age: Int = 20)
+class Example3 @JvmOverloads constructor(val name: String, val age: Int = 20)
