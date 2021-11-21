@@ -18,3 +18,7 @@ internal open class TalkativeButton: Focusable {
 //    yell()
 //    whisper()
 //}
+
+fun main() {
+    TalkativeButton().callModule()
+}

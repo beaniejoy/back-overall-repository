@@ -4,10 +4,6 @@ public class UserJ {
     private String nickname;
     private Boolean isSubscribed;
 
-    public UserJ() {
-
-    }
-
     public UserJ(String nickname) {
         this.nickname = nickname;
         this.isSubscribed = true;
