@@ -8,7 +8,7 @@ fun main() {
     val big1 = BigDecimal("320.1234").setScale(0, RoundingMode.CEILING)
     val big2 = BigDecimal("320.1234")
     // 이렇게 하면 에러 발생 (ArithmeticException: Rounding necessary)
-//    one.setScale(0, RoundingMode.CEILING)
+    // one.setScale(0, RoundingMode.CEILING)
     println("${big2}")
     println("toLong(): ${big2.toLong()}")
     println("longValueExact(): ${big1.longValueExact()}")

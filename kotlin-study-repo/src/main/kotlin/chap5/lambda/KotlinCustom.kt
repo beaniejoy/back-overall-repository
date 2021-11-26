@@ -22,4 +22,12 @@ fun main() {
     println(
         people.joinToString(separator = " ") { p: Person -> p.name }
     )
+
+    println(
+        people.joinToString(separator = " ") { it.name }
+    )
+
+    println(
+        people.joinToString(separator = " ", transform = Person::name)
+    )
 }
