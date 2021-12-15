@@ -12,3 +12,7 @@ fun applyAlphabet() = StringBuilder().apply {
     }
     append("\nThe End!")
 }.toString()
+
+fun main() {
+    println(applyAlphabet())
+}

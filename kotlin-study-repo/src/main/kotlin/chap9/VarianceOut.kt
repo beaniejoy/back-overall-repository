@@ -1,4 +1,4 @@
-package chap9.generics
+package chap9
 
 /*
 * 공변성(variance)
