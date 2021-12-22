@@ -25,6 +25,9 @@ fun <T> joinToString(
     return result.toString()
 }
 
+val UNIX_LINE_SEPARATOR = "\n"
+
 fun main() {
-    println(joinToString(listOf(1, 2, 3), prefix = "("))
+//    println(joinToString(listOf(1, 2, 3), prefix = "("))
+//    println(joinToString(listOf(1, 2, 3), prefix = "(", postfix = ")", separator = ","))
 }
