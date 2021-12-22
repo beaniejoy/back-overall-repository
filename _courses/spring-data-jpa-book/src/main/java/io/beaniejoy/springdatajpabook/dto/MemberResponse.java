@@ -1,23 +1,13 @@
-package io.beaniejoy.springdatajpabook.entity;
+package io.beaniejoy.springdatajpabook.dto;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "member")
-public class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MemberResponse {
     private Long id;
 
     private String name;
 
     private String email;
 
-    public Member() {
-    }
-
-    public Member(Long id, String name, String email) {
+    public MemberResponse(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
