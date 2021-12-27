@@ -6,6 +6,10 @@ fun strLenNotNull(s: String) = s.length
 fun strLenNullable(s: String?) =
     if (s != null) s.length else 0
 
+fun testNullable(s: String? = null) {
+    println(s!!)
+}
+
 fun main() {
     // 코틀린은 변수 타입 설정에서 ? 같이 null 체크를 하지 않으면 null을 변수에 담을 수 없다.
     // val name: String = null // (컴파일 에러)
@@ -15,4 +19,6 @@ fun main() {
 
     println(strLenNullable(null))
 
+    // NullPointerException -> null에 대해서 !! 단언을 해버리면 예외 발생
+    // testNullable()
 }
