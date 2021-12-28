@@ -1,4 +1,5 @@
 rootProject.name = 'spring-resttemplate-basic'
 include 'rest-front-api'
 include 'rest-back-api'
+include 'rest-common'
 

@@ -17,7 +17,7 @@ buildscript {
 }
 
 subprojects {
-    group = 'com.kakao.mobility'
+    group = 'io.beaniejoy'
     version = '0.0.1-SNAPSHOT'
 
     repositories {
@@ -46,20 +46,19 @@ subprojects {
         useJUnitPlatform()
     }
 }
+//
+//project(':coupon-common') {
+//
+//}
 
-group = 'io.beaniejoy'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-    mavenCentral()
+project(':rest-front-api') {
+    dependencies {
+        implementation project(':rest-common')
+    }
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-test {
-    useJUnitPlatform()
+project(':rest-back-api') {
+    dependencies {
+        implementation project(':rest-common')
+    }
 }
