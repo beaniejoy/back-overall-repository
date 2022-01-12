@@ -3,16 +3,16 @@ package io.beaniejoy.resttemplatebasic.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MemberDto {
-    @JsonProperty("hello_id")
+//    @JsonProperty("hello_id")
     private Long id;
 
-    @JsonProperty("hello_name")
+//    @JsonProperty("hello_name")
     private String name;
 
-    @JsonProperty("hello_email")
+//    @JsonProperty("hello_email")
     private String email;
 
-    @JsonProperty("hello_address")
+//    @JsonProperty("hello_address")
     private String address;
 
     public MemberDto() {

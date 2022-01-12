@@ -1,5 +1,6 @@
 package io.beaniejoy.resttemplatebasic.application;
 
+import io.beaniejoy.resttemplatebasic.entity.ExampleGetter;
 import io.beaniejoy.resttemplatebasic.entity.MemberDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponents;
@@ -20,5 +21,9 @@ public class RestTemplateFacade {
         UriComponents uriComponents = UriComponentsBuilder.newInstance().path(REST_BACK_API + "/member")
                 .build();
         return restClient.getObject(uriComponents.toString(), MemberDto.class);
+    }
+
+    public ExampleGetter getExampleGetter() {
+        return null;
     }
 }

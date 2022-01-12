@@ -1,18 +1,12 @@
 package io.beaniejoy.resttemplatebasic.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Member {
-    @JsonProperty("hello_id")
     private Long id;
 
-    @JsonProperty("hello_name")
     private String name;
 
-    @JsonProperty("hello_email")
     private String email;
 
-    @JsonProperty("hello_address")
     private String address;
 
     public Member() {

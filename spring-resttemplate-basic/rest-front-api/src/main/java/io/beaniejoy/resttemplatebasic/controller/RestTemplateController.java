@@ -1,6 +1,7 @@
 package io.beaniejoy.resttemplatebasic.controller;
 
 import io.beaniejoy.resttemplatebasic.application.RestTemplateFacade;
+import io.beaniejoy.resttemplatebasic.entity.ExampleGetter;
 import io.beaniejoy.resttemplatebasic.entity.MemberDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,5 +27,10 @@ public class RestTemplateController {
     @PostMapping("/member/post")
     public void postMember(@RequestBody MemberDto memberDto) {
         logger.info(memberDto.toString());
+    }
+
+    @GetMapping("/example/getter")
+    public ExampleGetter getExampleGetter() {
+        return restTemplateFacade.getExampleGetter();
     }
 }
