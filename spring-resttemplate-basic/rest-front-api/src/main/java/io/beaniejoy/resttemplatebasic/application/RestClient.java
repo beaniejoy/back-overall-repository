@@ -2,6 +2,7 @@ package io.beaniejoy.resttemplatebasic.application;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
@@ -10,7 +11,8 @@ import org.springframework.web.client.RestTemplate;
 public class RestClient {
     private final Logger logger = LoggerFactory.getLogger(RestClient.class);
 
-    private static final String LOCAL_URL = "http://localhost:8081";
+    @Value("${back.uri}")
+    private String backUri;
 
     public <T> T getObject(String api, Class<T> responseType) {
         RestTemplate restTemplate = new RestTemplate();
@@ -20,7 +22,7 @@ public class RestClient {
         logger.info("==========================================");
 
         try {
-            return restTemplate.getForObject(LOCAL_URL + api, responseType);
+            return restTemplate.getForObject(backUri + api, responseType);
         } catch (HttpStatusCodeException e) {
             // api에서 에러 발생시 4xx, 5xx 에러코드 반환
             logger.error(e.getMessage());
