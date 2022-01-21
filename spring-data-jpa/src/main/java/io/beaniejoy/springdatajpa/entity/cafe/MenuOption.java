@@ -1,5 +1,6 @@
 package io.beaniejoy.springdatajpa.entity.cafe;
 
+import io.beaniejoy.springdatajpa.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "menu_option")
-public class MenuOption {
+public class MenuOption extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

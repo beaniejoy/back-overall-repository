@@ -1,5 +1,6 @@
 package io.beaniejoy.springdatajpa.entity.member;
 
+import io.beaniejoy.springdatajpa.entity.BaseEntity;
 import io.beaniejoy.springdatajpa.entity.review.Review;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "member")
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

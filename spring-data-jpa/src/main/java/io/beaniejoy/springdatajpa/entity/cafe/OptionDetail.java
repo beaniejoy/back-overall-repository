@@ -1,5 +1,6 @@
 package io.beaniejoy.springdatajpa.entity.cafe;
 
+import io.beaniejoy.springdatajpa.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "option_detail")
-public class OptionDetail {
+public class OptionDetail extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
