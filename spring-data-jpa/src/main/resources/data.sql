@@ -1,1 +1,40 @@
-INSERT INTO cafe (name, address, description, phone_number) VALUES ('test_cafe_1', 'test_address_1', 'desc_1', 'phone_number_1');
+INSERT INTO cafe (id, name, address, description, phone_number, created_at, created_by) VALUES (100, 'test_cafe_1', 'test_address_1', 'desc_1', 'phone_number_1', now(), 'sys');
+INSERT INTO cafe (id, name, address, description, phone_number, created_at, created_by) VALUES (200, 'test_cafe_2', 'test_address_2', 'desc_2', 'phone_number_2', now(), 'sys');
+INSERT INTO cafe (id, name, address, description, phone_number, created_at, created_by) VALUES (300, 'test_cafe_3', 'test_address_3', 'desc_3', 'phone_number_3', now(), 'sys');
+
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1001, 'cafe_menu_100_1001', 1000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1002, 'cafe_menu_100_1002', 2000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1003, 'cafe_menu_100_1003', 10000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1004, 'cafe_menu_200_1004', 20000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1005, 'cafe_menu_200_1005', 3000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1006, 'cafe_menu_200_1006', 4000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1007, 'cafe_menu_300_1007', 9000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1008, 'cafe_menu_300_1008', 5000, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1009, 'cafe_menu_300_1009', 3500, 100, now(), 'sys');
+INSERT INTO cafe_menu (id, name, price, cafe_id, created_at, created_by) VALUES (1010, 'cafe_menu_300_1010', 1000, 100, now(), 'sys');
+
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (1, 'menu_option_1001_1', 1001, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (2, 'menu_option_1001_2', 1001, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (3, 'menu_option_1002_3', 1002, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (4, 'menu_option_1003_4', 1003, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (5, 'menu_option_1004_5', 1004, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (6, 'menu_option_1005_6', 1005, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (7, 'menu_option_1006_7', 1006, now(), 'sys');
+INSERT INTO menu_option (id, title, cafe_menu_id, created_at, created_by) VALUES (8, 'menu_option_1007_8', 1007, now(), 'sys');
+
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (500, 'od_1_500', 1000, 1, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (501, 'od_1_501', 2000, 1, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (502, 'od_2_502', 3000, 2, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (503, 'od_2_503', 1000, 2, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (504, 'od_3_504', 2000, 3, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (505, 'od_3_505', 3000, 3, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (506, 'od_4_506', 1000, 4, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (507, 'od_4_507', 2000, 4, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (508, 'od_5_508', 3000, 5, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (509, 'od_5_509', 1000, 5, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (510, 'od_6_510', 2000, 6, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (511, 'od_6_511', 3000, 6, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (512, 'od_7_512', 1000, 7, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (513, 'od_7_513', 2000, 7, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (514, 'od_8_514', 3000, 8, now(), 'sys');
+INSERT INTO option_detail (id, name, extra, menu_option_id, created_at, created_by) VALUES (515, 'od_8_515', 1000, 8, now(), 'sys');

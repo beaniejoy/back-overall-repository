@@ -2,15 +2,13 @@ package io.beaniejoy.springdatajpa.entity.cafe;
 
 import io.beaniejoy.springdatajpa.entity.BaseEntity;
 import io.beaniejoy.springdatajpa.entity.review.Review;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,9 +28,9 @@ public class Cafe extends BaseEntity {
 
     private String description;
 
-    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<CafeMenu> cafeMenus;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @ToString
@@ -18,6 +19,10 @@ public class OptionDetail extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
+
+    private BigDecimal extra;
 
     @ManyToOne
     @JoinColumn(name = "menu_option_id")
