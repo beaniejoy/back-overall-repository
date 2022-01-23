@@ -11,5 +11,6 @@ public class AppConfig {
     @Bean
     public CafeSearch cafeSearch() {
         return new CafeSpecification();
+//        return new CafeSpecificationWithPredicate();
     }
 }
