@@ -1,4 +1,4 @@
-package io.beaniejoy.springdatajpa;
+package io.beaniejoy.springdatajpa.controller;
 
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.service.CafeService;
