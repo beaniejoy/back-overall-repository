@@ -2,7 +2,7 @@ package io.beaniejoy.springdatajpa.data;
 
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -10,7 +10,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CafeSpecificationWithPredicate implements CafeSearch{
+public class CafeSpecificationWithPredicate implements CafeSearch {
 
     public Specification<Cafe> searchWith(String name, String address) {
         return (root, query, cb) -> {
@@ -21,14 +21,14 @@ public class CafeSpecificationWithPredicate implements CafeSearch{
     }
 
     private List<Predicate> constructPredicateListWithParams(String name,
-                                                                    String address,
-                                                                    Root<Cafe> root,
-                                                                    CriteriaBuilder cb) {
+                                                             String address,
+                                                             Root<Cafe> root,
+                                                             CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
-        if (name != null && !name.isEmpty())
+        if (StringUtils.hasText(name))
             cb.equal(root.get("name"), name);
 
-        if (address != null && !address.isEmpty())
+        if (StringUtils.hasText(address))
             cb.equal(root.get("address"), address);
 
         return predicates;
