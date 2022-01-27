@@ -1,15 +1,16 @@
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
   datasource:
-    url: jdbc:h2:~/test;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost/test?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
   jpa:
     #    generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -19,25 +20,27 @@ spring:
     defer-datasource-initialization: true
   sql:
     init:
-      mode: always
-  h2:
-    console:
-      enabled: true
-
+      mode: never
 ---
 
-# TODO: 실행시엔 MySQL, test시엔 h2 memory
-# 현재 test profile에 mem:testdb 적용시 앱 실행시에도 mem으로 사용됨
-#spring:
-#  profiles:
-#    active: test
-#  datasource:
-#    url: jdbc:h2:mem:testdb;MODE=MySQL
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    defer-datasource-initialization: true
+#  - SQL DB initialization
+#  - embedded in-memory db를 사용할 때만 수행
+#  - 만약 DB 타입 관계없이 초기화하려면 always 로 설정
+#  sql:
+#    init:
+#      mode: always
