@@ -36,4 +36,13 @@ public class CafeService {
 
         return new PageImpl<>(responses, pageable, result.getTotalElements());
     }
+
+    public void postCafe() {
+        cafeRepository.save(Cafe.builder()
+                .name("hello")
+                .description("good")
+                .phoneNumber("01010101")
+                .address("address_good")
+                .build());
+    }
 }

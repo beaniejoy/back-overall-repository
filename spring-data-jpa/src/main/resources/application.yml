@@ -26,16 +26,18 @@ spring:
 
 ---
 
-spring:
-  profiles:
-    active: test
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=MySQL
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+# TODO: 실행시엔 MySQL, test시엔 h2 memory
+# 현재 test profile에 mem:testdb 적용시 앱 실행시에도 mem으로 사용됨
+#spring:
+#  profiles:
+#    active: test
+#  datasource:
+#    url: jdbc:h2:mem:testdb;MODE=MySQL
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
