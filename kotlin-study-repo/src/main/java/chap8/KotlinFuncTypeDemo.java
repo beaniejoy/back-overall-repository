@@ -12,7 +12,7 @@ public class KotlinFuncTypeDemo {
         FunctionTypeKt.processTheAnswer(num -> num + 1);
 
         ArrayList<String> strings = new ArrayList<>();
-        strings.add("test");
+        strings.add("testpack");
 
         // kotlin -- strings.forEach{ i -> println(i) }
         CollectionsKt.forEach(strings, s -> {

@@ -1,4 +1,4 @@
-package test
+package testpack
 
 fun testPrint() {
     val id = null

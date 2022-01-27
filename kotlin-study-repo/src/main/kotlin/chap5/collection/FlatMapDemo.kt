@@ -9,7 +9,7 @@ class Book(val title: String, val authors: List<String>)
 * flatMap 의 반환 타입은 List 다. (헷갈리지 말 것)
 */
 fun main() {
-    val str = "test"
+    val str = "testpack"
     println(str.toList())
 
     val strings = listOf("abc", "def")
