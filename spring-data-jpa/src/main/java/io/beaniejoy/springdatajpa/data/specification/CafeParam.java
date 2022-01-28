@@ -1,4 +1,4 @@
-package io.beaniejoy.springdatajpa.data;
+package io.beaniejoy.springdatajpa.data.specification;
 
 import io.beaniejoy.springdatajpa.dto.CafeRequestParam;
 import lombok.AllArgsConstructor;

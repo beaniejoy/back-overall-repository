@@ -1,7 +1,7 @@
 package io.beaniejoy.springdatajpa.service;
 
-import io.beaniejoy.springdatajpa.data.CafeParam;
-import io.beaniejoy.springdatajpa.data.CafeSearch;
+import io.beaniejoy.springdatajpa.data.specification.CafeParam;
+import io.beaniejoy.springdatajpa.data.specification.CafeSearch;
 import io.beaniejoy.springdatajpa.dto.CafeRequestParam;
 import io.beaniejoy.springdatajpa.dto.CafeResponse;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;

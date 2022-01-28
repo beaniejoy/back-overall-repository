@@ -27,8 +27,8 @@ class CafeServiceTest {
     CafeRepository cafeRepository;
 
     @Test
-    @DisplayName("기본적인 Spec 조건으로 Cafe 전체 조회 테스트")
-    public void findAllTest() {
+    @DisplayName("(Spec)기본적인 Spec 조건으로 Cafe 전체 조회 테스트")
+    public void findAllTestWithSpecification() {
         Pageable pageable = PageRequest.of(0, 20);
 
         CafeRequestParam requestParam = new CafeRequestParam(null, "address", null);
@@ -42,8 +42,8 @@ class CafeServiceTest {
     }
 
     @Test
-    @DisplayName("없는 검색 조건으로 조회시 No Cafe List 반환 테스트")
-    public void returnNullWhenQueryWithNotExistingParams() {
+    @DisplayName("(Spec)없는 검색 조건으로 조회시 No Cafe List 반환 테스트")
+    public void returnNullWhenQueryWithNotExistingParamsWithSpecification() {
         Pageable pageable = PageRequest.of(0, 20);
 
         CafeRequestParam addressNotExistedParam = new CafeRequestParam(null, "not_valid", null);
