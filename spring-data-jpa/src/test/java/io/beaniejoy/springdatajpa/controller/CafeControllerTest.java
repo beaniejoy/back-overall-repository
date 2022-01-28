@@ -1,5 +1,6 @@
 package io.beaniejoy.springdatajpa.controller;
 
+import io.beaniejoy.springdatajpa.dto.CafeRequestParam;
 import io.beaniejoy.springdatajpa.dto.CafeResponse;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.service.CafeService;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -66,11 +66,15 @@ class CafeControllerTest {
         Page<Cafe> result = new PageImpl<>(cafeList, pageable, 2);
         Page<CafeResponse> cafeResponses = toCafeResponseList(result, pageable);
 
-        given(cafeService.getAllCafesWithNameOrAddress("", "address", pageable))
+        CafeRequestParam requestParam = new CafeRequestParam(null, "address", null);
+
+
+        given(cafeService.getAllCafesWithParams(requestParam, pageable))
                 .willReturn(cafeResponses);
 
-        mvc.perform(get("/api/v1/cafes?name=&address=address")
-                        .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/api/v1/cafes")
+                        .param("address", "address")
+                )
                 .andExpect(status().isOk())
                 .andDo(print());
     }

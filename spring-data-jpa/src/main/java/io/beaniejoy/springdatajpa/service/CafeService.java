@@ -2,6 +2,7 @@ package io.beaniejoy.springdatajpa.service;
 
 import io.beaniejoy.springdatajpa.data.CafeParam;
 import io.beaniejoy.springdatajpa.data.CafeSearch;
+import io.beaniejoy.springdatajpa.dto.CafeRequestParam;
 import io.beaniejoy.springdatajpa.dto.CafeResponse;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.repository.CafeRepository;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,13 +25,10 @@ public class CafeService {
 
     private final CafeSearch cafeSearch;
 
-    public Page<CafeResponse> getAllCafesWithNameOrAddress(String name, String address, Pageable pageable) {
-        CafeParam cafeParam = CafeParam.builder()
-                .name(name)
-                .address(address)
-                .build();
+    public Page<CafeResponse> getAllCafesWithParams(CafeRequestParam requestParam, Pageable pageable) {
+        Specification<Cafe> searchCafeSpecs = cafeSearch.toSpecification(CafeParam.of(requestParam));
 
-        Page<Cafe> result = cafeRepository.findAll(cafeSearch.toSpecification(cafeParam), pageable);
+        Page<Cafe> result = cafeRepository.findAll(searchCafeSpecs, pageable);
         List<CafeResponse> responses = result.getContent().stream()
                 .map(CafeResponse::of)
                 .collect(Collectors.toList());

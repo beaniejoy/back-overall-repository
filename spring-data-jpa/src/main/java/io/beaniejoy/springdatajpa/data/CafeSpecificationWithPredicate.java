@@ -14,22 +14,22 @@ public class CafeSpecificationWithPredicate implements CafeSearch {
 
     public Specification<Cafe> searchWith(String name, String address) {
         return (root, query, cb) -> {
-            List<Predicate> predicates = constructPredicateListWithParams(name, address, root, cb);
+            List<Predicate> predicates = createPredicateListWithParams(name, address, root, cb);
             query.orderBy(cb.desc(root.get("id")));
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
 
-    private List<Predicate> constructPredicateListWithParams(String name,
-                                                             String address,
-                                                             Root<Cafe> root,
-                                                             CriteriaBuilder cb) {
+    private List<Predicate> createPredicateListWithParams(String name,
+                                                          String address,
+                                                          Root<Cafe> root,
+                                                          CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
         if (StringUtils.hasText(name))
-            cb.equal(root.get("name"), name);
+            predicates.add(cb.equal(root.get("name"), name));
 
         if (StringUtils.hasText(address))
-            cb.equal(root.get("address"), address);
+            predicates.add(cb.equal(root.get("address"), address));
 
         return predicates;
     }

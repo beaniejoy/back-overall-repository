@@ -1,5 +1,6 @@
 package io.beaniejoy.springdatajpa.controller;
 
+import io.beaniejoy.springdatajpa.dto.CafeRequestParam;
 import io.beaniejoy.springdatajpa.dto.CafeResponse;
 import io.beaniejoy.springdatajpa.service.CafeService;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,9 @@ public class CafeController {
 
     @GetMapping("")
     public Page<CafeResponse> getAllCafesDynamicParam(
-            @RequestParam("name") String name,
-            @RequestParam("address") String address,
+            @ModelAttribute CafeRequestParam requestParam,
             @PageableDefault(page = 0, size = 20) Pageable pageable
     ) {
-        return cafeService.getAllCafesWithNameOrAddress(name, address, pageable);
+        return cafeService.getAllCafesWithParams(requestParam, pageable);
     }
 }
