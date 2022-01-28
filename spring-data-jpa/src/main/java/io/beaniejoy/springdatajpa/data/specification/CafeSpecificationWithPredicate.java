@@ -12,9 +12,17 @@ import java.util.List;
 
 public class CafeSpecificationWithPredicate implements CafeSearch {
 
-    public Specification<Cafe> searchWith(String name, String address) {
+    @Override
+    public Specification<Cafe> toSpecification(CafeParam param) {
+        return searchWith(
+                param.getName(),
+                param.getAddress(),
+                param.getPhoneNumber());
+    }
+
+    private Specification<Cafe> searchWith(String name, String address, String phoneNumber) {
         return (root, query, cb) -> {
-            List<Predicate> predicates = createPredicateListWithParams(name, address, root, cb);
+            List<Predicate> predicates = createPredicateListWithParams(name, address, phoneNumber, root, cb);
             query.orderBy(cb.desc(root.get("id")));
             return cb.and(predicates.toArray(new Predicate[0]));
         };
@@ -22,22 +30,20 @@ public class CafeSpecificationWithPredicate implements CafeSearch {
 
     private List<Predicate> createPredicateListWithParams(String name,
                                                           String address,
+                                                          String phoneNumber,
                                                           Root<Cafe> root,
                                                           CriteriaBuilder cb) {
+
         List<Predicate> predicates = new ArrayList<>();
         if (StringUtils.hasText(name))
             predicates.add(cb.equal(root.get("name"), name));
 
         if (StringUtils.hasText(address))
+            predicates.add(cb.like(root.get("address"), "%" + address + "%"));
+
+        if (StringUtils.hasText(phoneNumber))
             predicates.add(cb.equal(root.get("address"), address));
 
         return predicates;
-    }
-
-    @Override
-    public Specification<Cafe> toSpecification(CafeParam param) {
-        return searchWith(
-                param.getName(),
-                param.getAddress());
     }
 }
