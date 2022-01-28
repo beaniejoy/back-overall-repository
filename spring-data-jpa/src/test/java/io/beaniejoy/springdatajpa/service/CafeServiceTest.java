@@ -31,14 +31,15 @@ class CafeServiceTest {
     public void findAllTestWithSpecification() {
         Pageable pageable = PageRequest.of(0, 20);
 
-        CafeRequestParam requestParam = new CafeRequestParam(null, "address", null);
+        CafeRequestParam requestParam = new CafeRequestParam("test_cafe_3", "address", "phone_number_3");
         Page<CafeResponse> result = cafeService.getAllCafesWithParams(requestParam, pageable);
         List<CafeResponse> content = result.getContent();
 
-        assertEquals(result.getTotalElements(), 3);
+        assertEquals(result.getTotalElements(), 1);
         assertEquals(content.get(0).getId(), 300L);
         assertEquals(content.get(0).getName(), "test_cafe_3");
         assertEquals(content.get(0).getAddress(), "test_address_3");
+        assertEquals(content.get(0).getPhoneNumber(), "phone_number_3");
     }
 
     @Test

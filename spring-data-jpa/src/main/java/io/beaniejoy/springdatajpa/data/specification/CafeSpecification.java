@@ -1,5 +1,6 @@
 package io.beaniejoy.springdatajpa.data.specification;
 
+import io.beaniejoy.springdatajpa.data.CafeColumn;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
@@ -7,16 +8,11 @@ import org.springframework.util.StringUtils;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 public class CafeSpecification implements CafeSearch{
-    private static final String ID_COL = "id";
-    private static final String NAME_COL = "name";
-    private static final String ADDRESS_COL = "address";
-    private static final String PHONE_NUM_COL = "phoneNumber";
-
     public Specification<Cafe> nameEqual(String name) {
         return (root, query, cb) -> {
             if (!StringUtils.hasText(name)) return null;
 
-            return cb.equal(root.get(NAME_COL), name);
+            return cb.equal(root.get(CafeColumn.NAME_COL), name);
         };
     }
 
@@ -24,7 +20,7 @@ public class CafeSpecification implements CafeSearch{
         return (root, query, cb) -> {
             if (!StringUtils.hasText(address)) return null;
 
-            return cb.like(root.get(ADDRESS_COL), "%" + address + "%");
+            return cb.like(root.get(CafeColumn.ADDRESS_COL), "%" + address + "%");
         };
     }
 
@@ -32,14 +28,14 @@ public class CafeSpecification implements CafeSearch{
         return (root, query, cb) -> {
             if (!StringUtils.hasText(phoneNumber)) return null;
 
-            return cb.equal(root.get(PHONE_NUM_COL), phoneNumber);
+            return cb.equal(root.get(CafeColumn.PHONE_NUM_COL), phoneNumber);
         };
     }
 
     @Override
     public Specification<Cafe> toSpecification(CafeParam param) {
         Specification<Cafe> orderByIdDesc = (root, query, cb) -> {
-            query.orderBy(cb.desc(root.get(ID_COL)));
+            query.orderBy(cb.desc(root.get(CafeColumn.ID_COL)));
             return cb.and();
         };
 
