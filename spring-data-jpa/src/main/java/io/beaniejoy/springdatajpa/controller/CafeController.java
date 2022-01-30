@@ -28,4 +28,12 @@ public class CafeController {
     ) {
         return cafeService.getAllCafesWithParams(requestParam, pageable);
     }
+
+    @GetMapping("/querydsl")
+    public Page<CafeResponse> getAllCafesWithQuerydsl(
+            @ModelAttribute CafeRequestParam requestParam,
+            @PageableDefault(page = 0, size = 20) Pageable pageable
+    ) {
+        return cafeService.getAllCafesWithQuerydsl(requestParam, pageable);
+    }
 }

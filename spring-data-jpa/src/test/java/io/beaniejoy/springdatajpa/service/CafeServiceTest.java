@@ -56,4 +56,20 @@ class CafeServiceTest {
         assertTrue(resultWithAddress.isEmpty());
         assertTrue(resultWithName.isEmpty());
     }
+
+    @Test
+    @DisplayName("(QueryDSL)기본 카페 리스트 조회")
+    public void findAllBasicTestWithQuerydsl() {
+        Pageable pageable = PageRequest.of(0, 20);
+
+        CafeRequestParam requestParam = new CafeRequestParam("test_cafe_3", "address", "phone_number_3");
+        Page<CafeResponse> result = cafeService.getAllCafesWithQuerydsl(requestParam, pageable);
+        List<CafeResponse> content = result.getContent();
+
+        assertEquals(result.getTotalElements(), 1);
+        assertEquals(content.get(0).getId(), 300L);
+        assertEquals(content.get(0).getName(), "test_cafe_3");
+        assertEquals(content.get(0).getAddress(), "test_address_3");
+        assertEquals(content.get(0).getPhoneNumber(), "phone_number_3");
+    }
 }

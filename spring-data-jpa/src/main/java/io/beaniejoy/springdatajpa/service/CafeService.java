@@ -5,6 +5,7 @@ import io.beaniejoy.springdatajpa.data.specification.CafeSearch;
 import io.beaniejoy.springdatajpa.dto.CafeRequestParam;
 import io.beaniejoy.springdatajpa.dto.CafeResponse;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
+import io.beaniejoy.springdatajpa.entity.cafe.QCafe;
 import io.beaniejoy.springdatajpa.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,30 @@ public class CafeService {
         Specification<Cafe> searchCafeSpecs = cafeSearch.toSpecification(CafeParam.of(requestParam));
 
         Page<Cafe> result = cafeRepository.findAll(searchCafeSpecs, pageable);
-        List<CafeResponse> responses = result.getContent().stream()
-                .map(CafeResponse::of)
-                .collect(Collectors.toList());
+        List<CafeResponse> responses = toResponseList(result.getContent());
 
         return new PageImpl<>(responses, pageable, result.getTotalElements());
+    }
+
+    public Page<CafeResponse> getAllCafesWithQuerydsl(CafeRequestParam requestParam, Pageable pageable) {
+        QCafe cafe = QCafe.cafe;
+
+        Page<Cafe> result = cafeRepository.findAll(
+                cafe.name.eq(requestParam.getName())
+                        .and(cafe.address.contains(requestParam.getAddress()))
+                        .and(cafe.phoneNumber.eq(requestParam.getPhoneNumber())),
+                pageable
+        );
+
+        List<CafeResponse> responses = toResponseList(result.getContent());
+
+        return new PageImpl<>(responses, pageable, result.getTotalElements());
+    }
+
+    private List<CafeResponse> toResponseList(List<Cafe> cafeList) {
+        return cafeList.stream()
+                .map(CafeResponse::of)
+                .collect(Collectors.toList());
     }
 
     public void postCafe() {
