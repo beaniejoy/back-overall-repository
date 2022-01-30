@@ -1,3 +1,7 @@
+### IntelliJ Annotation Processor ###
+src/main/generated
+
+### basic ###
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar

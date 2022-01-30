@@ -22,61 +22,24 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     // QueryDSL plugin
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-//    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-//    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-def generatedDir = file("src/main/java-generated")
-
-sourceSets {
-    main {
-        java {
-            srcDirs generatedDir
-        }
-    }
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
-
-task createQuerydsl(type: JavaCompile, group: 'build') {
-    doFirst {
-        if (!generatedDir.exists()) {
-            logger.info("Creating `$generatedDir` directory")
-
-            if (!generatedDir.mkdirs()) {
-                throw new InvalidUserDataException("Unable to create `$generatedDir` directory")
-            }
-        }
-
-        source = sourceSets.main.java
-        classpath = configurations.compileClasspath
-        options.compilerArgs = [
-                "-proc:only",
-                "-processor",
-                "com.querydsl.apt.jpa.JPAAnnotationProcessor"
-        ]
-        destinationDirectory.set(generatedDir)
-    }
-}
-
-compileJava.dependsOn(createQuerydsl)
-compileTestJava.dependsOn(createQuerydsl)
-
+// Additionally,
+// delete IntelliJ Annotation Processor DIR
 clean {
-    delete generatedDir
+    delete file('src/main/generated')
 }
 
 test {
