@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.entity.cafe.QCafe;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//@Disabled
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CafeRepositoryQuerydslTest {
 //    @PersistenceUnit
 //    private EntityManagerFactory emf;
+
     @Autowired
     TestEntityManager testEntityManager;
 
