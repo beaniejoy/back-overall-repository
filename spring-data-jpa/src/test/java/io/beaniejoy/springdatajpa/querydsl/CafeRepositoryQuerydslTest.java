@@ -3,14 +3,10 @@ package io.beaniejoy.springdatajpa.querydsl;
 import com.querydsl.jpa.impl.JPAQuery;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.entity.cafe.QCafe;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
@@ -18,23 +14,23 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@Disabled
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CafeRepositoryQuerydslTest {
 //    @PersistenceUnit
 //    private EntityManagerFactory emf;
 
-    @Autowired
-    TestEntityManager testEntityManager;
+//    @Autowired
+//    TestEntityManager testEntityManager;
 
+    @Autowired
     EntityManager em;
 
-    @BeforeEach
-    void init() {
-        em = testEntityManager.getEntityManager();
-    }
+//    @BeforeEach
+//    void init() {
+//        em = testEntityManager.getEntityManager();
+//    }
 
     @Test
     @DisplayName("cafe name 기준으로 equal 조회")
