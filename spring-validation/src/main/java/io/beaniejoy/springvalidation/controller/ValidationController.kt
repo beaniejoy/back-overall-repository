@@ -1,8 +1,7 @@
-package io.beaniejoy.resttemplatebasic.controller
+package io.beaniejoy.springvalidation.controller
 
-import io.beaniejoy.resttemplatebasic.entity.ValidRequestDto
+import io.beaniejoy.springvalidation.dto.ValidRequestDto
 import mu.KLogging
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 

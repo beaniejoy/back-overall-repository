@@ -1,0 +1,53 @@
+buildscript {
+    ext {
+        springBootVersion = '2.5.9'
+        dependencyManagementVersion = '1.0.11.RELEASE'
+        kotlinVersion = '1.5.32'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        dependencies {
+            classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+            classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+            classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
+        }
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "kotlin"
+apply plugin: "kotlin-spring"
+
+group = 'io.beaniejoy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    implementation 'io.github.microutils:kotlin-logging:1.12.5'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
