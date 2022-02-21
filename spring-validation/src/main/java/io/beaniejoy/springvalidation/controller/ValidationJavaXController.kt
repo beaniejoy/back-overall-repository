@@ -1,6 +1,7 @@
 package io.beaniejoy.springvalidation.controller
 
 import mu.KLogging
+import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.Max
@@ -15,8 +16,12 @@ class ValidationJavaXController {
 
     @GetMapping("/get")
     fun getParam(
-        @NotNull(message = "value 필수값입니다.") @RequestParam value: String?
-    ): String? {
+        @NotNull(message = "value 필수값입니다.") @RequestParam value: Int?
+    ): Int? {
+//        if (bindingResult.hasErrors()) {
+//            logger.error("errors : ${bindingResult.fieldErrors}")
+//            throw RuntimeException("errors ${bindingResult.fieldErrors}")
+//        }
         return value
     }
 

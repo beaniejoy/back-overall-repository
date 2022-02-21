@@ -21,7 +21,7 @@ class ExceptionControllerAdvice {
         e: BindException,
         bindingResult: BindingResult
     ): ResponseEntity<ErrorDto> {
-        logger.error("validation errors : ${bindingResult.fieldErrors}")
+        logger.error("binding errors : ${bindingResult.fieldErrors}")
 
         val defaultMessage = bindingResult.fieldError?.defaultMessage
         val code = bindingResult.fieldError?.code
