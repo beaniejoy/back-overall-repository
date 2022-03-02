@@ -14,6 +14,10 @@ class ValidationJavaXController {
 
     companion object : KLogging()
 
+    /*
+    기본적으로 ConstraintViolationException (500 응답코드)
+    BindingResult 반환 X
+     */
     @GetMapping("/get")
     fun getParam(
         @NotNull(message = "value 필수값입니다.") @RequestParam value: Int?
@@ -22,10 +26,15 @@ class ValidationJavaXController {
 //            logger.error("errors : ${bindingResult.fieldErrors}")
 //            throw RuntimeException("errors ${bindingResult.fieldErrors}")
 //        }
+
         return value
     }
 
-    @GetMapping("/get/{id}")
+    /*
+    기본적으로 ConstraintViolationException (500 응답코드)
+    BindingResult 반환 X
+     */
+    @GetMapping("/path/{id}")
     fun getParam(
         @Max(10, message = "최대 10까지 가능합니다.") @PathVariable("id") id: Long?
     ): Long? {

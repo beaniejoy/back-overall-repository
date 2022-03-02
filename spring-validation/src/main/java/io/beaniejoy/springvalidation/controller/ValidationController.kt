@@ -13,8 +13,9 @@ class ValidationController {
     companion object : KLogging()
     
     /*
-    * ModelAttribute > type 변환, validation 관련된 내용을 BindingResult에 담아줌
-    * 그렇기에 Controller 단에서 Binding Error 관련된 내용을 바로 400에러로 반환하지 않고 처리 가능
+    ModelAttribute > type 변환, validation 관련된 내용을 BindingResult에 담아줌
+    그렇기에 Controller 단에서 Binding Error 관련된 내용을 바로 400에러로 반환하지 않고 처리 가능
+    기본적으로 BindException 반환 (400 응답코드)
     */
     @GetMapping("/get")
     fun getParam(
@@ -29,6 +30,9 @@ class ValidationController {
         return validRequestDto
     }
 
+    /*
+    기본적으로 MethodArgumentNotValidException 반환 (400 응답코드)
+    */
     @PostMapping("/post")
     fun postRequestBody(
         @Valid @RequestBody validRequestDto: ValidRequestDto

@@ -16,7 +16,7 @@ class ExceptionControllerAdvice {
     companion object : KLogging()
 
     // @ModelAttribute (query param 에 대한 Valid 내용) > BindException
-    @ExceptionHandler(BindException::class)
+//    @ExceptionHandler(BindException::class)
     fun handleNotValidException(
         e: BindException,
         bindingResult: BindingResult
@@ -37,7 +37,7 @@ class ExceptionControllerAdvice {
     }
 
     // @Requestbody (request body에 대한 Valid 내용) > MethodArgumentNotValidException(extends BindException)
-    @ExceptionHandler(MethodArgumentNotValidException::class)
+//    @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleRequestBodyException(
         e: MethodArgumentNotValidException,
         bindingResult: BindingResult
@@ -58,7 +58,7 @@ class ExceptionControllerAdvice {
     }
 
     // @RequestParam, @PathVariable validation 에러
-    @ExceptionHandler(ConstraintViolationException::class)
+//    @ExceptionHandler(ConstraintViolationException::class)
     fun handleConstraintViolationException(
         e: ConstraintViolationException
     ): ResponseEntity<ErrorDto> {
