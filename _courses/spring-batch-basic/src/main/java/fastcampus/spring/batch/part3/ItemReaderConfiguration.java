@@ -149,6 +149,7 @@ public class ItemReaderConfiguration {
     }
 
     // JDBC Paging 기반 ItemReader
+    // queryProvider 를 이용한 방법도 존재
     private JdbcPagingItemReader<Person> jdbcPagingItemReader() throws Exception {
         Map<String, Order> sortKeys = new HashMap<>();
         sortKeys.put("id", Order.DESCENDING);
@@ -165,7 +166,7 @@ public class ItemReaderConfiguration {
                         rs.getString(4))
                 )
                 .pageSize(10)
-                .sortKeys(sortKeys)
+                .sortKeys(sortKeys) // 필수 설정값
                 .build();
         itemReader.afterPropertiesSet();
 
