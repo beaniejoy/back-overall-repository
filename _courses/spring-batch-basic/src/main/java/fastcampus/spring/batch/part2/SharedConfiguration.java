@@ -52,7 +52,7 @@ public class SharedConfiguration {
                     log.info("jobName : {}, stepName : {}, parameter : {}",
                             jobInstance.getJobName(),
                             stepExecution.getStepName(),
-                            jobParameters.getLong("run.id"));
+                            jobParameters.getLong("run.id"));   // BATCH_JOB_EXECUTION_PARAMS' KEY_NAME
 
                     return RepeatStatus.FINISHED;
                 })

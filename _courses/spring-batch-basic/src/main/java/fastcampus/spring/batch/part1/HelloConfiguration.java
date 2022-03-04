@@ -22,6 +22,10 @@ public class HelloConfiguration {
         this.stepBuilderFactory = stepBuilderFactory;
     }
 
+    /*
+    * incrementer: RunIdIncrementer - job 이 생성될 때마다 파라미터 id를 자동으로 생성해주는 클래스
+    * (일종의 auto_increment 와 유사)
+    */
     @Bean
     public Job helloJob() {
         return jobBuilderFactory.get("helloJob")
@@ -30,6 +34,9 @@ public class HelloConfiguration {
                 .build();
     }
 
+    /*
+    * Step 안에는 tasklet, chunk 방식으로 Step 을 생성 가능
+    * */
     @Bean
     public Step helloStep() {
         return stepBuilderFactory.get("helloStep")
