@@ -89,7 +89,7 @@ public class ItemReaderConfiguration {
                 .build();
     }
 
-    // customItemReaderStep 을 위한 데이터 구성
+    // 1. customItemReaderStep 을 위한 데이터 구성
     private List<Person> getItems() {
         List<Person> items = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class ItemReaderConfiguration {
         return items;
     }
 
-    // csv file reader
+    // 2. csv file reader
     private FlatFileItemReader<Person> csvFileItemReader() throws Exception {
         DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
@@ -130,12 +130,12 @@ public class ItemReaderConfiguration {
         return itemReader;
     }
 
-    // JDBC Cursor 기반 ItemReader
+    // 3. JDBC Cursor 기반 ItemReader
     private JdbcCursorItemReader<Person> jdbcCursorItemReader() throws Exception {
         JdbcCursorItemReader<Person> itemReader = new JdbcCursorItemReaderBuilder<Person>()
                 .name("jdbcCursorItemReader")
-                .dataSource(dataSource)
-                .sql("select id, name, age, address from person")
+                .dataSource(dataSource) // datasource 설정
+                .sql("select id, name, age, address from person")   // sql 직접 설정
                 .rowMapper((rs, rowNum) -> new Person(
                         rs.getInt(1),
                         rs.getString(2),
@@ -148,7 +148,7 @@ public class ItemReaderConfiguration {
         return itemReader;
     }
 
-    // JDBC Paging 기반 ItemReader
+    // 4. JDBC Paging 기반 ItemReader
     // queryProvider 를 이용한 방법도 존재
     private JdbcPagingItemReader<Person> jdbcPagingItemReader() throws Exception {
         Map<String, Order> sortKeys = new HashMap<>();
@@ -157,15 +157,15 @@ public class ItemReaderConfiguration {
         JdbcPagingItemReader<Person> itemReader = new JdbcPagingItemReaderBuilder<Person>()
                 .name("jdbcPagingItemReader")
                 .dataSource(dataSource)
-                .selectClause("id, name, age, address")
-                .fromClause("from person")
+                .selectClause("id, name, age, address") // select projection 설정
+                .fromClause("from person")  // from 절 설정
                 .rowMapper((rs, rowNum) -> new Person(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getString(4))
                 )
-                .pageSize(10)
+                .pageSize(10)   // page size 설정 (필수 설정값)
                 .sortKeys(sortKeys) // 필수 설정값
                 .build();
         itemReader.afterPropertiesSet();
