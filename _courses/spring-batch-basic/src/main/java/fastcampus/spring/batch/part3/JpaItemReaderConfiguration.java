@@ -37,7 +37,7 @@ public class JpaItemReaderConfiguration {
 
     @Bean
     public Job JpaItemReaderJob() throws Exception {
-        return jobBuilderFactory.get("JpaItemReaderJob")
+        return jobBuilderFactory.get("jpaItemReaderJob")
                 .incrementer(new RunIdIncrementer())
                 .start(JpaCursorStep())
                 .next(JpaPagingStep())
@@ -46,7 +46,7 @@ public class JpaItemReaderConfiguration {
 
     @Bean
     public Step JpaCursorStep() throws Exception {
-        return stepBuilderFactory.get("JpaCursorStep")
+        return stepBuilderFactory.get("jpaCursorStep")
                 .<Person, Person>chunk(10)
                 .reader(jpaCursorItemReader())
                 .writer(itemWriter())
@@ -55,7 +55,7 @@ public class JpaItemReaderConfiguration {
 
     @Bean
     public Step JpaPagingStep() throws Exception {
-        return stepBuilderFactory.get("JpaPagingStep")
+        return stepBuilderFactory.get("jpaPagingStep")
                 .<Person, Person>chunk(10)
                 .reader(jpaPagingItemReader())
                 .writer(itemWriter())
