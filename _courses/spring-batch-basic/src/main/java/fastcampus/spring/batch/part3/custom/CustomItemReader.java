@@ -1,4 +1,4 @@
-package fastcampus.spring.batch.part3;
+package fastcampus.spring.batch.part3.custom;
 
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;

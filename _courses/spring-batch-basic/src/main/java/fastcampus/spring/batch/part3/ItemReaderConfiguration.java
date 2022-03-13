@@ -1,5 +1,7 @@
 package fastcampus.spring.batch.part3;
 
+import fastcampus.spring.batch.part3.custom.CustomItemReader;
+import fastcampus.spring.batch.source.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -15,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
