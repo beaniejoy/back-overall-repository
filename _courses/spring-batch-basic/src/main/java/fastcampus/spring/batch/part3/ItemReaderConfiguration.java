@@ -7,11 +7,6 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.batch.item.database.JdbcPagingItemReader;
-import org.springframework.batch.item.database.Order;
-import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
-import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -22,9 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,14 +25,11 @@ import java.util.stream.Collectors;
 public class ItemReaderConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final DataSource dataSource;
 
     public ItemReaderConfiguration(JobBuilderFactory jobBuilderFactory,
-                                   StepBuilderFactory stepBuilderFactory,
-                                   DataSource dataSource) {
+                                   StepBuilderFactory stepBuilderFactory) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
-        this.dataSource = dataSource;
     }
 
     @Bean
@@ -48,8 +38,6 @@ public class ItemReaderConfiguration {
                 .incrementer(new RunIdIncrementer())
                 .start(customItemReaderStep())
                 .next(csvFileStep())
-                .next(jdbcCursorStep())
-                .next(jdbcPagingStep())
                 .build();
     }
 
@@ -67,24 +55,6 @@ public class ItemReaderConfiguration {
         return stepBuilderFactory.get("csvFileStep")
                 .<Person, Person>chunk(10)
                 .reader(csvFileItemReader())
-                .writer(itemWriter())
-                .build();
-    }
-
-    @Bean
-    public Step jdbcCursorStep() throws Exception {
-        return stepBuilderFactory.get("jdbcCursorStep")
-                .<Person, Person>chunk(10)
-                .reader(jdbcCursorItemReader())
-                .writer(itemWriter())
-                .build();
-    }
-
-    @Bean
-    public Step jdbcPagingStep() throws Exception {
-        return stepBuilderFactory.get("jdbcPagingStep")
-                .<Person, Person>chunk(10)
-                .reader(jdbcPagingItemReader())
                 .writer(itemWriter())
                 .build();
     }
@@ -126,49 +96,6 @@ public class ItemReaderConfiguration {
                 .lineMapper(lineMapper) // 한 줄씩 가면서 mapping 하는 클래스 설정
                 .build();
         itemReader.afterPropertiesSet(); // itemReader 의 필수 설정값이 제대로 되어있는지 check
-
-        return itemReader;
-    }
-
-    // 3. JDBC Cursor 기반 ItemReader
-    private JdbcCursorItemReader<Person> jdbcCursorItemReader() throws Exception {
-        JdbcCursorItemReader<Person> itemReader = new JdbcCursorItemReaderBuilder<Person>()
-                .name("jdbcCursorItemReader")
-                .dataSource(dataSource) // datasource 설정
-                .sql("select id, name, age, address from person")   // sql 직접 설정
-                .rowMapper((rs, rowNum) -> new Person(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getString(4))
-                )
-                .build();
-        itemReader.afterPropertiesSet();
-
-        return itemReader;
-    }
-
-    // 4. JDBC Paging 기반 ItemReader
-    // queryProvider 를 이용한 방법도 존재
-    private JdbcPagingItemReader<Person> jdbcPagingItemReader() throws Exception {
-        Map<String, Order> sortKeys = new HashMap<>();
-        sortKeys.put("id", Order.DESCENDING);
-
-        JdbcPagingItemReader<Person> itemReader = new JdbcPagingItemReaderBuilder<Person>()
-                .name("jdbcPagingItemReader")
-                .dataSource(dataSource)
-                .selectClause("id, name, age, address") // select projection 설정
-                .fromClause("from person")  // from 절 설정
-                .rowMapper((rs, rowNum) -> new Person(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getString(4))
-                )
-                .pageSize(10)   // page size 설정 (필수 설정값)
-                .sortKeys(sortKeys) // 필수 설정값
-                .build();
-        itemReader.afterPropertiesSet();
 
         return itemReader;
     }
