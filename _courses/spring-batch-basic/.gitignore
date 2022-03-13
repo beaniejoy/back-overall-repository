@@ -1,3 +1,6 @@
+### custom ###
+output/
+
 .gradle
 gradle/
 gradlew
