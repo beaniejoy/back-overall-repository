@@ -54,7 +54,9 @@ fun variables() {
 * 컴파일러는 StringBuilder 사용하는 바이트코드를 생성
 * (append 로 이어붙이는 형태, java String "+" 연산도 마찬가지)
 */
-fun stringTemplate() {
+fun stringTemplate(message: String?) {
     val name = "Beanie"
     println("Hello ${name}")
+    // 이런 식으로 중괄호 식안에 여러 코드를 넣을 수도 있다.
+    println("Hello, ${if (message.isNullOrEmpty().not()) message else "default message"}!")
 }
