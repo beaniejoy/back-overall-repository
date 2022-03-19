@@ -43,3 +43,8 @@ fun mix(c1: Color, c2: Color) =
         setOf(BLUE, VIOLET) -> INDIGO
         else -> throw Exception("Dirty color")
     }
+
+/*
+* 인자 없는 when 은 사용하지 말자
+* 차라리 if 문으로 사용하는 것이 좋음
+*/
