@@ -1,6 +1,6 @@
 package io.beaniejoy.resttemplatebasic.controller;
 
-import io.beaniejoy.resttemplatebasic.entity.ExampleGetter;
+import io.beaniejoy.resttemplatebasic.dto.ExampleGetter;
 import io.beaniejoy.resttemplatebasic.entity.Member;
 import io.beaniejoy.resttemplatebasic.service.ExampleGetterService;
 import io.beaniejoy.resttemplatebasic.service.MemberService;

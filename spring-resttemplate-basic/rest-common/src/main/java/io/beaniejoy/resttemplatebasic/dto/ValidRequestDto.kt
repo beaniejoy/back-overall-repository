@@ -1,4 +1,4 @@
-package io.beaniejoy.resttemplatebasic.entity
+package io.beaniejoy.resttemplatebasic.dto
 
 import java.time.LocalDate
 import javax.validation.constraints.NotNull

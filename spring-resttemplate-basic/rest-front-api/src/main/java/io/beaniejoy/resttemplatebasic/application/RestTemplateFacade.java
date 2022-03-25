@@ -1,6 +1,6 @@
 package io.beaniejoy.resttemplatebasic.application;
 
-import io.beaniejoy.resttemplatebasic.entity.ExampleGetterDto;
+import io.beaniejoy.resttemplatebasic.dto.ExampleGetterDto;
 import io.beaniejoy.resttemplatebasic.entity.MemberDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponents;
