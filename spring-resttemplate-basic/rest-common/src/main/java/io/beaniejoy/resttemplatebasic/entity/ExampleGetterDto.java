@@ -1,5 +1,9 @@
 package io.beaniejoy.resttemplatebasic.entity;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ExampleGetterDto {
     private Long id;
 
@@ -9,47 +13,50 @@ public class ExampleGetterDto {
 
     private String address;
 
+    private String helloName;
+
     public ExampleGetterDto() {
     }
 
-    public ExampleGetterDto(Long id, String name, String email, String address) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-    }
+//    public ExampleGetterDto(Long id, String name, String email, String address) {
+//        this.id = id;
+//        this.name = name;
+//        this.email = email;
+//        this.address = address;
+//    }
 
     public Long getId() {
-        return id;
+        return id + 10L;
     }
 
-    public String getName() {
+    public String getHelloName() {
         return name;
     }
 
-    public String getEmail() {
+    public String getHelloEmail() {
         return email;
     }
 
-    public String getAddress() {
+    public String getHelloAddress() {
         return address;
     }
 
-    public void setHelloId(Long id) {
-        this.id = id;
-    }
+//    public void setHelloId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
 
-    public void setHelloName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     @Override
     public String toString() {
@@ -58,6 +65,7 @@ public class ExampleGetterDto {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", helloName='" + helloName + '\'' +
                 '}';
     }
 }
