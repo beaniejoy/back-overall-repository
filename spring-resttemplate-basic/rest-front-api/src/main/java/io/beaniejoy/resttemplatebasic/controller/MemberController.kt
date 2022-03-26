@@ -17,7 +17,8 @@ class MemberController(private val restTemplateFacade: RestTemplateFacade) {
     }
 
     @PostMapping("")
-    fun postMember(@RequestBody memberRequestDto: MemberRequestDto) {
+    fun postMember(@RequestBody memberRequestDto: MemberRequestDto): MemberRequestDto {
         logger.info(memberRequestDto.toString())
+        return memberRequestDto
     }
 }
