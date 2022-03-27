@@ -29,18 +29,19 @@ class MemberControllerTest {
     public void bindingDtoTest() throws Exception {
         String requestJson = "{\"id\": 1, " +
                 "\"name\": \"beanie\", " +
+                "\"helloName\": \"hello beanie\", " +
                 "\"address\": \"beanie address\", " +
                 "\"email\": \"beanie@example.com\", " +
                 "\"birthDate\": \"2000-10-25\"," +
                 "\"createdAt\": \"2022-03-26T13:20:30\", " +
                 "\"createdBy\": \"admin\"}";
 
-        mvc.perform(
-                post("/api/member")
+        mvc.perform(post("/api/member")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"id\":1,\"name\":\"beanie\"")))
+                .andExpect(content().string(containsString("\"name\":\"beanie\"")))
+                .andExpect(content().string(containsString("\"createdAt\":\"2022-03-26T13:20:30\"")))
                 .andDo(print());
     }
 }
