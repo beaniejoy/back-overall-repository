@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -17,12 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MemberControllerTest {
-
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String ADDRESS = "address";
-    private static final String EMAIL = "email";
-
     Long id;
     String name;
     String address;
@@ -56,10 +51,10 @@ class MemberControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(createKeyValueLong(ID, id))))
-                .andExpect(content().string(containsString(createKeyValueString(NAME, name))))
-                .andExpect(content().string(containsString(createKeyValueString(ADDRESS, address))))
-                .andExpect(content().string(containsString(createKeyValueString(EMAIL, email))))
+                .andExpect(content().string(containsString(createKeyValue(ID, id.toString()))))
+                .andExpect(content().string(containsString(createKeyValue(NAME, name))))
+                .andExpect(content().string(containsString(createKeyValue(ADDRESS, address))))
+                .andExpect(content().string(containsString(createKeyValue(EMAIL, email))))
                 .andDo(print());
     }
 
@@ -71,18 +66,51 @@ class MemberControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(createKeyValueLong(ID, id))))
-                .andExpect(content().string(containsString(createKeyValueString(NAME, name))))
-                .andExpect(content().string(containsString(createKeyValueString(ADDRESS, address))))
-                .andExpect(content().string(containsString(createKeyValueString(EMAIL, email))))
+                .andExpect(content().string(containsString(createKeyValue(ID, id.toString()))))
+                .andExpect(content().string(containsString(createKeyValue(NAME, name))))
+                .andExpect(content().string(containsString(createKeyValue(ADDRESS, address))))
+                .andExpect(content().string(containsString(createKeyValue(EMAIL, email))))
                 .andDo(print());
     }
 
-    private String createKeyValueLong(String key, Long value) {
-        return String.format("\"%s\":%d", key, value);
+    @Test
+    @Order(3)
+    @DisplayName("3. getter 이름과 field 이름 다른 경우에서 null 반환 테스트")
+    public void bindingDtoThreeTest() throws Exception {
+        String helloName = "joy";
+        String helloAddress = "joy's address";
+
+        requestJson.put(HELLO_NAME, helloName);
+        requestJson.put(HELLO_ADDRESS, helloAddress);
+
+        // 기존의 name, address는 매칭되는 getter 가 없어서 response json에 아예 포함 X
+        mvc.perform(post("/api/member/three")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson.toString()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(createKeyValue(ID, id.toString()))))
+                .andExpect(content().string(containsString(createKeyValue(HELLO_NAME, null))))
+                .andExpect(content().string(containsString(createKeyValue(HELLO_ADDRESS, null))))
+                .andExpect(content().string(containsString(createKeyValue(EMAIL, email))))
+                .andDo(print());
     }
 
-    private String createKeyValueString(String key, String value) {
-        return String.format("\"%s\":\"%s\"", key, value);
+    private String createKeyValue(String key, String value) {
+        String finalValue = "null";
+
+        if (value != null) {
+            finalValue = createValueString(key, value);
+        }
+
+        return String.format("\"%s\":%s", key, finalValue);
+    }
+
+    private String createValueString(String key, String value) {
+        switch (key) {
+            case ID:
+                return value;
+            default:
+                return "\"" + value + "\"";
+        }
     }
 }

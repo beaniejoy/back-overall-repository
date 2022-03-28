@@ -5,15 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MemberRequestDtoTest {
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String ADDRESS = "address";
-    private static final String EMAIL = "email";
+    private static final Logger logger = LoggerFactory.getLogger(MemberRequestDtoTest.class);
 
     Long id;
     String name;
@@ -47,10 +48,11 @@ class MemberRequestDtoTest {
     void checkValidMappingWithOnlyPublicField() throws JsonProcessingException {
         MemberRequestDto1 dto = mapper.readValue(json.toString(), MemberRequestDto1.class);
 
-        assertEquals(id, dto.id);
-        assertEquals(name, dto.name);
-        assertEquals(address, dto.address);
-        assertEquals(email, dto.email);
+        logger.info(dto.toString());
+//        assertEquals(id, dto.id);
+//        assertEquals(name, dto.name);
+//        assertEquals(address, dto.address);
+//        assertEquals(email, dto.email);
     }
 
     @Test
@@ -63,5 +65,25 @@ class MemberRequestDtoTest {
         assertEquals(name, dto.getName());
         assertEquals(address, dto.getAddress());
         assertEquals(email, dto.getEmail());
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("3. getter 이름과 field 이름 다른 경우에서 ObjectMapper 예외 발생 테스트")
+    void checkValidMappingWithAnotherGetterName() throws JsonProcessingException, JSONException {
+        String helloName = "joy";
+        String helloAddress = "joy's address";
+
+        json.remove(NAME);                      // "name" 포함시 Unrecognized field "name" 에러 발생 (getName() 존재 X)
+        json.remove(ADDRESS);
+        json.put(HELLO_NAME, helloName);        // Unrecognized field "helloName"
+        json.put(HELLO_ADDRESS, helloAddress);  // Unrecognized field "helloAddress"
+
+        JsonProcessingException exception = assertThrows(JsonProcessingException.class, () -> {
+            MemberRequestDto3 dto = mapper.readValue(json.toString(), MemberRequestDto3.class);
+        }, "JSON parsing 관련 에러가 발생하지 않았습니다.");
+
+
+        logger.info(exception.getMessage());
     }
 }

@@ -2,6 +2,7 @@ package io.beaniejoy.jacksonbindtest.controller;
 
 import io.beaniejoy.jacksonbindtest.dto.MemberRequestDto1;
 import io.beaniejoy.jacksonbindtest.dto.MemberRequestDto2;
+import io.beaniejoy.jacksonbindtest.dto.MemberRequestDto3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,12 @@ public class MemberController {
 
     @PostMapping("/two")
     public MemberRequestDto2 postMember2(@RequestBody MemberRequestDto2 requestDto) {
+        logger.info(requestDto.toString());
+        return requestDto;
+    }
+
+    @PostMapping("/three")
+    public MemberRequestDto3 postMember3(@RequestBody MemberRequestDto3 requestDto) {
         logger.info(requestDto.toString());
         return requestDto;
     }
