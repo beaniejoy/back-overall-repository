@@ -1,5 +1,6 @@
 package io.beaniejoy.jacksonbindtest.controller;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +23,35 @@ class MemberControllerTest {
     private static final String ADDRESS = "address";
     private static final String EMAIL = "email";
 
+    Long id;
+    String name;
+    String address;
+    String email;
+
+    JSONObject requestJson;
+
     @Autowired
     MockMvc mvc;
 
-    @Test
-    @Order(1)
-    @DisplayName("1. public field 만으로 Request Binding 테스트")
-    public void bindingDtoOneTest() throws Exception {
-        JSONObject requestJson = new JSONObject();
+    @BeforeEach
+    void setup() throws JSONException {
+        id = 100L;
+        name = "beanie";
+        address = "beanie's address";
+        email = "beanie's email";
 
-        Long id = 100L;
-        String name = "beanie";
-        String address = "beanie's address";
-        String email = "beanie's email";
+        requestJson = new JSONObject();
 
         requestJson.put(ID, id);
         requestJson.put(NAME, name);
         requestJson.put(ADDRESS, address);
         requestJson.put(EMAIL, email);
+    }
 
+    @Test
+    @Order(1)
+    @DisplayName("1. public field 만으로 Request Binding 테스트")
+    public void bindingDtoOneTest() throws Exception {
         mvc.perform(post("/api/member/one")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
@@ -56,18 +67,6 @@ class MemberControllerTest {
     @Order(2)
     @DisplayName("2. private field & getter 만으로 Request Binding 테스트")
     public void bindingDtoTwoTest() throws Exception {
-        JSONObject requestJson = new JSONObject();
-
-        Long id = 100L;
-        String name = "beanie";
-        String address = "beanie's address";
-        String email = "beanie's email";
-
-        requestJson.put(ID, id);
-        requestJson.put(NAME, name);
-        requestJson.put(ADDRESS, address);
-        requestJson.put(EMAIL, email);
-
         mvc.perform(post("/api/member/two")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
