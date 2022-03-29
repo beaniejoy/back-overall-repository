@@ -1,5 +1,6 @@
 package io.beaniejoy.jacksonbindtest.dto;
 
+// 3. field name과 getter name이 불일치 하는 경우
 public class MemberRequestDto3 {
     private Long id;
     // getName 메소드가 없어서 "name" key 에 대해서도 binding 실패

@@ -1,8 +1,7 @@
 package io.beaniejoy.jacksonbindtest.dto;
 
-/*
-* private field + getter
-*/
+
+// 2. private field + getter 조합만으로 구성
 public class MemberRequestDto2 {
     private Long id;
     private String name;

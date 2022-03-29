@@ -1,5 +1,6 @@
 package io.beaniejoy.jacksonbindtest.dto;
 
+// 4. getter에서 해당 field를 return하지 않고 custom한 내용 반환하는 경우
 public class MemberRequestDto4 {
     private Long id;
     private String name;
@@ -10,8 +11,9 @@ public class MemberRequestDto4 {
         return id;
     }
 
+    // custom return value 에 대해서 response json 에 해당 내용으로 return
     public String getName() {
-        return name;
+        return "getName(): Custom return value";
     }
 
     public String getAddress() {
@@ -22,6 +24,13 @@ public class MemberRequestDto4 {
         return email;
     }
 
-    // custom return value 에 대해서 response json 에 해당 내용으로 return
-
+    @Override
+    public String toString() {
+        return "MemberRequestDto4{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

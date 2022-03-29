@@ -46,7 +46,7 @@ class MemberControllerTest {
     @Test
     @Order(1)
     @DisplayName("1. public field 만으로 Request Binding 테스트")
-    public void bindingDtoOneTest() throws Exception {
+    public void bindingDtoOneCaseTest() throws Exception {
         mvc.perform(post("/api/member/one")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
@@ -61,7 +61,7 @@ class MemberControllerTest {
     @Test
     @Order(2)
     @DisplayName("2. private field & getter 만으로 Request Binding 테스트")
-    public void bindingDtoTwoTest() throws Exception {
+    public void bindingDtoTwoCaseTest() throws Exception {
         mvc.perform(post("/api/member/two")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
@@ -76,7 +76,7 @@ class MemberControllerTest {
     @Test
     @Order(3)
     @DisplayName("3. getter 이름과 field 이름 다른 경우에서 null 반환 테스트")
-    public void bindingDtoThreeTest() throws Exception {
+    public void bindingDtoThreeCaseTest() throws Exception {
         String helloName = "joy";
         String helloAddress = "joy's address";
 
@@ -91,6 +91,23 @@ class MemberControllerTest {
                 .andExpect(content().string(containsString(createKeyValue(ID, id.toString()))))
                 .andExpect(content().string(containsString(createKeyValue(HELLO_NAME, null))))
                 .andExpect(content().string(containsString(createKeyValue(HELLO_ADDRESS, null))))
+                .andExpect(content().string(containsString(createKeyValue(EMAIL, email))))
+                .andDo(print());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("4. getter 에서 임의로 지정한 내용을 return 하는 경우에서 response 반환 내용 테스트")
+    public void bindingDtoFourCaseTest() throws Exception {
+        String customName = "getName(): Custom return value";
+
+        mvc.perform(post("/api/member/four")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson.toString()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(createKeyValue(ID, id.toString()))))
+                .andExpect(content().string(containsString(createKeyValue(NAME, customName))))
+                .andExpect(content().string(containsString(createKeyValue(ADDRESS, address))))
                 .andExpect(content().string(containsString(createKeyValue(EMAIL, email))))
                 .andDo(print());
     }

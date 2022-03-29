@@ -9,8 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MemberRequestDtoTest {
@@ -87,5 +86,19 @@ class MemberRequestDtoTest {
 
 
         logger.info(exception.getMessage());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("4. getter 에서 임의로 지정한 내용을 return 하는 경우")
+    void checkValidMappingWithGetterCustomReturnValue() throws JsonProcessingException, JSONException {
+        logger.info(json.toString());
+
+        MemberRequestDto4 dto = mapper.readValue(json.toString(), MemberRequestDto4.class);
+
+        assertEquals(id, dto.getId());
+        assertNotEquals(name, dto.getName());
+        assertEquals(address, dto.getAddress());
+        assertEquals(email, dto.getEmail());
     }
 }
