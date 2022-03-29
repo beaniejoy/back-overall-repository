@@ -49,10 +49,10 @@ class MemberRequestDtoTest {
         MemberRequestDto1 dto = mapper.readValue(json.toString(), MemberRequestDto1.class);
 
         logger.info(dto.toString());
-//        assertEquals(id, dto.id);
-//        assertEquals(name, dto.name);
-//        assertEquals(address, dto.address);
-//        assertEquals(email, dto.email);
+        assertEquals(id, dto.id);
+        assertEquals(name, dto.name);
+        assertEquals(address, dto.address);
+        assertEquals(email, dto.email);
     }
 
     @Test
@@ -74,8 +74,10 @@ class MemberRequestDtoTest {
         String helloName = "joy";
         String helloAddress = "joy's address";
 
+        // 이번 테스트는 helloName, helloAddress에 초점
+        // helloName, helloAddress field만 없고 getter만 존재하는 상황
         json.remove(NAME);                      // "name" 포함시 Unrecognized field "name" 에러 발생 (getName() 존재 X)
-        json.remove(ADDRESS);
+        json.remove(ADDRESS);                   // "address" 포함시 Unrecognized field "name" 에러 발생 (getName() 존재 X)
         json.put(HELLO_NAME, helloName);        // Unrecognized field "helloName"
         json.put(HELLO_ADDRESS, helloAddress);  // Unrecognized field "helloAddress"
 
