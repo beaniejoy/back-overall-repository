@@ -42,4 +42,10 @@ public class MemberController {
         logger.info(requestDto.toString());
         return requestDto;
     }
+
+    @PostMapping("/eight")
+    public MemberRequestDto8 postMember8(@RequestBody MemberRequestDto8 requestDto) {
+        logger.info(requestDto.toString());
+        return requestDto;
+    }
 }

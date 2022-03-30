@@ -69,7 +69,7 @@ class MemberRequestDtoTest {
     @Test
     @Order(3)
     @DisplayName("3. getter 이름과 field 이름 다른 경우에서 ObjectMapper 예외 발생 테스트")
-    void checkValidMappingWithAnotherGetterName() throws JsonProcessingException, JSONException {
+    void checkValidMappingWithAnotherGetterName() throws JSONException {
         String helloName = "joy";
         String helloAddress = "joy's address";
 
@@ -92,13 +92,19 @@ class MemberRequestDtoTest {
     @Order(4)
     @DisplayName("4. getter 에서 임의로 지정한 내용을 return 하는 경우")
     void checkValidMappingWithGetterCustomReturnValue() throws JsonProcessingException, JSONException {
-        logger.info(json.toString());
-
         MemberRequestDto4 dto = mapper.readValue(json.toString(), MemberRequestDto4.class);
+        // 실제 dto 내부 필드에는 json 내용대로 잘 주입됨
+        // api response 내보낼 때 봐야함
+        logger.info(dto.toString());
 
         assertEquals(id, dto.getId());
         assertNotEquals(name, dto.getName());
         assertEquals(address, dto.getAddress());
         assertEquals(email, dto.getEmail());
+
+        String resultJson = mapper.writeValueAsString(dto);
+        logger.info(resultJson);
+
+        assertTrue(resultJson.contains("\"name\":\"getName(): Custom return value\""));
     }
 }

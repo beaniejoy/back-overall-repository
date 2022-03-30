@@ -44,11 +44,10 @@ class MemberControllerTest2 {
     }
 
     @Test
-    @Order(1)
-    @DisplayName("5. private field & setter 조합만으로 406 응답코드 반환 테스트")
-    public void bindingDtoOneCaseTest() throws Exception {
+    @Order(5)
+    @DisplayName("5. private field & setter 조합만으로 406 응답코드(Not Acceptable) 반환 테스트")
+    public void bindingDtoFiveCaseTest() throws Exception {
         // getter가 없어서 response를 내보낼 때 각 field에 저장된 데이터에 접근할 수 없게됨
-
         mvc.perform(post("/api/member/five")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
@@ -56,22 +55,14 @@ class MemberControllerTest2 {
                 .andDo(print());
     }
 
-    private String createKeyValue(String key, String value) {
-        String finalValue = "null";
-
-        if (value != null) {
-            finalValue = createValueString(key, value);
-        }
-
-        return String.format("\"%s\":%s", key, finalValue);
-    }
-
-    private String createValueString(String key, String value) {
-        switch (key) {
-            case ID:
-                return value;
-            default:
-                return "\"" + value + "\"";
-        }
+    @Test
+    @Order(8)
+    @DisplayName("8. POJO 형태에서 기본 생성자만 없는 경우 테스트")
+    public void bindingDtoEightCaseTest() throws Exception {
+        mvc.perform(post("/api/member/eight")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson.toString()))
+                .andExpect(status().isNotAcceptable())
+                .andDo(print());
     }
 }
