@@ -3,7 +3,6 @@ package io.beaniejoy.jacksonbindtest.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -11,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
-import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.EMAIL;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MemberRequestDtoTest2 {
@@ -98,17 +97,5 @@ public class MemberRequestDtoTest2 {
         assertEquals("joy", dto.getName());
         assertEquals("joy's address", dto.getAddress());
         assertEquals(email, dto.getEmail());
-    }
-
-    @Test
-    @Order(8)
-    @DisplayName("8. POJO 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 테스트")
-    void checkValidMappingWithNoDefaultConstructor() throws JsonProcessingException, JSONException {
-        // Cannot construct instance
-        InvalidDefinitionException exception = assertThrows(InvalidDefinitionException.class, () -> {
-            MemberRequestDto8 dto = mapper.readValue(json.toString(), MemberRequestDto8.class);
-        });
-
-        logger.info(exception.getMessage());
     }
 }

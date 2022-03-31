@@ -59,10 +59,12 @@ class MemberControllerTest2 {
     @Order(8)
     @DisplayName("8. POJO 형태에서 기본 생성자만 없는 경우 테스트")
     public void bindingDtoEightCaseTest() throws Exception {
+        // 기본 생성자가 없어도 @RequestBody 에서는 값을 제대로 binding 해준다.
+        // 기본 생성자가 > 해당 필드를 넣을 수 있는 인자 있는 생성자 > setter 적용
         mvc.perform(post("/api/member/eight")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
-                .andExpect(status().isNotAcceptable())
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 }
