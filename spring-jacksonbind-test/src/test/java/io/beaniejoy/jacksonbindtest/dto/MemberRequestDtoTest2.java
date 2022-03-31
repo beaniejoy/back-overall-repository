@@ -66,7 +66,7 @@ public class MemberRequestDtoTest2 {
 
     @Test
     @Order(6)
-    @DisplayName("6. 기본적인 POJO 구조에서 setter 에 임의의 값 주입하는 경우에서 ObjectMapper 테스트")
+    @DisplayName("6. 기본적인 POJO 구조에서 setter에 임의의 값 주입하는 경우에서 ObjectMapper 테스트")
     void checkValidMappingWithSetterCustomValue() throws JsonProcessingException {
         MemberRequestDto6 dto = mapper.readValue(json.toString(), MemberRequestDto6.class);
 
