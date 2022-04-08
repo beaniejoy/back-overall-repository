@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="bean" name="name1-bean,name2-bean" class="io.beaniejoy.springframeworkbasic.bean.TestBean">
         <constructor-arg name="id" value="1"/>
@@ -11,7 +12,13 @@
     <alias name="bean" alias="subA-bean"/>
     <alias name="bean" alias="subB-bean"/>
 
-    <bean id="beanByFactory"
+    <bean id="testBeanFactory"
           class="io.beaniejoy.springframeworkbasic.bean.TestBeanFactory"
           factory-method="createInstance"/>
+
+    <!-- factory method를 가진 bean 객체를 따로 등록하고 factory-bean 속성을 통해 해당 팩토리 메소드 사용 가능 -->
+    <bean id="testBeanInstanceFactory" class="io.beaniejoy.springframeworkbasic.bean.TestBeanInstanceFactory"/>
+    <bean id="testBean2"
+          factory-bean="testBeanInstanceFactory"
+          factory-method="createTestBeanInstance"/>
 </beans>

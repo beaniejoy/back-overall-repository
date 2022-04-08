@@ -1,6 +1,7 @@
 package io.beaniejoy.springframeworkbasic.bean
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
@@ -31,5 +32,14 @@ class SpringBeanTest {
 
         assertEquals(subABean.id, 1L)
         assertEquals(subBBean.name, "test-bean")
+    }
+
+    @Test
+    @DisplayName("factory method로 만들어진 bean에 대한 singleton 객체 여부 테스트")
+    fun factoryMethodSingletonTest() {
+        val testBean2A = context.getBean<TestBean2>("testBean2")
+        val testBean2B = context.getBean<TestBean2>("testBean2")
+
+        assertTrue(testBean2A === testBean2B)
     }
 }
