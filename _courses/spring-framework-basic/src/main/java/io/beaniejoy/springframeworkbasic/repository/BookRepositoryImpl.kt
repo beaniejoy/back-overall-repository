@@ -6,8 +6,8 @@ import java.time.LocalDateTime
 
 class BookRepositoryImpl: BookRepository {
     companion object {
-        val BOOK_STORE: Map<Long, Book> = mapOf(
-            1L to Book(
+        val BOOK_STORE: List<Book> = listOf(
+            Book(
                 id = 1L,
                 name = "book_1",
                 price = BigDecimal.valueOf(12500L),
@@ -15,7 +15,7 @@ class BookRepositoryImpl: BookRepository {
                 createdAt = LocalDateTime.now(),
                 createdBy = "system"
             ),
-            2L to Book(
+            Book(
                 id = 2L,
                 name = "book_2",
                 price = BigDecimal.valueOf(30000L),
@@ -23,7 +23,7 @@ class BookRepositoryImpl: BookRepository {
                 createdAt = LocalDateTime.now(),
                 createdBy = "system"
             ),
-            3L to Book(
+            Book(
                 id = 3L,
                 name = "book_3",
                 price = BigDecimal.valueOf(24900),
@@ -35,10 +35,10 @@ class BookRepositoryImpl: BookRepository {
     }
 
     override fun findById(id: Long): Book? {
-        return BOOK_STORE[id];
+        return BOOK_STORE.find { it.id == id };
     }
 
     override fun findByName(name: String): Book? {
-        TODO("Not yet implemented")
+        return BOOK_STORE.find { it.name == name };
     }
 }

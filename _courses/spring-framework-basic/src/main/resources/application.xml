@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="bookService" class="io.beaniejoy.springframeworkbasic.BookService">
-<!--        <property name="bookRepository" ref="bookRepository"/>-->
+    <bean id="bookService" class="io.beaniejoy.springframeworkbasic.service.BookService">
+        <constructor-arg name="bookRepository" ref="bookRepository"/>
     </bean>
 
-<!--    <bean id="bookRepository" class="io.beaniejoy.springframeworkbasic.repository.BookRepository"/>-->
+    <bean id="bookRepository" class="io.beaniejoy.springframeworkbasic.repository.BookRepositoryImpl"/>
 </beans>

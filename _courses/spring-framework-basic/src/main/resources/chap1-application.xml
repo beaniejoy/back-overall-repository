@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bean" name="name1-bean,name2-bean" class="io.beaniejoy.springframeworkbasic.bean.TestBean">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="name" value="test-bean"/>
+    </bean>
+
+    <alias name="bean" alias="subA-bean"/>
+    <alias name="bean" alias="subB-bean"/>
+
+    <bean id="beanByFactory"
+          class="io.beaniejoy.springframeworkbasic.bean.TestBeanFactory"
+          factory-method="createInstance"/>
+</beans>
