@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="bookService" class="io.beaniejoy.springframeworkbasic.BookService">
-        <property name="bookRepository" ref="bookRepository"/>
+<!--        <property name="bookRepository" ref="bookRepository"/>-->
     </bean>
 
-    <bean id="bookRepository" class="io.beaniejoy.springframeworkbasic.BookRepository"/>
+<!--    <bean id="bookRepository" class="io.beaniejoy.springframeworkbasic.repository.BookRepository"/>-->
 </beans>
