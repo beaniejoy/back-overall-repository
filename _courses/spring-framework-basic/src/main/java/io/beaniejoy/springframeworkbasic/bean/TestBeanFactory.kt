@@ -8,11 +8,6 @@ class TestBeanFactory private constructor() {
     }
 }
 
-class TestBean2(
-    var name: String? = null,
-    var value: String? = null
-)
-
 class TestBeanInstanceFactory {
     // 이렇게 xml 설정해도 singleton을 유지하게 된다.
     fun createTestBeanInstance(): TestBean2 {

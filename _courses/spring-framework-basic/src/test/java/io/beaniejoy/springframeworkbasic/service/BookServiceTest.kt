@@ -12,7 +12,7 @@ import org.springframework.context.support.GenericApplicationContext
 class BookServiceTest {
 
     private val context: ApplicationContext =
-        ClassPathXmlApplicationContext("application.xml")
+        ClassPathXmlApplicationContext("service-application.xml")
 
     // GenericApplicationContext: ApplicationContext 구현체 중 하나
     private val genericContext = GenericApplicationContext()
@@ -31,7 +31,7 @@ class BookServiceTest {
     @DisplayName("GenericApplicationContext으로 xml 설정 flexible한 bean 로드 테스트")
     fun findByIdWithGenericAc() {
         // xml, groovy 설정 파일을 유연하게 가져올 수 있음
-        XmlBeanDefinitionReader(genericContext).loadBeanDefinitions("application.xml")
+        XmlBeanDefinitionReader(genericContext).loadBeanDefinitions("service-application.xml")
         genericContext.refresh()
 
         val bookService = genericContext.getBean<BookService>("bookService")

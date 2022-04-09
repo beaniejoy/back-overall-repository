@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-            https://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="bean" name="name1-bean,name2-bean" class="io.beaniejoy.springframeworkbasic.bean.TestBean">
         <constructor-arg name="id" value="1"/>
@@ -21,4 +20,26 @@
     <bean id="testBean2"
           factory-bean="testBeanInstanceFactory"
           factory-method="createTestBeanInstance"/>
+
+    <!--
+    1.4.1. Dependency Injection
+        - Setter-based Dependency Injection
+        - https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-setter-injection
+    -->
+    <!-- start -->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <bean class="io.beaniejoy.springframeworkbasic.config.bean.CustomDateEditorRegistrar"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="testBean3" class="io.beaniejoy.springframeworkbasic.bean.TestBean3">
+        <property name="firstName" value="beanie" />
+        <property name="lastName" value="joy" />
+        <property name="price" value="10200" />
+        <property name="dateOfBirth" value="2000-09-30" />
+    </bean>
+    <!-- end -->
 </beans>

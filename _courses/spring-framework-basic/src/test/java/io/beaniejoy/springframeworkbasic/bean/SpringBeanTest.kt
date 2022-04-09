@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Date
 
 class SpringBeanTest {
     private val context: ApplicationContext =
@@ -41,5 +44,17 @@ class SpringBeanTest {
         val testBean2B = context.getBean<TestBean2>("testBean2")
 
         assertTrue(testBean2A === testBean2B)
+    }
+
+    @Test
+    @DisplayName("1.4.1 DI - PropertyEditor를 통한 property format converting 테스트")
+    fun customPropertyEditorTest() {
+        val bean = context.getBean<TestBean3>("testBean3")
+
+        println(bean)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val dateStr = dateFormat.format(bean.dateOfBirth)
+
+        assertEquals(dateStr, "2000-09-30")
     }
 }
