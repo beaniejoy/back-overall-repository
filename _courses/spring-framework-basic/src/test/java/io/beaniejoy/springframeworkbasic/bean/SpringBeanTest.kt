@@ -1,5 +1,6 @@
 package io.beaniejoy.springframeworkbasic.bean
 
+import io.beaniejoy.springframeworkbasic.bean.chap1.sub4.TestBean3
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.getBean
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.Date
 
 class SpringBeanTest {
     private val context: ApplicationContext =

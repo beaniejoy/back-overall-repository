@@ -1,14 +1,18 @@
 package io.beaniejoy.springframeworkbasic.basic
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.util.regex.Pattern
 
+@DisplayName("BigDecimal 관련 테스트")
 class BigDecimalTest {
+
+    companion object {
+        val ONLY_VALID_CURRENCY_REGEX = "[0-9,]*[0-9]{1,3}.[0-9]{2}".toRegex()
+    }
 
     @Test
     @DisplayName("화폐 콤마(,) format 변환 성공 테스트")
@@ -24,24 +28,66 @@ class BigDecimalTest {
     }
 
     @Test
-    fun containsOnlyCharsOfBigDecimal() {
-        val pattern = ","
+    @DisplayName("올바르지 않은 화폐 형식 입력시 RuntimeException 발생 여부 테스트")
+    fun throwExceptionWhenNotValidCurrencyFormat() {
+        val input = "23,124,3.3.00"
+        val input2 = "23,124,3.3.00"
+        val input3 = "23,1-?,029.00"
+        val input4 = "23,100,09.00"
 
-        val strDecimal = ",123,123,445,777.001"
+        assertThrows<RuntimeException> {
+            checkValidCurrencyFormat(input)
+        }
+        assertThrows<RuntimeException> {
+            checkValidCurrencyFormat(input2)
+        }
+        assertThrows<RuntimeException> {
+            checkValidCurrencyFormat(input3)
+        }
+        assertThrows<RuntimeException> {
+            checkValidCurrencyFormat(input4)
+        }
+    }
 
-        println(strDecimal.split(",")[0].length)
+    @Test
+    @DisplayName("올바른 화폐 형식 입력 테스트")
+    fun checkValidCurrencyFormat() {
+        val input = "23,124,303.00"
+        val input2 = "323,124,303.00"
+        val input3 = "303.00"
+        val input4 = "03.00"
 
-        val compile = Pattern.compile(pattern)
-        val matcher = compile.matcher(strDecimal)
-        println(matcher.find())
-        println(matcher.find())
-        println(matcher.find())
-        println(matcher.find())
-        println(matcher.find())
+        checkValidCurrencyFormat(input)
+        checkValidCurrencyFormat(input2)
+        checkValidCurrencyFormat(input3)
+        checkValidCurrencyFormat(input4)
+    }
 
-//        assertTrue(pattern(strDecimal))
+    private fun checkValidCurrencyFormat(text: String?) {
+        if (text == null) {
+            throw RuntimeException("BigDecimal에 대한 입력값이 null 입니다.")
+        }
 
-//        val pattern2 = "^[0-9]{1,3},[]*$".toRegex()
+        if (text.matches(ONLY_VALID_CURRENCY_REGEX).not()) {
+            throw RuntimeException("올바르지 않은 화폐 형식 입니다. (숫자 세 단위마다 콤마, 소수점 둘째자리까지 표시)")
+        }
 
+        val splitNumbers = text.split(",").toMutableList()
+
+        if (splitNumbers.size > 1 && splitNumbers[0].length > 3 || splitNumbers[0].isEmpty()) {
+            throw RuntimeException("올바르지 않는 형식입니다.")
+        }
+
+        splitNumbers.removeAt(0)
+
+        splitNumbers.forEach {
+            if (it.contains(".") && it.length != 6) {
+                throw RuntimeException("올바르지 않는 형식입니다.")
+            }
+
+            if (it.contains(".").not() && it.length != 3) {
+                throw RuntimeException("올바르지 않는 형식입니다.")
+            }
+        }
     }
 }
