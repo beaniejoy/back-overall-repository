@@ -22,6 +22,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
+apply plugin: 'org.jetbrains.kotlin.jvm'
 
 group = 'io.beaniejoy'
 version = '0.0.1-SNAPSHOT'
