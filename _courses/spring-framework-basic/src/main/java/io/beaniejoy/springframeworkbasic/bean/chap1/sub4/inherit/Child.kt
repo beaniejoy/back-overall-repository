@@ -1,4 +1,4 @@
-package io.beaniejoy.springframeworkbasic.bean.chap1.sub4
+package io.beaniejoy.springframeworkbasic.bean.chap1.sub4.inherit
 
 class Child(
     val name: String,

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="outer" class="io.beaniejoy.springframeworkbasic.bean.chap1.sub4.Outer">
+        <constructor-arg name="name" value="outer name"/>
+        <constructor-arg name="inner">
+            <!-- inner class는 id, name 속성이 필요없다. -->
+            <bean class="io.beaniejoy.springframeworkbasic.bean.chap1.sub4.Outer.Inner">
+                <constructor-arg name="address" value="inner's address"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>

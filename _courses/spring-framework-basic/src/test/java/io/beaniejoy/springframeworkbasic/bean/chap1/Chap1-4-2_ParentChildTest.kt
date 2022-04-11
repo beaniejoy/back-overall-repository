@@ -1,6 +1,6 @@
 package io.beaniejoy.springframeworkbasic.bean.chap1
 
-import io.beaniejoy.springframeworkbasic.bean.chap1.sub4.Child
+import io.beaniejoy.springframeworkbasic.bean.chap1.sub4.inherit.Child
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.getBean
 import org.springframework.context.support.GenericXmlApplicationContext
 
 @DisplayName("chap 1.4.2 Parent, Child Context 테스트")
-class ParentChildContextTest {
+class `Chap1-4-2_ParentChildTest` {
 
     companion object {
         lateinit var parentContext: GenericXmlApplicationContext
