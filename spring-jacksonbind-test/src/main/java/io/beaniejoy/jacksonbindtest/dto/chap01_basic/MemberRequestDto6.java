@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
 
 // 6. 기본적인 POJO 구조에서 setter 에 임의의 값 주입하는 경우
 public class MemberRequestDto6 {

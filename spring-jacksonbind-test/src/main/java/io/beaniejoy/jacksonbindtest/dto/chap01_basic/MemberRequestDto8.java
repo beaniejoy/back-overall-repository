@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
 
 // 8. 기본 생성자만 없는 경우
 public class MemberRequestDto8 {

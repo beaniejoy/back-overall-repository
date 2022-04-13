@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
 
 // 4. getter에서 해당 field를 return하지 않고 custom한 내용 반환하는 경우
 public class MemberRequestDto4 {

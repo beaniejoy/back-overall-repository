@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
 
 // 가장 기본적으로 ObjectMapper에는 default constructor가 필요하다.
 // (ObjectMapper는 deserialize 할 때 default constructor를 가지고 객체를 생성)

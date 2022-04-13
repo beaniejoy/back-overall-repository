@@ -1,10 +1,12 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto8;
+import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto9;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -58,7 +60,7 @@ public class MemberRequestDtoTest3 {
 
     @Test
     @Order(9)
-    @DisplayName("8-1. POJO 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 직렬화 테스트")
+    @DisplayName("8-1. POJO 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 역직렬화 테스트")
     void checkValidMappingWithNoDefaultConstructorByParameterNamesModule() throws JsonProcessingException {
         // ParameterNamesModule: 기본생성자, setter 가 없어도 다른 인자가 있는 생성자를 통해 binding 되도록 위임
         mapper.registerModule(new ParameterNamesModule());
@@ -79,7 +81,7 @@ public class MemberRequestDtoTest3 {
 
     @Test
     @Order(11)
-    @DisplayName("9. Single Argument Constructor 인 상황에서의 ObjectMapper 역직렬화 테스트")
+    @DisplayName("9. Single Argument Constructor인 상황에서의 ObjectMapper 역직렬화 테스트")
     void checkSerializeWithSingleArgumentConstructor() throws JsonProcessingException {
         json.remove("id");
         json.remove("address");

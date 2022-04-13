@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
 
 // 3. field name과 getter name이 불일치 하는 경우
 public class MemberRequestDto3 {

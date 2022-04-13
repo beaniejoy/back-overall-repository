@@ -1,8 +1,11 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto5;
+import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto6;
+import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto7;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;

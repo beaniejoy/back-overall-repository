@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto;
+package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
 
 // 7. setter의 이름이 필드명과 일치하지 않는 경우
 public class MemberRequestDto7 {
