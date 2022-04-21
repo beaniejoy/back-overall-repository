@@ -1,15 +1,11 @@
 package io.beaniejoy.jacksonbindtest.dto.chap02;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto1;
-import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto2;
-import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto3;
-import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto4;
+import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -51,7 +47,7 @@ public class MemberConstructorTest {
 
     @Test
     @Order(8)
-    @DisplayName("8. POJO 형태에서 기본 생성자만 없는 경우에서의 에러 발생 ObjectMapper 테스트")
+    @DisplayName("8. JavaBean 형태에서 기본 생성자만 없는 경우에서의 에러 발생 ObjectMapper 테스트")
     void checkValidMappingWithNoDefaultConstructor() throws JsonProcessingException {
         // Cannot construct instance
         InvalidDefinitionException exception = assertThrows(InvalidDefinitionException.class, () -> {
@@ -62,12 +58,14 @@ public class MemberConstructorTest {
 
     @Test
     @Order(9)
-    @DisplayName("8-1. POJO 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 역직렬화 테스트")
+    @DisplayName("8-1. JavaBean 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 역직렬화 테스트")
     void checkValidMappingWithNoDefaultConstructorByParameterNamesModule() throws JsonProcessingException {
         // ParameterNamesModule: 기본생성자, setter 가 없어도 다른 인자가 있는 생성자를 통해 binding 되도록 위임
         mapper.registerModule(new ParameterNamesModule());
         MemberConstructorDto1 dto = mapper.readValue(json.toString(), MemberConstructorDto1.class);
         logger.info(dto.toString());
+        assertEquals(dto.getName(), "beanie");
+        assertEquals(dto.getAddress(), "beanie's address");
     }
 
     @Test
@@ -119,6 +117,18 @@ public class MemberConstructorTest {
         // Spring Boot에서 Request json 데이터를 받아올 때 이러한 방식으로 받아오게 되는데 그래서 기본 생성자가 없어도
         mapper.registerModule(new ParameterNamesModule());
         MemberConstructorDto4 dto = mapper.readValue(json.toString(), MemberConstructorDto4.class);
+        logger.info(dto.toString());
+    }
+
+    @Test
+    @Order(14)
+    @DisplayName("12. 인자가 있는 생성자와 setter로 역직렬화하는 테스트")
+    void checkDeserializeWithConstructorAndSetter() throws JsonProcessingException {
+        json.remove("id");
+
+        // constructor에 지정되지 않는 필드(email)가 있으면 setter에 매핑되는 내용을 찾는다.
+        mapper.registerModule(new ParameterNamesModule());
+        MemberConstructorDto5 dto = mapper.readValue(json.toString(), MemberConstructorDto5.class);
         logger.info(dto.toString());
     }
 }

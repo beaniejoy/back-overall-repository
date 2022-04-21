@@ -10,12 +10,9 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
-import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -94,6 +91,19 @@ class MemberControllerTest2 {
                 .andExpect(result ->
                         assertTrue(result.getResolvedException() instanceof HttpMessageNotReadableException)
                 )
+                .andDo(print());
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("12. 인자가 있는 생성자와 setter로 request binding 테스트")
+    public void bindingDtoTwelveCaseTest() throws Exception {
+        requestJson.remove(ID);
+
+        mvc.perform(post("/api/member/twelve")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson.toString()))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 }

@@ -3,6 +3,7 @@ package io.beaniejoy.jacksonbindtest.controller;
 import io.beaniejoy.jacksonbindtest.dto.chap01_basic.*;
 import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto1;
 import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto2;
+import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,8 +46,8 @@ public class MemberController {
         return requestDto;
     }
 
-        @PostMapping("/eight")
-        public MemberConstructorDto1 postMember8(@RequestBody MemberConstructorDto1 requestDto) {
+    @PostMapping("/eight")
+    public MemberConstructorDto1 postMember8(@RequestBody MemberConstructorDto1 requestDto) {
         logger.info(requestDto.toString());
         return requestDto;
     }
@@ -55,5 +56,11 @@ public class MemberController {
     public MemberConstructorDto2 postMember9(@RequestBody MemberConstructorDto2 requestDto) {
         logger.info(requestDto.toString());
         return requestDto;
+    }
+
+    @PostMapping("/twelve")
+    public String postMember12(@RequestBody MemberConstructorDto5 requestDto) {
+        logger.info(requestDto.toString());
+        return "success!!";
     }
 }
