@@ -1,8 +1,8 @@
-package io.beaniejoy.jacksonbindtest.dto.chap02;
+package io.beaniejoy.jacksonbindtest.dto.chap03;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.beaniejoy.jacksonbindtest.dto.chap02_collection.LibraryDto;
+import io.beaniejoy.jacksonbindtest.dto.chap03_collection.LibraryDto;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

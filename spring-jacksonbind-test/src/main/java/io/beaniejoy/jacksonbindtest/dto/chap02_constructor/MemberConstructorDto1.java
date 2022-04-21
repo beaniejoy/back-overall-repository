@@ -1,13 +1,13 @@
-package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
+package io.beaniejoy.jacksonbindtest.dto.chap02_constructor;
 
 // 8. 기본 생성자만 없는 경우
-public class MemberRequestDto8 {
+public class MemberConstructorDto1 {
     private Long id;
     private String name;
     private String address;
     private String email;
 
-    public MemberRequestDto8(Long id, String name, String address, String email) {
+    public MemberConstructorDto1(Long id, String name, String address, String email) {
         this.id = id;
         this.name = name;
         this.address = address;

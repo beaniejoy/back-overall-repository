@@ -1,12 +1,15 @@
-package io.beaniejoy.jacksonbindtest.dto.chap01;
+package io.beaniejoy.jacksonbindtest.dto.chap02;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto8;
-import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto9;
+import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto1;
+import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto2;
+import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto3;
+import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.MemberConstructorDto4;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -14,13 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 // 생성자 테스트
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MemberRequestDtoTest3 {
-    private static final Logger logger = LoggerFactory.getLogger(MemberRequestDtoTest3.class);
+public class MemberConstructorTest {
+    private static final Logger logger = LoggerFactory.getLogger(MemberConstructorTest.class);
 
     Long id;
     String name;
@@ -53,7 +55,7 @@ public class MemberRequestDtoTest3 {
     void checkValidMappingWithNoDefaultConstructor() throws JsonProcessingException {
         // Cannot construct instance
         InvalidDefinitionException exception = assertThrows(InvalidDefinitionException.class, () -> {
-            MemberRequestDto8 dto = mapper.readValue(json.toString(), MemberRequestDto8.class);
+            MemberConstructorDto1 dto = mapper.readValue(json.toString(), MemberConstructorDto1.class);
         });
         logger.info(exception.getMessage());
     }
@@ -64,7 +66,7 @@ public class MemberRequestDtoTest3 {
     void checkValidMappingWithNoDefaultConstructorByParameterNamesModule() throws JsonProcessingException {
         // ParameterNamesModule: 기본생성자, setter 가 없어도 다른 인자가 있는 생성자를 통해 binding 되도록 위임
         mapper.registerModule(new ParameterNamesModule());
-        MemberRequestDto8 dto = mapper.readValue(json.toString(), MemberRequestDto8.class);
+        MemberConstructorDto1 dto = mapper.readValue(json.toString(), MemberConstructorDto1.class);
         logger.info(dto.toString());
     }
 
@@ -72,7 +74,7 @@ public class MemberRequestDtoTest3 {
     @Order(10)
     @DisplayName("8-2. POJO 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 직렬화 테스트")
     void checkSerializeWithNoDefaultConstructor() throws JsonProcessingException {
-        MemberRequestDto8 dto = new MemberRequestDto8(1L, "beanie", "beanie's address", "beanie@example.com");
+        MemberConstructorDto1 dto = new MemberConstructorDto1(1L, "beanie", "beanie's address", "beanie@example.com");
         String resultJson = mapper.writeValueAsString(dto);
         logger.info(resultJson);
 
@@ -90,7 +92,33 @@ public class MemberRequestDtoTest3 {
         mapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
         assertTrue(String.valueOf(mapper.getRegisteredModuleIds()).contains("jackson-module-parameter-names"));
 
-        MemberRequestDto9 dto = mapper.readValue(json.toString(), MemberRequestDto9.class);
+        MemberConstructorDto2 dto = mapper.readValue(json.toString(), MemberConstructorDto2.class);
+        logger.info(dto.toString());
+    }
+
+    @Test
+    @Order(12)
+    @DisplayName("10. 생성자에 @JsonCreator, @JsonProperty를 사용해서 json mapping을 할 수 있다.")
+    void checkDeserializeWithJsonCreatorAndProperty() throws JsonProcessingException {
+        json.remove("id");
+        json.remove("address");
+        json.remove("email");
+        MemberConstructorDto3 dto = mapper.readValue(json.toString(), MemberConstructorDto3.class);
+        logger.info(dto.toString());
+        assertEquals(dto.getName(), "beanie");
+    }
+
+    @Test
+    @Order(13)
+    @DisplayName("11. 인자가 두 개 이상인 생성자를 가진 객체로 역직렬화하는 상황 테스트")
+    void checkDeserializeWithMoreThanTwoArgumentsConstructor() throws JsonProcessingException {
+        json.remove("id");
+        json.remove("email");
+
+        // 인자가 두 개 이상인 생성자는 jackson-module-parameter-names 모듈만 등록해줘도 역직렬화 잘 수행해준다.
+        // Spring Boot에서 Request json 데이터를 받아올 때 이러한 방식으로 받아오게 되는데 그래서 기본 생성자가 없어도
+        mapper.registerModule(new ParameterNamesModule());
+        MemberConstructorDto4 dto = mapper.readValue(json.toString(), MemberConstructorDto4.class);
         logger.info(dto.toString());
     }
 }

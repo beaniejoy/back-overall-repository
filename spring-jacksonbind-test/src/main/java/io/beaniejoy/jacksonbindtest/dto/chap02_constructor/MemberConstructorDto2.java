@@ -1,13 +1,13 @@
-package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
+package io.beaniejoy.jacksonbindtest.dto.chap02_constructor;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 // 9. 인자가 한 개인 생성자만 존재하는 경우(single argument constructor)
-public class MemberRequestDto9 {
+public class MemberConstructorDto2 {
     private String name;
 
     @JsonCreator
-    public MemberRequestDto9(String name) {
+    public MemberConstructorDto2(String name) {
         this.name = name;
     }
 

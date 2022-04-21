@@ -6,10 +6,13 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static io.beaniejoy.jacksonbindtest.common.JsonKeyManager.*;
 import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -55,16 +58,42 @@ class MemberControllerTest2 {
                 .andDo(print());
     }
 
+    /**
+     * 참고로
+     * 406 에러는 헤더에 지정한 Accept 같은 형식을 생성해낼 수 없을 때 (HttpMediaTypeNotAcceptableException)
+     *   - 객체로 바인딩은 됐지만 return 할 때 원하는 형태로 변환이 이루어지지 않아 발생하는 에러
+     * 400 에러는 여기서 @RequestBody에 지정한 객체로 역직렬화가 되지 않아 실패(HttpMessageNotReadableException)
+     */
     @Test
     @Order(8)
     @DisplayName("8. POJO 형태에서 기본 생성자만 없는 경우 테스트")
     public void bindingDtoEightCaseTest() throws Exception {
         // 기본 생성자가 없어도 @RequestBody 에서는 값을 제대로 binding 해준다.
-        // 기본 생성자가 > 해당 필드를 넣을 수 있는 인자 있는 생성자 > setter 적용
+        // 기본 생성자 > 해당 필드를 넣을 수 있는 인자 있는 생성자 > setter 적용
         mvc.perform(post("/api/member/eight")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("9. 인자가 한 개인 생성자만 존재하는 경우 테스트")
+    public void bindingDtoNineCaseTest() throws Exception {
+        requestJson.remove(ID);
+        requestJson.remove(ADDRESS);
+        requestJson.remove(EMAIL);
+
+        // 400 에러는 여기서 @RequestBody에 지정한 객체로 역직렬화가 되지 않아 실패(HttpMessageNotReadableException)
+        // cannot deserialize from Object value (no delegate- or property-based Creator)
+        mvc.perform(post("/api/member/nine")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson.toString()))
+                .andExpect(status().isBadRequest())
+                .andExpect(result ->
+                        assertTrue(result.getResolvedException() instanceof HttpMessageNotReadableException)
+                )
                 .andDo(print());
     }
 }

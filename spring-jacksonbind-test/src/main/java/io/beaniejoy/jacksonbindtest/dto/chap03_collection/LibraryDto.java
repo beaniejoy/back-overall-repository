@@ -1,6 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto.chap02_collection;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
+package io.beaniejoy.jacksonbindtest.dto.chap03_collection;
 
 import java.util.List;
 
