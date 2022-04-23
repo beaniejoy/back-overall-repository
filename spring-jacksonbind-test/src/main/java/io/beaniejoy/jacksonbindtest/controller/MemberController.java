@@ -53,9 +53,9 @@ public class MemberController {
     }
 
     @PostMapping("/nine")
-    public MemberConstructorDto2 postMember9(@RequestBody MemberConstructorDto2 requestDto) {
+    public String postMember9(@RequestBody MemberConstructorDto2 requestDto) {
         logger.info(requestDto.toString());
-        return requestDto;
+        return "success!!";
     }
 
     @PostMapping("/twelve")

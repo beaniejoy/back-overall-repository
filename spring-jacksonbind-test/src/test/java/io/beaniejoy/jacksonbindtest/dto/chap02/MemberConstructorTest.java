@@ -2,6 +2,7 @@ package io.beaniejoy.jacksonbindtest.dto.chap02;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -87,7 +88,7 @@ public class MemberConstructorTest {
         json.remove("address");
         json.remove("email");
         // 직접 생성자에 @JsonCreator(mode = JsonCreator.Mode.PROPERTIES), @JsonProperty 로 지정할 수도 있다.
-        mapper.registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
+        mapper.registerModule(new ParameterNamesModule());
         assertTrue(String.valueOf(mapper.getRegisteredModuleIds()).contains("jackson-module-parameter-names"));
 
         MemberConstructorDto2 dto = mapper.readValue(json.toString(), MemberConstructorDto2.class);
