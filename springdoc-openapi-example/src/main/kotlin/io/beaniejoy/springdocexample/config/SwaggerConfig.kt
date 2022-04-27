@@ -17,7 +17,7 @@ class SwaggerConfig {
         return GroupedOpenApi.builder()
             .group("cafe")
             .packagesToScan("io.beaniejoy.springdocexample.domain.cafe")
-//            .addOpenApiCustomiser(sortSchemas())
+            .addOpenApiCustomiser(sortSchemas())
             .build()
     }
 
@@ -26,7 +26,7 @@ class SwaggerConfig {
         return GroupedOpenApi.builder()
             .group("member")
             .packagesToScan("io.beaniejoy.springdocexample.domain.member")
-//            .addOpenApiCustomiser(sortSchemas())
+            .addOpenApiCustomiser(sortSchemas())
             .build()
     }
 
@@ -41,9 +41,9 @@ class SwaggerConfig {
             .addServersItem(Server().url("/"))
     }
 
-//    private fun sortSchemas(): OpenApiCustomiser {
-//        return OpenApiCustomiser { openApi ->
-//            openApi.components.schemas = TreeMap(openApi.components.schemas)
-//        }
-//    }
+    private fun sortSchemas(): OpenApiCustomiser {
+        return OpenApiCustomiser { openApi ->
+            openApi.components.schemas = TreeMap(openApi.components.schemas)
+        }
+    }
 }
