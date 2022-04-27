@@ -13,14 +13,17 @@ buildscript {
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
         classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}"
     }
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: "kotlin-noarg"
+apply plugin: "kotlin-jpa"
 
 group = "io.beaniejoy"
 version = "0.0.1-SNAPSHOT"

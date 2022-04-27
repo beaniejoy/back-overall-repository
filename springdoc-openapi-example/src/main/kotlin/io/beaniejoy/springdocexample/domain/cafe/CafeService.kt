@@ -2,15 +2,24 @@ package io.beaniejoy.springdocexample.domain.cafe
 
 import io.beaniejoy.springdocexample.domain.cafe.dto.CafeResponseDto
 import io.beaniejoy.springdocexample.domain.cafe.dto.MenuItemDto
+import io.beaniejoy.springdocexample.domain.cafe.entity.Cafe
+import io.beaniejoy.springdocexample.domain.cafe.entity.MenuItem
+import io.beaniejoy.springdocexample.domain.cafe.repository.CafeRepository
+import io.beaniejoy.springdocexample.domain.cafe.repository.MenuItemRepository
 import mu.KLogging
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-class CafeService {
+class CafeService(
+    private val cafeRepository: CafeRepository,
+    private val menuItemRepository: MenuItemRepository
+) {
 
     companion object: KLogging()
 
+    @Transactional(readOnly = true)
     fun getCafeListWith(
         id: Long?,
         name: String?,
@@ -20,15 +29,25 @@ class CafeService {
         return emptyList()
     }
 
+    @Transactional
     fun registerCafe(
         name: String,
         address: String,
         menuItems: List<MenuItemDto>,
         phoneNumber: String?
     ) {
-        logger.info { "Create New Cafe: $name, $address, $phoneNumber" }
+        val cafe = Cafe(name = name, address = address, phoneNumber = phoneNumber)
+
+        val savedCafe = cafeRepository.save(cafe)
+
+        val menuItemList = menuItems.map {
+            MenuItem(name = it.name!!, price = it.price!!, cafe = savedCafe)
+        }
+
+        menuItemRepository.saveAll(menuItemList)
     }
 
+    @Transactional(readOnly = true)
     fun getCafeById(id: Long): CafeResponseDto {
         return CafeResponseDto(
             id = id,
@@ -39,6 +58,7 @@ class CafeService {
         )
     }
 
+    @Transactional
     fun updateCafe(
         id: Long,
         name: String?,
