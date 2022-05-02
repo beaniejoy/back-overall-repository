@@ -1,7 +1,7 @@
-package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
+package io.beaniejoy.jacksonbindtest.dto.part01_basic;
 
-// 6. 기본적인 POJO 구조에서 setter 에 임의의 값 주입하는 경우
-public class MemberRequestDto6 {
+// 7. setter의 이름이 필드명과 일치하지 않는 경우
+public class MemberRequestDto7 {
     private Long id;
     private String name;
     private String address;
@@ -27,15 +27,12 @@ public class MemberRequestDto6 {
         this.id = id;
     }
 
-    // 임의의 값을 setter에서 필드에 주입하는 경우
-    // json 데이터에 name, address key로 들어오는 value는 무시되고
-    // 임의로 지정한 값이 들어가게 된다.
-    public void setName(String name) {
-        this.name = "default name";
+    public void setHelloName(String name) {
+        this.name = name;
     }
 
-    public void setAddress(String address) {
-        this.address = "default address";
+    public void setHelloAddress(String address) {
+        this.address = address;
     }
 
     public void setEmail(String email) {
@@ -44,7 +41,7 @@ public class MemberRequestDto6 {
 
     @Override
     public String toString() {
-        return "MemberRequestDto6{" +
+        return "MemberRequestDto7{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +

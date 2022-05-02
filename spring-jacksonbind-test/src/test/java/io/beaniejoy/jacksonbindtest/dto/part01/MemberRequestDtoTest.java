@@ -1,11 +1,11 @@
-package io.beaniejoy.jacksonbindtest.dto.chap01;
+package io.beaniejoy.jacksonbindtest.dto.part01;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto1;
-import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto2;
-import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto3;
-import io.beaniejoy.jacksonbindtest.dto.chap01_basic.MemberRequestDto4;
+import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto1;
+import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto2;
+import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto3;
+import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto4;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;

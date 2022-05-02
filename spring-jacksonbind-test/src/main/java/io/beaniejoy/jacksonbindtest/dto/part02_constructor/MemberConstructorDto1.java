@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto.chap02_constructor;
+package io.beaniejoy.jacksonbindtest.dto.part02_constructor;
 
 // 8. 기본 생성자만 없는 경우
 public class MemberConstructorDto1 {

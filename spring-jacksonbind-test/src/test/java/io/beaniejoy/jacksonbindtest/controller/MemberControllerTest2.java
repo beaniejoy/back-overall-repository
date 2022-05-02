@@ -82,15 +82,16 @@ class MemberControllerTest2 {
         requestJson.remove(ADDRESS);
         requestJson.remove(EMAIL);
 
+        // @JsonCreator 가 없는 경우
         // 400 에러는 여기서 @RequestBody에 지정한 객체로 역직렬화가 되지 않아 실패(HttpMessageNotReadableException)
         // cannot deserialize from Object value (no delegate- or property-based Creator)
         mvc.perform(post("/api/member/nine")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson.toString()))
-                .andExpect(status().isBadRequest())
-                .andExpect(result ->
-                        assertTrue(result.getResolvedException() instanceof HttpMessageNotReadableException)
-                )
+                .andExpect(status().isOk())
+//                .andExpect(result ->
+//                        assertTrue(result.getResolvedException() instanceof HttpMessageNotReadableException)
+//                )
                 .andDo(print());
     }
 

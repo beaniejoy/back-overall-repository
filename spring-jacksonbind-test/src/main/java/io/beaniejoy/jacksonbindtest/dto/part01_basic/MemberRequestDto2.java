@@ -1,4 +1,4 @@
-package io.beaniejoy.jacksonbindtest.dto.chap01_basic;
+package io.beaniejoy.jacksonbindtest.dto.part01_basic;
 
 
 // 2. private field + getter 조합만으로 구성

@@ -1,13 +1,19 @@
-package io.beaniejoy.jacksonbindtest.dto.chap02_constructor;
+package io.beaniejoy.jacksonbindtest.dto.part02_constructor;
 
-// 11. 인자가 두 개 이상인 상황
-public class MemberConstructorDto4 {
+// 12. 인자가 있는 생성자 + setter
+public class MemberConstructorDto5 {
     private String name;
     private String address;
 
-    public MemberConstructorDto4(String name, String address) {
+    private String email;
+
+    public MemberConstructorDto5(String name, String address) {
         this.name = name;
         this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

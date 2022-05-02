@@ -1,17 +1,17 @@
-package io.beaniejoy.jacksonbindtest.dto.chap03_collection;
+package io.beaniejoy.jacksonbindtest.dto.part03_collection;
 
 import java.util.List;
 
-public class LibraryDto {
+public class LibraryDto2 {
     private String name;
 
-    private List<String> books;
+    private List<Book> books;
 
     public String getName() {
         return name;
     }
 
-    public List<String> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
@@ -19,13 +19,13 @@ public class LibraryDto {
         this.name = name;
     }
 
-    public void setBooks(List<String> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
     @Override
     public String toString() {
-        return "LibraryDto{" +
+        return "LibraryDto2{" +
                 "name='" + name + '\'' +
                 ", books=" + books +
                 '}';

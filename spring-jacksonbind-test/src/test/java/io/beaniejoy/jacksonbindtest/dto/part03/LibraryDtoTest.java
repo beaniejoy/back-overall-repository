@@ -1,8 +1,8 @@
-package io.beaniejoy.jacksonbindtest.dto.chap03;
+package io.beaniejoy.jacksonbindtest.dto.part03;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.beaniejoy.jacksonbindtest.dto.chap03_collection.LibraryDto;
+import io.beaniejoy.jacksonbindtest.dto.part03_collection.LibraryDto;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +33,7 @@ public class LibraryDtoTest {
 
     @Test
     @Order(1)
-    @DisplayName("chap02-1-1 List 필드에 대한 직렬화, 역직렬화 테스트")
+    @DisplayName("chap03-1-1 List 필드에 대한 직렬화, 역직렬화 테스트")
     void checkListTypeFieldBingingTest() throws JsonProcessingException, JSONException {
         json.put("name", "beanie's Library");
         jsonArr.put("book1");
@@ -50,7 +50,7 @@ public class LibraryDtoTest {
 
     @Test
     @Order(2)
-    @DisplayName("chap02-1-2 List 필드에 대한 null 처리 테스트")
+    @DisplayName("chap0-1-2 List 필드에 대한 null 처리 테스트")
     void checkListTypeFieldWithNullPointer() throws JsonProcessingException, JSONException {
         json.put("name", "beanie's Library");
         json.put("books", null);

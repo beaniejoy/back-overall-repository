@@ -1,12 +1,10 @@
-package io.beaniejoy.jacksonbindtest.dto.chap02;
+package io.beaniejoy.jacksonbindtest.dto.part02;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import io.beaniejoy.jacksonbindtest.dto.chap02_constructor.*;
+import io.beaniejoy.jacksonbindtest.dto.part02_constructor.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -47,7 +45,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(8)
+    @Order(1)
     @DisplayName("8. JavaBean 형태에서 기본 생성자만 없는 경우에서의 에러 발생 ObjectMapper 테스트")
     void checkValidMappingWithNoDefaultConstructor() throws JsonProcessingException {
         // Cannot construct instance
@@ -58,7 +56,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(9)
+    @Order(2)
     @DisplayName("8-1. JavaBean 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 역직렬화 테스트")
     void checkValidMappingWithNoDefaultConstructorByParameterNamesModule() throws JsonProcessingException {
         // ParameterNamesModule: 기본생성자, setter 가 없어도 다른 인자가 있는 생성자를 통해 binding 되도록 위임
@@ -70,7 +68,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(10)
+    @Order(3)
     @DisplayName("8-2. POJO 형태에서 기본 생성자만 없는 경우에서의 ObjectMapper 직렬화 테스트")
     void checkSerializeWithNoDefaultConstructor() throws JsonProcessingException {
         MemberConstructorDto1 dto = new MemberConstructorDto1(1L, "beanie", "beanie's address", "beanie@example.com");
@@ -81,7 +79,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(11)
+    @Order(4)
     @DisplayName("9. Single Argument Constructor인 상황에서의 ObjectMapper 역직렬화 테스트")
     void checkSerializeWithSingleArgumentConstructor() throws JsonProcessingException {
         json.remove("id");
@@ -96,7 +94,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(12)
+    @Order(5)
     @DisplayName("10. 생성자에 @JsonCreator, @JsonProperty를 사용해서 json mapping을 할 수 있다.")
     void checkDeserializeWithJsonCreatorAndProperty() throws JsonProcessingException {
         json.remove("id");
@@ -108,7 +106,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(13)
+    @Order(6)
     @DisplayName("11. 인자가 두 개 이상인 생성자를 가진 객체로 역직렬화하는 상황 테스트")
     void checkDeserializeWithMoreThanTwoArgumentsConstructor() throws JsonProcessingException {
         json.remove("id");
@@ -122,7 +120,7 @@ public class MemberConstructorTest {
     }
 
     @Test
-    @Order(14)
+    @Order(7)
     @DisplayName("12. 인자가 있는 생성자와 setter로 역직렬화하는 테스트")
     void checkDeserializeWithConstructorAndSetter() throws JsonProcessingException {
         json.remove("id");
