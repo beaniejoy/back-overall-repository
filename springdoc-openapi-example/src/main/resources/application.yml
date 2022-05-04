@@ -2,3 +2,6 @@ spring:
   h2:
     console:
       enabled: true
+springdoc:
+  server:
+    url: http://localhost:8080

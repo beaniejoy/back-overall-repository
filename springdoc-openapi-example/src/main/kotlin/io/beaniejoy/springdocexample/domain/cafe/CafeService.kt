@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class CafeService(
     private val cafeRepository: CafeRepository,
     private val menuItemRepository: MenuItemRepository
@@ -19,7 +20,6 @@ class CafeService(
 
     companion object: KLogging()
 
-    @Transactional(readOnly = true)
     fun getCafeListWith(
         id: Long?,
         name: String?,
@@ -47,7 +47,6 @@ class CafeService(
         menuItemRepository.saveAll(menuItemList)
     }
 
-    @Transactional(readOnly = true)
     fun getCafeById(id: Long): CafeResponseDto {
         return CafeResponseDto(
             id = id,
@@ -69,5 +68,4 @@ class CafeService(
 
         return id
     }
-
 }

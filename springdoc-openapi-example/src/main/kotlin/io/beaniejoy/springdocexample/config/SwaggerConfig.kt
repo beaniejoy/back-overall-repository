@@ -5,12 +5,16 @@ import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.GroupedOpenApi
 import org.springdoc.core.customizers.OpenApiCustomiser
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.*
 
 @Configuration
-class SwaggerConfig {
+class SwaggerConfig(
+    @Value("\${springdoc.server.url}")
+    private val serverUrl: String
+) {
 
     @Bean
     fun cafeApi(): GroupedOpenApi {
@@ -38,7 +42,7 @@ class SwaggerConfig {
                     .title("SpringDoc OpenAPI Example")
                     .description("springdoc 예제")
             )
-            .addServersItem(Server().url("/"))
+            .addServersItem(Server().url(serverUrl))
     }
 
     private fun sortSchemas(): OpenApiCustomiser {
