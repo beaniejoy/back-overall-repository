@@ -5,11 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.web.authentication.logout.LogoutHandler
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Configuration
 @EnableWebSecurity
@@ -48,6 +44,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .permitAll()
             .and()
 
+            // 로그아웃 기능
             .logout()
             .logoutUrl("/logout")
             // logout process 중 등록하고 싶은 작업 적용
@@ -64,6 +61,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .deleteCookies("remember-me") // 원하는 쿠키 삭제
             .and()
 
+            // remember-me 기능
             .rememberMe()
             .rememberMeParameter("remember")
             .tokenValiditySeconds(60 * 60) // default 14일
