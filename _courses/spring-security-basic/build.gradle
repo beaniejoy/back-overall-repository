@@ -37,6 +37,9 @@ dependencies {
 
     implementation('io.github.microutils:kotlin-logging:2.1.21')
 
+    // spring security starter 적용
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
