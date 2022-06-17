@@ -37,19 +37,19 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 response.sendRedirect("/")
             }
             // AuthenticationFailureHandler
-            .failureHandler { request, response, exception ->
-                println("exception ${exception.message}")
-                response.sendRedirect("/login")
-            }
+//            .failureHandler { request, response, exception ->
+//                println("exception ${exception.message}")
+//                response.sendRedirect("/login")
+//            }
             .permitAll()
-            .and()
 
-            // 로그아웃 기능
+        // 로그아웃 기능
+        http
             .logout()
             .logoutUrl("/logout")
             // logout process 중 등록하고 싶은 작업 적용
             .addLogoutHandler { request, _, _ ->
-                println("session invalidate")
+                println("logout handler: session invalidate")
                 val session = request.session
                 session.invalidate()
             }
@@ -59,13 +59,28 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 response.sendRedirect("/login")
             }
             .deleteCookies("remember-me") // 원하는 쿠키 삭제
-            .and()
 
-            // remember-me 기능
+        // remember-me 기능
+        http
             .rememberMe()
             .rememberMeParameter("remember")
             .tokenValiditySeconds(60 * 60) // default 14일
             .alwaysRemember(false)  // true: remember-me를 활성화하지 않아도 항상 실행
             .userDetailsService(userDetailsService)
+
+        http
+            .sessionManagement()
+            .invalidSessionUrl("/invalid") // 세션이 유효하지 않을 때 이동할 페이지
+            .maximumSessions(1) // 최대 허용 가능 세션 수, -1: 무제한 로그인 세션 허용
+            .maxSessionsPreventsLogin(true) // ture: 동시 로그인 차단 - 현재 사용자 로그인 차단 (default: false - 이전 사용자 만료)
+            .expiredUrl("/expired") // 세션이 만료된 경우 이동할 페이지
+
+        http
+            .sessionManagement()
+            .sessionFixation()
+            .changeSessionId()  // 세션 ID만 바뀜 (default)
+            //.none() // 인증 후 세션 관련 아무런 조치 X (취약)
+            //.migrateSession() // 새로운 session 생성, 새로운 세션 ID 발급 (이전의 세션들을 새로운 세션으로 옮김)
+            //.newSession() // 완전히 새로운 세션 생성(이전 세션 보존 X)
     }
 }
