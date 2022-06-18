@@ -189,9 +189,11 @@ http
 @PreAuthorize("hasRole('USER')")
 fun user() { /*...*/ }
 ```
+
 <br>
 
 ## 📌 인증/인가 API - ExceptionTranslationFilter, RequestCacheAwareFilter
+
 - 해당 필터들은 다음 두 가지 예외를 처리
   - `AuthenticationException`: 인증 예외처리
   - `AccessDeniedException`: 인가 예외처리
@@ -214,3 +216,35 @@ fun user() { /*...*/ }
 
 - `AuthenticationEntryPoint`: 로그인 페이지로 이동하기 전에 SecurityContext 인증 객체 null 처리
 - `RequestCacheAwareFilter`: `saveRequest != null` 인 경우 저장된 savedRequest 내용을 다음 필터에 전달해주는 기능 제공 
+
+```kotlin
+http
+  .exceptionHandling()
+  .authenticationEntryPoint { _, response, _ ->
+      response.sendRedirect("/login")
+  }
+  .accessDeniedHandler { _, response, _ ->
+      response.sendRedirect("/denied")
+  }
+```
+
+<br>
+
+## 📌 사이트 간 요청 위조 - CSRF, CsrfFilter
+- CSRF: 사이트 간 요청 위조
+  - 사용자는 로그인하면 쿠키를 발급 받음(session id)
+  - 공격자는 사용자에게 공격자 사이트 전달
+  - 공격자 사이트 html 코드 중에 img를 통해서 공격자가 원하는 요청을 보냄(사용자 브라우저 통해서)
+  - 서버는 사용자의 브라우저가 이미 인증(쿠키 발급)된 것으로 판단하고 공격자의 요청을 그대로 수행
+
+### Form 인증 - CsrfFilter
+- 모든 요청에 랜덤하게 생성된 토큰을 HTTP 헤더 or 파라미터로 요구
+  - **POST, PUT, PATCH, DELETE**에 해당
+  - `_csrf`(파라미터), `X-CSRF-TOKEN`(헤더)
+- `클라이언트가 보낸 토큰` != `서버의 토큰` -> 요청 실패
+
+```kotlin
+// 기본적으로 csrf 설정되어 있음
+http.csrf().disabled()
+```
+- csrf 설정시 모든 요청에 토큰 파라미터가 붙기 때문에 공격자가 건넨 html 내의 요청에서는 토큰이 붙어있을 수 없음

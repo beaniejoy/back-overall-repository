@@ -15,8 +15,8 @@ import org.springframework.security.web.savedrequest.RequestCache
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 class SecurityAuthConfig : WebSecurityConfigurerAdapter() {
     companion object: KLogging()
 
