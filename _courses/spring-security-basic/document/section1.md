@@ -159,3 +159,58 @@ session.isExpired() == true
       - 이건 `ConcurrentSessionFilter`에서 수행
   - 현재 사용자 인증 실패
     - throw `SessionAuthenticationException`
+
+<br>
+
+## 📌 권한 설정과 표현식(인가, Authorization)
+- 선언적 방식
+  - URL
+  - Method
+- 동적 방식
+  - URL
+  - Method
+
+### 선언적 방식
+#### URL  
+설정 파일에 해당
+```kotlin
+http
+  .authorizeRequests()
+  .antMatchers("/user").hasRole("USER")
+  .antMatchers("/admin/pay").hasRole("ADMIN")
+  .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
+  .anyRequest().authenticated()
+```
+- 경로 설정은 구체적인 것부터 범위가 넓은 순으로 설정해야 한다.
+
+#### Method  
+해당 핸들러에 애노테이션 직접 적용
+```kotlin
+@PreAuthorize("hasRole('USER')")
+fun user() { /*...*/ }
+```
+<br>
+
+## 📌 인증/인가 API - ExceptionTranslationFilter, RequestCacheAwareFilter
+- 해당 필터들은 다음 두 가지 예외를 처리
+  - `AuthenticationException`: 인증 예외처리
+  - `AccessDeniedException`: 인가 예외처리
+- `FilterSecurityInterceptor`
+  - Spring Security 맨 마지막 필터
+  - 바로 앞이 `ExceptionTranslationFilter`
+  - `try ~ catch`로 `FilterSecurityInterceptor`호출(인증, 인가 예외 throw)
+
+### AuthenticationException (인증 예외)
+- `AuthenticationEntryPoint` 호출 (interface)
+  - 로그인 페이지 이동, 401 오류 코드 전달
+- 인증 예외가 발생하기 전의 요청 정를 저장
+  - `RequestCache`: 이전 요청 정보를 세션에 저장하고 이를 꺼내오는 메커니즘
+    - `SavedRequest`: 구현체, 사용자가 요청했던 request parameter, header 저장
+
+### AccessDeniedException (인가 예외)
+- `AccessDeniedHandler`에서 예외 처리
+
+<img width="1006" alt="Screen Shot 2022-06-18 at 3 05 58 PM" src="https://user-images.githubusercontent.com/41675375/174425263-49657538-6a45-4185-8393-b3fde7b75c89.png">
+
+- `AuthenticationEntryPoint`: 로그인 페이지로 이동하기 전에 SecurityContext 인증 객체 null 처리
+- `RequestCacheAwareFilter`: `saveRequest != null` 인 경우 저장된 savedRequest 내용을 다음 필터에 전달해주는 기능 제공 

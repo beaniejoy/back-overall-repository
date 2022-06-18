@@ -7,10 +7,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.core.userdetails.UserDetailsService
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 class SecurityConfig : WebSecurityConfigurerAdapter() {
-    @Autowired
+//    @Autowired
     private lateinit var userDetailsService: UserDetailsService
 
     override fun configure(http: HttpSecurity) {
