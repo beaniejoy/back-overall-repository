@@ -95,20 +95,21 @@ class MemberRequestDtoTest {
     @Test
     @Order(4)
     @DisplayName("4. getter 에서 임의로 지정한 내용을 return 하는 경우")
-    void checkValidMappingWithGetterCustomReturnValue() throws JsonProcessingException, JSONException {
+    void checkValidMappingWithGetterCustomReturnValue() throws JsonProcessingException {
         MemberRequestDto4 dto = mapper.readValue(json.toString(), MemberRequestDto4.class);
         // 실제 dto 내부 필드에는 json 내용대로 잘 주입됨
-        // api response 내보낼 때 봐야함
-        logger.info(dto.toString());
+        // (custom getter의 return 값이 아닌 request data로 잘 binding)
+        logger.info("binding request: {}", dto.toString());
 
         assertEquals(id, dto.getId());
-        assertNotEquals(name, dto.getName());
         assertEquals(address, dto.getAddress());
         assertEquals(email, dto.getEmail());
 
+        // api response 내보낼 때 잘 봐야함
         String resultJson = mapper.writeValueAsString(dto);
-        logger.info(resultJson);
+        logger.info("binding response: {}", resultJson);
 
+        // custom getter return value로 response를 반환한다.
         assertTrue(resultJson.contains("\"name\":\"getName(): Custom return value\""));
     }
 }

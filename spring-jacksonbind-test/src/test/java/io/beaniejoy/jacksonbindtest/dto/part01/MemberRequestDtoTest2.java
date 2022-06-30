@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto5;
 import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto6;
 import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto7;
+import io.beaniejoy.jacksonbindtest.dto.part01_basic.MemberRequestDto8;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -100,5 +101,21 @@ public class MemberRequestDtoTest2 {
         assertEquals("joy", dto.getName());
         assertEquals("joy's address", dto.getAddress());
         assertEquals(email, dto.getEmail());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("8. custom getter에 대한 response json 테스트")
+    void checkResponseJsonDataWithCustomGetter() throws JsonProcessingException, JSONException {
+        MemberRequestDto8 dto = new MemberRequestDto8(id, name, address, email);
+
+        logger.info(dto.toString());
+
+        String resultJson = mapper.writeValueAsString(dto);
+
+        logger.info(resultJson);
+        // 원래의 field는 json으로 응답하지 않고 custom getter 이름대로 response 해주는 것을 확인
+        assertTrue(resultJson.contains("\"helloAddress\":\"hello beanie's address\""));
+        assertTrue(resultJson.contains("\"helloEmail\":\"hello beanie's email\""));
     }
 }
