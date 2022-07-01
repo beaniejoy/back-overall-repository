@@ -111,3 +111,15 @@ Authentication authentication = SecurityContextHolder.getContext().getAuthentica
 ### 관련 클래스
 - `ThreadLocalSecurityContextHolderStrategy`: ThreadLocal 선언
 - `SecurityContextImpl`: SC 구현체
+
+<br>
+
+## 📌 인증 저장소 필터 - SecurityContextPersistenceFilter
+- Session 저장공간과 `SecurityContextHolder` 저장공간이 따로 있다는 것을 인지
+- Session은 세션 방식으로, SC Holder는 `ThreadLocal`(default) 방식으로 각각 SC 저장
+- `SecurityContextPersistenceFilter` 내부에는 `SecurityContextRepository`를 가지고 있음
+  - **여기서 SC를 생성하고 조회하는 역할 수행**
+
+### 익명사용자
+- 처음에 인증전에 api 호출하면 시큐리티 필터에서는 익명사용자로 인식
+- Session에는  SC 객체
