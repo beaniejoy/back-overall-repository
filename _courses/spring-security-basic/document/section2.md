@@ -12,6 +12,8 @@
 ```text
 Servlet Filter -> DelegatingFilterProxy(요청 위임) -> Spring Bean(Filter)
 ```
+![Screen Shot 2022-06-29 at 11 07 16 PM](https://user-images.githubusercontent.com/41675375/176457421-f797249d-3a11-4710-a678-47187b5e3425.png)
+
 - `DelegatingFilterProxy`는 `springSecurityFilterChain` 이름으로 된 스프링 빈을 찾게 된다.
 
 ### FilterChainProxy
@@ -101,6 +103,7 @@ List<Filter> filters = getFilters(firewallRequest);
   - `MODE_THREADLOCAL`: 기본값, 쓰레드당 SC 할당
   - `MODE_INHERITABLETHREADLOCAL`: 메인 스레드와 자식 스레드에 대해 동일 SC 유지
   - `MODE_GLOBAL`: 애플리케이션에서 단 하나의 SC 저장
+  - `SecurityController`, `SecurityContextHolderConfig` 참고
 - `clearContext()`: SC 초기화
 ```java
 Authentication authentication = SecurityContextHolder.getContext().getAuthentication()
