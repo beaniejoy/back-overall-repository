@@ -126,3 +126,36 @@ Authentication authentication = SecurityContextHolder.getContext().getAuthentica
 ### 익명사용자
 - 처음에 인증전에 api 호출하면 시큐리티 필터에서는 익명사용자로 인식
 - Session에는  SC 객체
+
+<br>
+
+## 📌 인증 흐름 이해 - Authentication Flow
+1. `UsernamePasswordAuthenticationFilter`
+   - `Authentication` 객체 생성(id, password 요청 데이터로)
+   - 인증 성공시 `Authentication`을 `Manager`로부터 받아서 SC에 저장
+2. `AuthenticationManager`
+   - `List` 형식으로 `Provider` 객체를 저장, 관리
+   - 실제 인증 처리를 적절한 `Provider`를 찾아 해당 `Provider`에게 위임
+3. `AuthenticationProvider`
+   - 여기서 `User` 유효성 검증(패스워드 체크)
+   - 실제 인증 처리 작업
+   - 인증 성공 시 `Authentication`(`UserDetails`, `authorities`) 생성 및 반환
+4. `UserDetailsService`
+   - `loadUserByUsername(username)`
+   - Provider 안에서 `findById`를 통해 User 객체 조회
+     - 여기서 사실상 ID 체크, 없으면 예외 발생
+   - `UserDetails` 타입으로 (`return UserDetails`)
+   - 그 이후 `Provider`에서 password 검증
+5. `Repository`
+   - 유저 객체 조회(`return User`)
+   - User 객체 조회 시도 시 실패했을 때 Filter가 예외를 받아서 처리(fail handler 수행)
+
+### AuthenticationProvider 로직
+- `AbstractUserDetailsAuthenticationProvider`에서 인증을 위한 실제 로직 진행
+- `retrieveUser` 통해 UserDetails를 가져오는 로직이 있는데 여기서 `loadUserByUsername`을 수행
+  - `DaoAuthenticationProvider` 여기서 실제 `retrieveUser` 구현 로직 수행
+
+<br>
+
+## 인증 관리자 - AuthenticationManager
+- 위의 인증 흐름 이해에서 `UsernamePasswordAuthenticationFilter`에서 `Authentication` 객체를 받아 적절한 `Provider`에게 위임하는 역할 수행
