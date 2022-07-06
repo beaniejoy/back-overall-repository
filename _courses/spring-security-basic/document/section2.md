@@ -157,5 +157,31 @@ Authentication authentication = SecurityContextHolder.getContext().getAuthentica
 
 <br>
 
-## 인증 관리자 - AuthenticationManager
+## 📌 인증 관리자 - AuthenticationManager
 - 위의 인증 흐름 이해에서 `UsernamePasswordAuthenticationFilter`에서 `Authentication` 객체를 받아 적절한 `Provider`에게 위임하는 역할 수행
+  - `AuthenticationProvider` 목록 중 인증 처리 요건에 맞는 것을 찾아 인증 처리 위임
+- 인증시 `ProviderManager`를 사용
+
+### ProviderManager
+- Form 인증, RememberMe 인증, Oauth 인증 등 여러 인증이 존재
+- `ProviderManager`는 여러 인증 요청을 보고 적절한 `Provider`에게 위임
+  - `DaoAuthenticationProvider`
+  - `RememberMeAuthenticationProvider`
+- Oauth 인증 같은 경우 처리할 수 있는 `ProviderManager` 객체가 없음
+  - `parent` 속성 사용 (`parent`: `AuthenticationManager` 타입의 클래스를 저장)
+  - `parent`에서 다른 Provider를 찾을 수 있다. (`OauthAuthenticationProvider`)
+
+### 참고해야할 클래스
+- `AuthenticationManagerBuilder`
+  - `AuthenticationManager` 객체를 생성하는 역할 수행
+  - 여기서 `Provider`를 등록
+
+### 과정
+- `UsernamePasswordAuthenticationFilter`
+  - 요청에서 username, password 추출해 `Authentication`(`UsernamePasswordAuthenticationToken`) 객체 생성
+  - `AuthenticationManager::authenticate(Authentication)` 호출
+- `AuthenticationManager`
+  - `ProviderManager`가 실제 인증 과정 처리
+    - 자체적으로 가지고 있는 provider: `AnonymousAuthenticationProvider`
+    - **parent** ProviderManager's provider: `DaoAuthenticationProvider`
+    - 자체 provider `supports` 조건 체크(Authentication 가지고 조건 체크) -> 아니면 parent의 provider로 넘김
