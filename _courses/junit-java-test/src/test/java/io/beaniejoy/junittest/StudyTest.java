@@ -63,16 +63,14 @@ class StudyTest {
     }
 
     // Tag
-    @Test
+    @FastTest
     @DisplayName("스터디 만들기 fast")
-    @Tag("fast")
     void create_new_study_fast() {
         System.out.println("create fast");
     }
 
-    @Test
+    @SlowTest
     @DisplayName("스터디 만들기 slow")
-    @Tag("slow")
     void create_new_study_slow() {
         System.out.println("create slow");
     }

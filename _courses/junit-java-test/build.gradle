@@ -19,7 +19,12 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform {
-//        includeTags 'fast'
-//        excludeTags 'slow'
+        excludeTags 'slow'
+    }
+}
+
+task ciTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'fast | slow'
     }
 }

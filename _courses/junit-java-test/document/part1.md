@@ -30,7 +30,7 @@
 
 <br>
 
-## JUnit5 Assertion
+## :pushpin: JUnit5 Assertion
 
 ```java
 assertEquals(StudyStatus.DRAFT,study.getStatus(),"스터디 최초 상태는 DRAFT여야 합니다.");
@@ -64,7 +64,7 @@ assertAll(
 
 <br>
 
-## 조건에 따라 테스트 실행하기
+## :pushpin: 조건에 따라 테스트 실행하기
 - `assumeTrue([조건])`
   - 조건에 만족하면 그 아래 테스트를 실행
   - 조건 만족하지 않으면 Disabled 된 것처럼 실행 X
@@ -77,8 +77,13 @@ assertAll(
 
 <br>
 
-## 태깅과 필터링
-- `@Tag("fast")`
+## :pushpin: 태깅과 필터링
+```java
+@Test
+@DisplayName("스터디 만들기 fast")
+@Tag("fast")
+```
+
 ```groovy
 tasks.named('test') {
     useJUnitPlatform {
@@ -87,4 +92,28 @@ tasks.named('test') {
     }
 }
 ```
-- `./gradlew --info test`
+- `./gradlew --info clean test`
+
+```groovy
+task ciTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'fast | slow'
+    }
+}
+```
+- 이런 식으로 별도 gradle 작업을 만들어서 특정 tag만 실행하도록 설정할 수 있다.
+- **profile 별로 설정하는 것은 알아봐야 할 듯**
+
+<br>
+
+## :pushpin: 커스텀 태그
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Test
+@Tag("fast")
+public @interface FastTest {
+}
+```
+- 기존 `@Tag("fast")`는 type safe 하지 않다. (fast 값에서 오타 발생 가능)
+- 커스텀 태그를 통해 미리 지정해놓고 어노테이션으로 사용 가능
