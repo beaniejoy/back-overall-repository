@@ -117,3 +117,26 @@ public @interface FastTest {
 ```
 - 기존 `@Tag("fast")`는 type safe 하지 않다. (fast 값에서 오타 발생 가능)
 - 커스텀 태그를 통해 미리 지정해놓고 어노테이션으로 사용 가능
+
+<br>
+
+## :pushpin: 반복 테스트
+- `RepeatedTest`
+- `ParameterizedTest` (JUnit5 기본 제공)
+
+```java
+@DisplayName("스터디 만들기 RepeatedTest")
+@RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
+void repeatTest(RepetitionInfo repetitionInfo) {
+    // 현재 몇번째 반복 진행중인지 / 전체 반복 횟수
+    System.out.println("test " + repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
+}
+
+// JUnit5 기본 제공
+@DisplayName("스터디 만들기 ParameterizedTest")
+@ParameterizedTest(name = "{index} {displayName} message={0}")
+@ValueSource(strings = {"날씨가", "많이", "추워지고", "있네요."})
+void parameterizedTest(String message) {
+    System.out.println(message);
+}
+```

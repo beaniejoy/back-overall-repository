@@ -4,11 +4,13 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+//@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class StudyTest {
     @Test
     @DisplayName("스터디 만들기")
@@ -74,6 +76,22 @@ class StudyTest {
     void create_new_study_slow() {
         System.out.println("create slow");
     }
+
+    @DisplayName("스터디 만들기 RepeatedTest")
+    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
+    void repeatTest(RepetitionInfo repetitionInfo) {
+        // 현재 몇번째 반복 진행중인지 / 전체 반복 횟수
+        System.out.println("test " + repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
+    }
+
+    // JUnit5 기본 제공
+    @DisplayName("스터디 만들기 ParameterizedTest")
+    @ParameterizedTest(name = "{index} {displayName} message={0}")
+    @ValueSource(strings = {"날씨가", "많이", "추워지고", "있네요."})
+    void parameterizedTest(String message) {
+        System.out.println(message);
+    }
+
 
     // private X, static void만 가능
     @BeforeAll
