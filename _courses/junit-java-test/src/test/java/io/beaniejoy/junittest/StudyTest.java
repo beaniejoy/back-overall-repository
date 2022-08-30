@@ -77,21 +77,6 @@ class StudyTest {
         System.out.println("create slow");
     }
 
-    @DisplayName("스터디 만들기 RepeatedTest")
-    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")
-    void repeatTest(RepetitionInfo repetitionInfo) {
-        // 현재 몇번째 반복 진행중인지 / 전체 반복 횟수
-        System.out.println("test " + repetitionInfo.getCurrentRepetition() + "/" + repetitionInfo.getTotalRepetitions());
-    }
-
-    // JUnit5 기본 제공
-    @DisplayName("스터디 만들기 ParameterizedTest")
-    @ParameterizedTest(name = "{index} {displayName} message={0}")
-    @ValueSource(strings = {"날씨가", "많이", "추워지고", "있네요."})
-    void parameterizedTest(String message) {
-        System.out.println(message);
-    }
-
 
     // private X, static void만 가능
     @BeforeAll
