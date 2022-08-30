@@ -67,6 +67,7 @@ public class StudyRepeatTest {
         }
     }
 
+    // static inner class, public class 이어야 한다.
     static class StudyAggregator implements ArgumentsAggregator {
         @Override
         public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {

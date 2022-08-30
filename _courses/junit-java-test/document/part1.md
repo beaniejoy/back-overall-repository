@@ -140,3 +140,30 @@ void parameterizedTest(String message) {
     System.out.println(message);
 }
 ```
+
+<br>
+
+## :pushpin: 테스트 인스턴스
+```java
+@FastTest
+@DisplayName("스터디 만들기 fast")
+void create_new_study_fast() {
+    System.out.println(this);   // 테스트 마다 인스턴스가 다르다.
+    System.out.println("create fast");
+}
+
+@SlowTest
+@DisplayName("스터디 만들기 slow")
+void create_new_study_slow() {
+    System.out.println(this);   // 테스트 마다 인스턴스가 다르다.
+    System.out.println("create slow");
+}
+```
+- JUnit은 기본적으로 테스트 메소드마다 인스턴스를 생성해서 사용
+- 테스트간에 의존성을 없애기 위해(공유하는 값 제거)
+
+```java
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+```
+- 이렇게 하면 테스트가 클래스 단위로 수행하게 된다. (기존 메소드 단위)
+- `@BeforeAll`, `@AfterAll` 같은 경우 static일 필요가 없어짐
