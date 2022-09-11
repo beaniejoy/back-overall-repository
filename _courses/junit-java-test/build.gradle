@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "junit:junit:4.13.2" // JUnit4
 }
 
 tasks.named('test') {
@@ -27,4 +28,8 @@ task ciTest(type: Test) {
     useJUnitPlatform {
         includeTags 'fast | slow'
     }
+}
+
+bootJar {
+    enabled = false
 }
