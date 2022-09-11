@@ -2,17 +2,18 @@ package io.beaniejoy.junittest;
 
 import org.junit.jupiter.api.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudyInstanceTest {
     @Test
-    @DisplayName("스터디 만들기 1")
+//    @DisplayName("스터디 만들기 1")
+    @Disabled
     void create_new_study_fast() {
         System.out.println(this);   // 인스턴스가 같다.
         System.out.println("create study 1");
     }
 
     @Test
-    @DisplayName("스터디 만들기 2")
+//    @DisplayName("스터디 만들기 2")
     void create_new_study_slow() {
         System.out.println(this);   // 인스턴스가 같다.
         System.out.println("create study 2");
