@@ -1,5 +1,6 @@
 package io.beaniejoy.junittest;
 
+import io.beaniejoy.junittest.domain.Study;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +39,7 @@ public class StudyRepeatTest {
     @ParameterizedTest(name = "{index} {displayName} message={0}")
     @ValueSource(ints = {10, 20, 40})
     void parameterizedTest2(@ConvertWith(StudyConverter.class) Study study) {
-        System.out.println(study.getLimit());
+        System.out.println(study.getLimitCount());
     }
 
     // 암묵적 형 변환 제공 2

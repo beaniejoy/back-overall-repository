@@ -1,5 +1,6 @@
 package io.beaniejoy.junittest;
 
+import io.beaniejoy.junittest.domain.Study;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -53,7 +54,7 @@ class StudyTest {
         });
 
         Study study = new Study(10);
-        assertTrue(study.getLimit() > 0);
+        assertTrue(study.getLimitCount() > 0);
     }
 
     @Test
