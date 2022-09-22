@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.BDDMockito.*
 import org.mockito.Mock
-import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
@@ -81,16 +81,20 @@ internal class StudyServiceTest {
 
     @Test
     fun createNewStudyTest() {
+        // 1. Given
         val studyService = StudyService(mockMemberService, mockStudyRepository)
         assertNotNull(studyService)
 
         val member = Member.createMember(id = 1L, email = "beanie@test.com")
-        `when`(mockMemberService.findById(1L)).thenReturn(Optional.of(member))
+         `when`(mockMemberService.findById(1L)).thenReturn(Optional.of(member))
 
         val study = Study(10, "테스트")
-        `when`(mockStudyRepository.save(study)).thenReturn(study)
+         `when`(mockStudyRepository.save(study)).thenReturn(study)
 
+        // 2. When
         studyService.createNewStudy(1L, study)
+
+        // 3. Then
         // 실제 service 코드 호출 대로 verify
         verify(mockMemberService).findById(1L)
         verify(mockStudyRepository).save(study) // 여기서는 any 가능
@@ -105,6 +109,41 @@ internal class StudyServiceTest {
 
         // 모든 메소드 interactions가 다 마치고 끝났는지 검증
         verifyNoMoreInteractions(mockMemberService)
+
+        assertEquals(member, study.owner)
+    }
+
+    // BDD Mockito API에 맞춘 mock 테스트
+    @Test
+    fun createNewStudyTestWithBDDMockito() {
+        // 1. Given
+        val studyService = StudyService(mockMemberService, mockStudyRepository)
+        assertNotNull(studyService)
+
+        val member = Member.createMember(id = 1L, email = "beanie@test.com")
+        given(mockMemberService.findById(1L)).willReturn(Optional.of(member)) // BDD 맞게 given 사용
+
+        val study = Study(10, "테스트")
+        given(mockStudyRepository.save(study)).willReturn(study) // BDD 맞게 given 사용
+
+        // 2. When
+        studyService.createNewStudy(1L, study)
+
+        // 3. Then
+        // 실제 service 코드 호출 대로 verify
+        then(mockMemberService).should(times(1)).findById(1L)
+        then(mockStudyRepository).should().save(study) // 여기서는 any 가능
+        then(mockMemberService).should().notify(study)
+        then(mockMemberService).should().notify(member)
+        then(mockMemberService).should(never()).validate(1L)
+
+        // 메소드 실행 순서에 대한 검증
+        val inOrder = inOrder(mockMemberService)
+        then(mockMemberService).should(inOrder).notify(study)
+        then(mockMemberService).should(inOrder).notify(member)
+
+        // 모든 메소드 interactions가 다 마치고 끝났는지 검증
+        then(mockMemberService).shouldHaveNoMoreInteractions()
 
         assertEquals(member, study.owner)
     }

@@ -60,3 +60,18 @@ val member = Member.createMember(id = 1L, email = "beanie@test.com")
 every { mockKMemberService.findById(any()) } returns Optional.of(member) // any() 사용 가능
 ```
 - 여기서 사용되는 `any()`는 mockK inline fun
+
+<br>
+
+## BDD 스타일 Mockito API
+
+### BDD
+- Behavior-driven Development(BDD)
+- 애플리케이션이 어떻게 행동해야 하는지에 대한 공통된 이해를 구성하는 방법
+- `TDD`에서 착안
+- given - when - then
+
+### 기존 mockito when
+- mockito api에서 제공해주는 `when`은 사실 BDD의 given 단계에 해당
+- 그런데 메소드명 자체가 `given`하고 어울리지 않는다.
+- BDD Mockito API에서 `given`으로 사용할 수 있게 해준다.
