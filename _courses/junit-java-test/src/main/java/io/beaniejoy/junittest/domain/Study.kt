@@ -1,9 +1,7 @@
 package io.beaniejoy.junittest.domain
 
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class Study {
@@ -21,7 +19,9 @@ class Study {
 
     var openedDateTime: LocalDateTime? = null
 
-    var ownerId: Long? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    var owner: Member? = null
 
     constructor(limitCount: Int, name: String?) {
         this.limitCount = limitCount

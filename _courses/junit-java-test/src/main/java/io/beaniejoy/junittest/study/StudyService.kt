@@ -13,7 +13,7 @@ class StudyService(
     fun createNewStudy(memberId: Long, study: Study): Study {
         val member: Optional<Member> = memberService.findById(memberId)
         if (member.isPresent) {
-            study.ownerId = memberId
+            study.owner = member.get()
         } else {
             throw IllegalArgumentException("Member doesn't exist for id: '$memberId'")
         }
@@ -21,6 +21,7 @@ class StudyService(
         val newStudy = repository.save(study)
 
         memberService.notify(newStudy)
+        memberService.notify(member.get())
 
         return newStudy
     }

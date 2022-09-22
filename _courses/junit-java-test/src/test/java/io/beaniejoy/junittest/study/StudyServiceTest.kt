@@ -1,6 +1,7 @@
 package io.beaniejoy.junittest.study
 
 import io.beaniejoy.junittest.domain.Member
+import io.beaniejoy.junittest.domain.Study
 import io.beaniejoy.junittest.member.MemberService
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -76,5 +77,35 @@ internal class StudyServiceTest {
 
         assertEquals("beanie@test.com", mockKMemberService.findById(1L).get().email)
         assertEquals("beanie@test.com", mockKMemberService.findById(2L).get().email)
+    }
+
+    @Test
+    fun createNewStudyTest() {
+        val studyService = StudyService(mockMemberService, mockStudyRepository)
+        assertNotNull(studyService)
+
+        val member = Member.createMember(id = 1L, email = "beanie@test.com")
+        `when`(mockMemberService.findById(1L)).thenReturn(Optional.of(member))
+
+        val study = Study(10, "테스트")
+        `when`(mockStudyRepository.save(study)).thenReturn(study)
+
+        studyService.createNewStudy(1L, study)
+        // 실제 service 코드 호출 대로 verify
+        verify(mockMemberService).findById(1L)
+        verify(mockStudyRepository).save(study) // 여기서는 any 가능
+        verify(mockMemberService).notify(study)
+        verify(mockMemberService).notify(member)
+        verify(mockMemberService, never()).validate(1L)
+
+        // 메소드 실행 순서에 대한 검증
+        val inOrder = inOrder(mockMemberService)
+        inOrder.verify(mockMemberService).notify(study)
+        inOrder.verify(mockMemberService).notify(member)
+
+        // 모든 메소드 interactions가 다 마치고 끝났는지 검증
+        verifyNoMoreInteractions(mockMemberService)
+
+        assertEquals(member, study.owner)
     }
 }
