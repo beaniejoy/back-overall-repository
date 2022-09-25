@@ -1,13 +1,15 @@
 <template>
-  <v-app>
-    <v-container>
-      hello world
-    </v-container>
-  </v-app>
+  <hello-world />
 </template>
 
 <script>
-export default {
-  name: 'HomeView',
-}
+  import HelloWorld from '@/components/HelloWorld'
+
+  export default {
+    name: 'HomeView',
+
+    components: {
+      HelloWorld,
+    },
+  }
 </script>
