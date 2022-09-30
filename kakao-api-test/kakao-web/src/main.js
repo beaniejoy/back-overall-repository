@@ -4,6 +4,11 @@ import store from './store';
 import router from './router';
 import vuetify from './plugins/vuetify';
 import 'tailwindcss/tailwind.css';
+import VueCookies from 'vue-cookies';
+
+// vue-cookies default setting
+Vue.use(VueCookies);
+Vue.$cookies.config('3d');  // expire (3 days)
 
 Vue.config.productionTip = false;
 

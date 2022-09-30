@@ -2,6 +2,7 @@
 export default {
   data() {
     return {
+      KAKAO_ACCESS_TOKEN_KEY: 'KAKAO_ACCESS_TOKEN',
       defaultErrorMsg: '일시적인 오류입니다.'
     };
   },

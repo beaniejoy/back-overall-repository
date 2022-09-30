@@ -29,12 +29,12 @@
 </template>
 
 <script>
-import CommonFuncMixin from '@/components/common/CommonFuncMixin.vue';
+import CommonMixin from '@/components/common/CommonMixin.vue';
 import KakaoApiMixin from '@/components/common/KakaoApiMixin';
 
 export default {
   name: 'HomeView',
-  mixins: [CommonFuncMixin, KakaoApiMixin],
+  mixins: [CommonMixin, KakaoApiMixin],
   computed: {
     size() {
       switch (this.$vuetify.breakpoint.name) {
@@ -53,6 +53,11 @@ export default {
     }
   },
   async created() {
+    if (this.isValidAccessToken()) {
+      this.$router.back();
+      return;
+    }
+    
     const params = this.getQueryParams();
     console.log('params', params);
 
@@ -60,10 +65,9 @@ export default {
     console.log('code', code);
 
     if (code) {
-      console.log('authenticate Kakao!');
       const accessToken = await this.requestKakaoToken(code);
-      console.log('accessToken', accessToken);
-      this.setKakaoAccessToken(accessToken);
+      // this.setKakaoAccessToken(accessToken);
+      this.saveKakaoAccessTokenInCookie(accessToken);
 
       this.$router.replace({ path: '/', query: {} });
       return;

@@ -1,11 +1,12 @@
 <script>
-import CommonFuncMixin from '@/components/common/CommonFuncMixin.vue';
+import CommonMixin from '@/components/common/CommonMixin.vue';
 import { requestKakaoTokenApi } from '@/api/kakao';
+import { getCookie, setCookie } from '@/utils/cookies';
 
-const Kakao = require('@/utils/kakao.min');
+const Kakao = require('@/lib/kakao.min');
 
 export default {
-  mixins: [CommonFuncMixin],
+  mixins: [CommonMixin],
   data() {
     return {
       redirectUri: `${window.location.protocol}//${window.location.host}/oauth`
@@ -40,6 +41,16 @@ export default {
       });
 
       return response.data.access_token;
+    },
+    isValidAccessToken() {
+      if (getCookie(this.KAKAO_ACCESS_TOKEN_KEY)) {
+        return true;
+      }
+
+      return false;
+    },
+    saveKakaoAccessTokenInCookie(accessToken) {
+      setCookie(this.KAKAO_ACCESS_TOKEN_KEY, accessToken, 60 * 60 * 1);
     }
   }
 };

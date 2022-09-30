@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     checkAuthorizedKakaoUser() {
-      if (!this.getKakaoAccessToken()) {
+      if (!this.isValidAccessToken()) {
         this.$router.replace({ path: '/login', query: {} });
       }
     }
