@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+kakao:
+  kauth: https://kauth.kakao.com
+  kapi: https://kapi.kakao.com

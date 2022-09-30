@@ -7,12 +7,17 @@
 </template>
 
 <script>
+import KakaoApiMixin from '@/components/common/KakaoApiMixin';
 
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
+  mixins: [KakaoApiMixin],
+  data() {
+    return {};
+  },
+  created() {
+    console.log('App.vue');
+    this.initKakaoSdk();
+  }
 };
 </script>
