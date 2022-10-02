@@ -185,3 +185,45 @@ Authentication authentication = SecurityContextHolder.getContext().getAuthentica
     - 자체적으로 가지고 있는 provider: `AnonymousAuthenticationProvider`
     - **parent** ProviderManager's provider: `DaoAuthenticationProvider`
     - 자체 provider `supports` 조건 체크(Authentication 가지고 조건 체크) -> 아니면 parent의 provider로 넘김
+
+<br>
+
+## 📌 인증 처리자 - AuthenticationProvider
+- `AuthenticationProvider`: 인터페이스
+- `authenticate(authentication)`, `supports(authentication)` 두 개 메소드를 구현해야 한다.
+
+### authenticate(authentication)
+1. ID 검증
+   - `UserDetailsService`
+   - `loadUserByUsername(username)`를 통해 user(`UserDetails`) 조회 및 ID 검증
+   - 없으면 `UserNotFoundException` throw
+2. password 검증
+   - 위에 `UserDetails` 반환 받은 내용을 토대로 입력 받은 password와 비교
+   - 불일치시 `BadCredentialException` throw
+3. 추가 검증
+   - 추가 검증도 거치게 됨
+4. 인증 성공
+   - `Authentication` 객체에 User 정보, authorities 담아서 `AuthenticationManager`에게 반환
+
+<br>
+
+## 📌 인가 개념 및 필터 이해 - Authorization, FilterSecurityInterceptor
+- 스프링 시큐리티가 지원하는 권한 계층
+  - 웹 계층: URL
+  - 서비스 계층: 기능 단위(메소드)
+  - 도메인 계층
+
+### FilterSecurityInterceptor
+- 스프링 시큐리티에서 설정된 필터 중 가장 마지막에 수행
+- 인증된 사용자에 대한 특정 요청의 승인/거부(인가) 여부 최종적으로 결정
+
+### 주요 과정
+- `FilterSecurityInterceptor`에 진입
+- 인증(authentication) 객체 유무 체크
+- `SecurityMetadataSource`
+  - 요청한 자원에 필요한 권한 정보 조회(ex. `/user` -> `ROLE_USER`)
+  - null일 경우 자원 접근 허용
+- `AccessDecisionManager` 
+  - 심의 결정자(접근 권한 결정)
+  - `AccessDecisionVoter`에게 심의 위임(승인/거부 내용 전달)
+  - 접근 승인 유무 체크 후 허용할지 `AccessDeniedException` 던질지 결정

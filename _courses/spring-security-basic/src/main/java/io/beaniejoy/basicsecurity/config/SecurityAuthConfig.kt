@@ -22,7 +22,7 @@ class SecurityAuthConfig : WebSecurityConfigurerAdapter() {
 
     // 권한 설정(인가 설정)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        // setting user based on in-memory
+        // setting user based on in-memory (yaml 설정파일에서도 등록 가능)
         auth.inMemoryAuthentication().withUser("user").password("{noop}1111").roles("USER")
         auth.inMemoryAuthentication().withUser("sys").password("{noop}1111").roles("SYS")
         auth.inMemoryAuthentication().withUser("admin").password("{noop}1111").roles("ADMIN")
