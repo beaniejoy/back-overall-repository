@@ -3,6 +3,9 @@ node_modules/
 /src/lib/
 /src/assets/
 
+# file
+.eslintrc.js
+
 # !src/
 # src/*
 # !src/components/

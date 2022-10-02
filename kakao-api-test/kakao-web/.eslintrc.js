@@ -9,7 +9,7 @@ module.exports = {
   },
   extends: [
     // 'plugin:vue/essential', // Use this if you are using Vue.js 2.x.
-    'plugin:vue/vue3-recommended', // able to use vue-cli eslint ()
+    'plugin:vue/vue3-recommended', // able to use vue-cli eslint
     'eslint:recommended',  // able to use eslint rules (https://eslint.org/docs/rules/)
   ],
   rules: {
@@ -31,6 +31,15 @@ module.exports = {
     'quotes': ['error', 'single'],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+
+    'vue/max-attributes-per-line': ['error', {
+      'singleline': {
+        'max': 2
+      },
+      'multiline': {
+        'max': 1
+      }
+    }],
 
     /* plugin:vue/vue3-essential */ 
     'vue/html-closing-bracket-newline': ['error', {
