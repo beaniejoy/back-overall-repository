@@ -20,11 +20,12 @@ class ValidationController {
     @GetMapping("/get")
     fun getParam(
         @Valid @ModelAttribute validRequestDto: ValidRequestDto,
+        temp: Long?,
         bindingResult: BindingResult
     ): ValidRequestDto {
         if (bindingResult.hasErrors()) {
             logger.error("errors : ${bindingResult.fieldErrors}")
-            throw RuntimeException("errors ${bindingResult.fieldErrors}")
+            throw RuntimeException("binding errors ${bindingResult.fieldErrors}")
         }
 
         return validRequestDto

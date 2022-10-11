@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/back")
 public class RestBackController {
@@ -33,5 +36,10 @@ public class RestBackController {
     public ExampleGetter getExampleGetter() {
         logger.info("ExampleGetter");
         return exampleGetterService.getExampleGetter();
+    }
+
+    @GetMapping("/members/empty")
+    public List<Member> getMemberList() {
+        return new ArrayList<>();
     }
 }

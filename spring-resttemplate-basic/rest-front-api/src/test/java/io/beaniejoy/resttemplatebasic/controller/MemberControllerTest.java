@@ -1,6 +1,7 @@
 package io.beaniejoy.resttemplatebasic.controller;
 
 import io.beaniejoy.resttemplatebasic.application.RestTemplateFacade;
+import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 class MemberControllerTest {
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String ADDRESS = "address";
+    private static final String EMAIL = "email";
 
     @Autowired
     MockMvc mvc;
@@ -27,7 +32,7 @@ class MemberControllerTest {
     @Test
     @DisplayName("MemberRequestDto jackson binding 테스트")
     public void bindingDtoTest() throws Exception {
-        String requestJson = "{\"id\": 1, " +
+        String requestJson = "{\"helloId\": 1, " +
                 "\"name\": \"beanie\", " +
                 "\"helloName\": \"hello beanie\", " +
                 "\"address\": \"beanie address\", " +

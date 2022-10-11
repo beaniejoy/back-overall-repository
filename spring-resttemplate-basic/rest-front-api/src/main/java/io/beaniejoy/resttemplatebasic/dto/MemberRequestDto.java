@@ -44,7 +44,11 @@ public class MemberRequestDto {
     * "getXxxx()" -> "xxxx" 에 해당하는 맴버변수에 binding 됨
     * "getXxxx()" 로 설정되어 있으면 맴버변수도 "xxxx"로 통일해야 함 (안 그럼 매핑이 안됨)
     */
-    public Long getId() {
+//    public Long getId() {
+//        return id;
+//    }
+
+    public Long getHelloId() {
         return id;
     }
 
@@ -84,9 +88,9 @@ public class MemberRequestDto {
     * setter는 POJO 객체로 역질렬화(request 받았을 때)하는 경우에 적용된다.
     * "setXxxx()" -> {"xxxx": "value"} 이렇게 request data json의 key 이름으로 매핑이 된다.
     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public void setHelloId(Long id) {
+//        this.id = id;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -124,7 +128,8 @@ public class MemberRequestDto {
     @Override
     public String toString() {
         return "MemberRequestDto{" +
-                "id=" + id +
+                "id=" + id + '\'' +
+//                ", helloId=" + helloId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +

@@ -5,7 +5,7 @@ fun sendEmailTo(email: String) {
 }
 
 fun main() {
-    var email: String? = "beanie.joy@kakaomobility.com"
+    var email: String? = "test@test.com"
     email?.let { sendEmailTo(it)}
 
 //     컴파일 단계에서 에러 발생

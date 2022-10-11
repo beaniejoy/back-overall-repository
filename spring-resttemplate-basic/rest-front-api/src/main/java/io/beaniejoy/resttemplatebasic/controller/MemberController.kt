@@ -2,6 +2,8 @@ package io.beaniejoy.resttemplatebasic.controller
 
 import io.beaniejoy.resttemplatebasic.application.RestTemplateFacade
 import io.beaniejoy.resttemplatebasic.dto.MemberRequestDto
+import io.beaniejoy.resttemplatebasic.dto.MemberRequestDto1
+import io.beaniejoy.resttemplatebasic.dto.MemberRequestDto2
 import io.beaniejoy.resttemplatebasic.entity.MemberDto
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
