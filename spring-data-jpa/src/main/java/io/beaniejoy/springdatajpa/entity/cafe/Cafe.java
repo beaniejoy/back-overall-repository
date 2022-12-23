@@ -33,4 +33,9 @@ public class Cafe extends BaseEntity {
 
     @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<CafeMenu> cafeMenus;
+
+    public void updateInfo(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 }

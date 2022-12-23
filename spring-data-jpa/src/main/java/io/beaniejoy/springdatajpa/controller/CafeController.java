@@ -36,4 +36,9 @@ public class CafeController {
     ) {
         return cafeService.getAllCafesWithQuerydsl(requestParam, pageable);
     }
+
+    @PostMapping("/test")
+    public void updateTest() {
+        cafeService.updateTest();
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,5 +64,20 @@ public class CafeService {
                 .phoneNumber("01010101")
                 .address("address_good")
                 .build());
+    }
+
+    @Transactional
+    public void updateTest() {
+        // cafe 조회 (id: 100L)
+        Cafe cafe = cafeRepository.findById(100L)
+                .orElseThrow(() -> new RuntimeException("Not Found Cafe"));
+
+        // update cafe name & address
+        cafe.updateInfo("updated Cafe Name", "updated cafe address");
+
+        cafeRepository.save(cafe);
+
+        log.info("cafe name {}, address {}", cafe.getName(), cafe.getAddress());
+        log.info("cafe updatedAt: {}", cafe.getUpdatedAt()); // 이전 데이터 로깅??
     }
 }
