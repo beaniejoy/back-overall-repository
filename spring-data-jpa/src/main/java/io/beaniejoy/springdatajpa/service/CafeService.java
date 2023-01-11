@@ -69,11 +69,22 @@ public class CafeService {
     @Transactional
     public void updateTest() {
         // cafe 조회 (id: 100L)
-        Cafe cafe = cafeRepository.findById(100L)
-                .orElseThrow(() -> new RuntimeException("Not Found Cafe"));
+//        Cafe cafe = cafeRepository.findById(100L)
+//                .orElseThrow(() -> new RuntimeException("Not Found Cafe"));
 
+        // Detached Entity update test
+        Cafe cafe = Cafe.builder()
+                .id(100L)
+                .name("update cafe name")
+                .address("update cafe address")
+                .phoneNumber("update cafe phone number")
+                .description("update desc")
+                .build();
+
+        cafe.setUpdatedBy("beanie");
+        cafe.setCreatedBy("beanie_first");
         // update cafe name & address
-        cafe.updateInfo("updated Cafe Name", "updated cafe address");
+//        cafe.updateInfo("updated Cafe Name", "updated cafe address");
 
         cafeRepository.save(cafe);
 
