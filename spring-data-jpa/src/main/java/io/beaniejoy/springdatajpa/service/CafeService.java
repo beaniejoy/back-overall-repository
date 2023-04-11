@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,7 +65,7 @@ public class CafeService {
                 .build());
     }
 
-    @Transactional
+//    @Transactional
     public void updateTest() {
         // cafe 조회 (id: 100L)
 //        Cafe cafe = cafeRepository.findById(100L)

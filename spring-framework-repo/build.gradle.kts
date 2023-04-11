@@ -23,6 +23,8 @@ dependencies {
 
     implementation("io.github.microutils:kotlin-logging:2.1.21")
 
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

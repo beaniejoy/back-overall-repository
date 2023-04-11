@@ -1,0 +1,11 @@
+example:
+  one:
+    one: 1
+    two: 2
+    text: "text"
+    hello: hello
+  another:
+    one: 1
+    two: 2
+    text: "text"
+    hello: hello
