@@ -1,3 +1,9 @@
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+# properties test
 example:
   one:
     one: 1

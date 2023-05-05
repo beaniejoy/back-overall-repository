@@ -17,7 +17,7 @@ class FilterConfig : WebMvcConfigurer {
         return FilterRegistrationBean<Filter>().apply {
             this.filter = FirstFilter()
             this.order = 1
-            this.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD)
+            this.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ERROR)
         }
     }
 
@@ -26,7 +26,7 @@ class FilterConfig : WebMvcConfigurer {
         return FilterRegistrationBean<Filter>().apply {
             this.filter = SecondFilter()
             this.order = 1
-            this.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD)
+            this.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ERROR)
         }
     }
 }

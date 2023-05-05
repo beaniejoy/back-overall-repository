@@ -11,15 +11,10 @@ class FirstFilter : Filter {
     companion object : KLogging()
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
-        try {
-            val req = request as HttpServletRequest
-            logger.info { "#### [FirstFilter] [${req.dispatcherType}] request uri ${req.requestURI} ####" }
+        val req = request as HttpServletRequest
+        logger.info { "#### [FirstFilter] [${req.dispatcherType}] request uri ${req.requestURI} ####" }
 
-            chain.doFilter(request, response)
-        } catch (e: Exception) {
-            logger.error { "[FirstFilter] error: ${e.message}" }
-        } finally {
-            logger.info { "#### [FirstFilter] after doFilter ####" }
-        }
+        chain.doFilter(request, response)
+        logger.info { "#### [FirstFilter] after doFilter ####" }
     }
 }

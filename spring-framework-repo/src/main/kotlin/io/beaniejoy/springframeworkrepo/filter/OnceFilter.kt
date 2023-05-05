@@ -17,13 +17,8 @@ class OnceFilter : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        try {
-            log.info { "#### [*OnceFilter*] [${request.dispatcherType}] request uri ${request.requestURI} ####" }
-            filterChain.doFilter(request, response)
-        } catch (e: Exception) {
-            log.error { e.message }
-        } finally {
-            log.info { "#### [*OnceFilter*] after doFilter ####" }
-        }
+        log.info { "#### [*OnceFilter*] [${request.dispatcherType}] request uri ${request.requestURI} ####" }
+        filterChain.doFilter(request, response)
+        log.info { "#### [*OnceFilter*] after doFilter ####" }
     }
 }
