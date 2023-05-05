@@ -1,4 +1,4 @@
-package io.beaniejoy.springframeworkrepo.common.filter
+package io.beaniejoy.springframeworkrepo.filter
 
 import mu.KLogging
 import javax.servlet.Filter
@@ -13,13 +13,13 @@ class SecondFilter: Filter {
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         try {
             val req = request as HttpServletRequest
-            logger.info { "#### [Second Filter] request uri ${req.requestURI} ####" }
+            logger.info { "#### [SecondFilter] [${req.dispatcherType}] request uri ${req.requestURI} ####" }
 
             chain.doFilter(request, response)
         } catch (e: Exception) {
-            logger.error { "[Second Filter] error: ${e.message}" }
+            logger.error { "[SecondFilter] error: ${e.message}" }
         } finally {
-            logger.info { "#### [Second Filter] after doFilter ####" }
+            logger.info { "#### [SecondFilter] after doFilter ####" }
         }
     }
 }

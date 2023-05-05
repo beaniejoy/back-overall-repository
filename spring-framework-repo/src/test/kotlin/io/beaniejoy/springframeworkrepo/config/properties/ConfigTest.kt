@@ -1,5 +1,7 @@
-package io.beaniejoy.springframeworkrepo.config
+package io.beaniejoy.springframeworkrepo.config.properties
 
+import io.beaniejoy.springframeworkrepo.config.properties.ExampleProps
+import io.beaniejoy.springframeworkrepo.config.properties.ExampleProps2
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
