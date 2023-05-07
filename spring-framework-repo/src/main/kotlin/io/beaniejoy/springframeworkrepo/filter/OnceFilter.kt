@@ -1,14 +1,11 @@
 package io.beaniejoy.springframeworkrepo.filter
 
-import mu.KLogging
 import mu.KotlinLogging
-import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Component
 class OnceFilter : OncePerRequestFilter() {
     private val log = KotlinLogging.logger {}
 

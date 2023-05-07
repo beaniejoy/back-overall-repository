@@ -6,7 +6,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 
-@Component
+//@Component
 class WebServerCustomizer: WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
     override fun customize(factory: ConfigurableWebServerFactory?) {
         val errorPage404 = ErrorPage(HttpStatus.NOT_FOUND, "/error-page/404")

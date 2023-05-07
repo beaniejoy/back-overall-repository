@@ -21,6 +21,11 @@ class SpringFilterController {
         return "forward:/api/filter/test"
     }
 
+    @GetMapping("/redirect")
+    fun redirect(): String {
+        return "redirect:/api/filter/test"
+    }
+
     @GetMapping("/error")
     fun error() {
         throw RuntimeException("error test")
