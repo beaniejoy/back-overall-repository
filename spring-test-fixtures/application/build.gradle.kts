@@ -1,3 +1,9 @@
+tasks {
+    test {
+        dependsOn(":domain:test")
+    }
+}
+
 dependencies {
     implementation(project(":domain"))
     runtimeOnly(project(":db"))

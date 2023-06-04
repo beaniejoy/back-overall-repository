@@ -12,7 +12,6 @@ plugins {
     kotlin("plugin.jpa") version "1.8.21"
 }
 
-
 allprojects {
     group = "io.beaniejoy"
     version = "0.0.1-SNAPSHOT"
@@ -21,7 +20,6 @@ allprojects {
         mavenCentral()
     }
 }
-
 
 subprojects {
     apply {
