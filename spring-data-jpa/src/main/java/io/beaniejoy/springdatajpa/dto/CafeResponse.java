@@ -1,15 +1,13 @@
 package io.beaniejoy.springdatajpa.dto;
 
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class CafeResponse {
     private Long id;
 

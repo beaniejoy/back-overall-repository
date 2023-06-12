@@ -1,12 +1,6 @@
 spring:
-  config:
-    activate:
-      on-profile: dev
-  datasource:
-    url: jdbc:mysql://localhost:3306/test?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: beaniejoy
+  profiles:
+    active: run
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,31 +8,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: never
----
-
-spring:
-  config:
-    activate:
-      on-profile: test
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=MySQL
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
 #  - SQL DB initialization
 #  - embedded in-memory db를 사용할 때만 수행
 #  - 만약 DB 타입 관계없이 초기화하려면 always 로 설정
-#  sql:
-#    init:
-#      mode: always
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org.springframework.orm.jpa.JpaTransactionManager: trace # transaction rollback 확인 로깅
