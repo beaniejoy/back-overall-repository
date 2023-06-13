@@ -12,13 +12,13 @@ import java.io.IOException;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TestService {
     private final TestNestedService test2Service;
     private final CafeRepository cafeRepository;
 
-    @Transactional
-    public void transactionTest() throws IOException {
+    public void transactionTest() {
         Cafe cafe = Cafe.builder()
                 .name("joy's cafe")
                 .description("joy cafe desc")
@@ -33,6 +33,6 @@ public class TestService {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        throw new IOException("test");
+//        throw new IOException("test");
     }
 }

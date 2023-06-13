@@ -13,13 +13,14 @@ import java.io.IOException;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TestNestedService {
     private final CafeRepository cafeRepository;
 
-    @Transactional
-//    @TestAnnotation
-    public void nestedMethod() throws IOException {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @TestAnnotation
+    public void nestedMethod() {
         Cafe cafe = Cafe.builder()
                 .name("beanie's cafe")
                 .description("beanie cafe desc")
@@ -29,7 +30,7 @@ public class TestNestedService {
 
 //        try {
         cafeRepository.save(cafe);
-        throw new IOException("test");
+//        throw new IOException("test");
 //        } catch (Exception e) {
 //            log.error(e.getMessage());
 //        }

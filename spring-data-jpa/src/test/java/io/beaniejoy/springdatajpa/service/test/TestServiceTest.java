@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.lang.reflect.UndeclaredThrowableException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,15 +19,18 @@ class TestServiceTest {
     @Autowired
     private TestService testService;
     @Autowired
+    private TestNestedService testNestedService;
+
+    @Autowired
     private CafeService cafeService;
 
     @Test
     public void transactionTest() {
-        assertThrows(IOException.class, () -> {
-            testService.transactionTest();
-        });
+//        assertThrows(RuntimeException.class, () -> {
+//            testService.transactionTest();
+//        });
 
-//        testService.transactionTest();
+        testService.transactionTest();
 
         Page<CafeResponse> response =
                 cafeService.getAllCafesWithParams(new CafeRequestParam(), Pageable.unpaged());

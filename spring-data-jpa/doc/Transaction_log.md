@@ -73,7 +73,7 @@ nested 메소드에 `@Transactional` propagation을 `REQUIRES_NEW`로 설정해�
 
 <br>
 
-## :pushpin: checked vs unchecked
+## :pushpin: checked vs unchecked Exception
 
 위의 모든 내용은 RuntimeException 인 경우에 해당(**unchecked exception**)  
 (`Error`도 모두 롤백되긴 한다.)  
@@ -83,7 +83,7 @@ nested 메소드에 `@Transactional` propagation을 `REQUIRES_NEW`로 설정해�
 
 ### 1. `REQUIRED`(default)
 
-부모 메소드 혹은 자식 메소드에서 IOException 발생해도 모두 커밋된다.
+부모 메소드 혹은 자식 메소드에서 `IOException` 발생해도 모두 커밋된다.
 
 <br>
 
@@ -97,7 +97,7 @@ nested 메소드에 `@Transactional` propagation을 `REQUIRES_NEW`로 설정해�
     > throw IOException
 ```
 자식 메소드에서만 롤백될 것으로 기대했으나 모두 커밋됨  
-IOException > checked exception 이기에 롤백 마크대상이 아니다.
+`IOException` > checked exception 이기에 롤백 마크대상이 아니다.
 
 - 부모 메소드에서 `IOException` 발생시
 ```
@@ -107,3 +107,52 @@ IOException > checked exception 이기에 롤백 마크대상이 아니다.
     > 정상 동작
 ```
 부모 메소드만 롤백될 것으로 기대했으나 마찬가지로 모두 커밋됨
+
+<br>
+
+## :pushpin: AOP내의 예외 발생 케이스
+
+### 1. Custom Aspect에서 예외 발생시
+
+```
+1. - @Transactional parentMethod() "save1"
+        > **childMethod를 try catch로 감싸는 경우**
+2. - @Transactional(propagation = Propagation.REQUIRES_NEW), 
+   - @TestAnnotation 
+        childMethod() "save2"
+        > 서비스 코드 정상동작 > TestAspect throw RuntimeException
+```
+Custom Aspect 내에서 RuntimeException 발생,  
+parentMethod에서는 childMethod 호출 부분 try catch로 처리  
+이 때는 parentMethod > commit / childMethod > rollback  
+(try catch로 묶지 않으면 둘 다 rollback 되는 것 참고)
+
+### 2. Aspect에 최우선 순위로 설정한 경우
+```java
+@Aspect
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class TestAspect {
+    //...
+}
+```
+Custom Aspect를 최우선 순위로 놓고 1번 상황과 같게 해서 테스트  
+parent, child method 둘 다 commit 되었음  
+```
+@TestAnnotation > @Transactional > Service > @Transactional > @TestAnnotation(여기서 에러)
+```
+위의 흐름대로 동작해서 이미 transaction 처리가 완료된 이후로 TestAspect에서 오류 발생되어 childMethod rollback X  
+
+### 3. Aspect에 throw checked exception 
+aop order는 원래대로 설정
+```
+1. - @Transactional parentMethod() "save1"
+        > **childMethod를 try catch로 감싸는 경우**
+2. - @Transactional(propagation = Propagation.REQUIRES_NEW), 
+   - @TestAnnotation 
+        childMethod() "save2"
+        > 서비스 코드 정상동작 > TestAspect throw IOException
+```
+원래 `IOException`은 transaction의 롤백 마크 대상이 아니지만  
+AOP상에서 발생하는 checked exception은 `UndeclaredThrowableException`로 wrapping 되어 변환되는데  
+해당 예외는 `RuntimeException`이다.
