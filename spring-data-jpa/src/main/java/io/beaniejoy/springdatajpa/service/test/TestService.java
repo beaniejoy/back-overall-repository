@@ -28,11 +28,11 @@ public class TestService {
 
         cafeRepository.save(cafe);
 
-        try {
-            test2Service.nestedMethod();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+//        try {
+        test2Service.nestedMethod();
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//        }
 //        throw new IOException("test");
     }
 }

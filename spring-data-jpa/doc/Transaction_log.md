@@ -154,5 +154,31 @@ aop order는 원래대로 설정
         > 서비스 코드 정상동작 > TestAspect throw IOException
 ```
 원래 `IOException`은 transaction의 롤백 마크 대상이 아니지만  
+childMethod는 rollback이 된다.
 AOP상에서 발생하는 checked exception은 `UndeclaredThrowableException`로 wrapping 되어 변환되는데  
-해당 예외는 `RuntimeException`이다.
+해당 예외는 `RuntimeException`이다. (https://www.baeldung.com/java-undeclaredthrowableexception)
+
+
+### 4. 특이한 케이스 (with propagation `REQUIRED`)
+```
+1. - @Transactional parentMethod() "save1"
+        > ** childMethod를 try catch X **
+2. - @Transactional(propagation = Propagation.REQUIRED), 
+   - @TestAnnotation 
+        childMethod() "save2"
+        > 서비스 코드 정상동작 > TestAspect throw RuntimeException
+```
+1. childMethod를 기본 propagation 전략으로 설정   
+2. parentMethod에서는 childMethod 호출 부분을 try catch로 처리하지 않음
+3. TestAspect AOP의 순서를 최우선순위로 설정(tx보다 앞서게)
+4. TestAspect에서 throw `RuntimeException`
+
+위의 상황에서는 parentMethod에서 진행한 save 내용은 rollback되고  
+childMethod에서 진행한 save 내용은 commit 됨
+
+
+> **정리**  
+> - AOP에서 에러 발생시 RuntimeException으로 wrapping 되어 throw
+> - 만약 custom AOP가 spring tx안에 있다면 롤백이 된다.(RuntimeException 이기에)
+> - custom AOP 우선순위가 spring tx AOP보다 앞선다면 tx안에 묶이지 않아 롤백 X
+> - 호출하는 쪽(parentMethod)에서는 childMethod에 custom AOP가 에러가 발생해도 childMethod에서 발생한 것이라 판단해서 롤백 여부 판단

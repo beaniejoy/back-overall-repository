@@ -26,16 +26,17 @@ class TestServiceTest {
 
     @Test
     public void transactionTest() {
-//        assertThrows(RuntimeException.class, () -> {
-//            testService.transactionTest();
-//        });
+        assertThrows(RuntimeException.class, () -> {
+            testService.transactionTest();
+        });
 
-        testService.transactionTest();
+//        testService.transactionTest();
 
         Page<CafeResponse> response =
                 cafeService.getAllCafesWithParams(new CafeRequestParam(), Pageable.unpaged());
 
         System.out.println(response.getTotalElements());
+        response.getContent().forEach(System.out::println);
         assertTrue(
                 response.getContent().stream().anyMatch(res -> res.getName().equals("joy's cafe")),
                 "No joy's cafe"
