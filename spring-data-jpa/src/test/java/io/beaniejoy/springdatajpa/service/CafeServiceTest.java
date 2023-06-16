@@ -72,4 +72,9 @@ class CafeServiceTest {
         assertEquals(content.get(0).getAddress(), "test_address_3");
         assertEquals(content.get(0).getPhoneNumber(), "phone_number_3");
     }
+
+    @Test
+    public void testPersistentContext() {
+        cafeService.test();
+    }
 }

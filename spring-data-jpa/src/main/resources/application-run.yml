@@ -1,7 +1,13 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;MODE=MySQL
-#    url: jdbc:mysql://localhost:3306/test?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: beaniejoy
+    url: jdbc:mysql://localhost:3306/test?autoreconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: beaniejoy
+
+  #  - SQL DB initialization
+  #  - embedded in-memory db를 사용할 때만 수행
+  #  - 만약 DB 타입 관계없이 초기화하려면 always 로 설정
+  sql:
+    init:
+      mode: always

@@ -1,6 +1,6 @@
 package io.beaniejoy.springdatajpa.controller;
 
-import io.beaniejoy.springdatajpa.service.test.TestService;
+import io.beaniejoy.springdatajpa.service.tx.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +12,11 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/api/test")
 public class TestController {
-    private final TestService testService;
+    private final ParentService testService;
 
     @PostMapping
     public String transactionTest() throws IOException {
-        testService.transactionTest();
+        testService.justCallChildService();
         return "ok";
     }
 }

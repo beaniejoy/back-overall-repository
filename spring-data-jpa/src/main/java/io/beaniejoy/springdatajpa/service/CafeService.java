@@ -14,8 +14,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,6 +27,20 @@ public class CafeService {
     private final CafeRepository cafeRepository;
 
     private final CafeSearch cafeSearch;
+
+    public List<Cafe> getAllCafes() {
+        return cafeRepository.findAll();
+    }
+
+    @Transactional
+    public Cafe test() {
+
+        cafeRepository.getCafeById(100L);
+
+        Optional<Cafe> cafe = cafeRepository.findById(100L);
+
+        return cafe.orElseThrow(() -> new RuntimeException("test"));
+    }
 
     public Page<CafeResponse> getAllCafesWithParams(CafeRequestParam requestParam, Pageable pageable) {
         Specification<Cafe> searchCafeSpecs = cafeSearch.toSpecification(CafeParam.of(requestParam));
@@ -46,7 +62,6 @@ public class CafeService {
         );
 
         List<CafeResponse> responses = toResponseList(result.getContent());
-
         return new PageImpl<>(responses, pageable, result.getTotalElements());
     }
 
@@ -89,5 +104,10 @@ public class CafeService {
 
         log.info("cafe name {}, address {}", cafe.getName(), cafe.getAddress());
         log.info("cafe updatedAt: {}", cafe.getUpdatedAt()); // 이전 데이터 로깅??
+    }
+
+    @Transactional
+    public void truncateCafe() {
+        cafeRepository.deleteAll();
     }
 }

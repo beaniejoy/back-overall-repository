@@ -10,12 +10,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
-#  - SQL DB initialization
-#  - embedded in-memory db를 사용할 때만 수행
-#  - 만약 DB 타입 관계없이 초기화하려면 always 로 설정
-  sql:
-    init:
-      mode: always
 
 logging:
   level:
