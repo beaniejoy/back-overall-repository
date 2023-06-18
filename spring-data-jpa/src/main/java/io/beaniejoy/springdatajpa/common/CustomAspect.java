@@ -7,16 +7,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 
 @Slf4j
 @Aspect
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class TestAspect {
-    @Around("@annotation(io.beaniejoy.springdatajpa.common.TestAnnotation)")
+public class CustomAspect {
+    @Around("@annotation(io.beaniejoy.springdatajpa.common.CustomAnnotation)")
     public Object testAround(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info(">>> TestAspect START");
         Object result = joinPoint.proceed();

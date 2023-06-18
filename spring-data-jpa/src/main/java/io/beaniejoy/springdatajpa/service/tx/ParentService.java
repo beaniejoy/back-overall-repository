@@ -151,4 +151,22 @@ public class ParentService {
             log.error(e.getMessage());
         }
     }
+
+    @Transactional
+    public void callChildServiceWithCustomAspect() {
+        Cafe cafe = Cafe.builder()
+                .name("joy's cafe")
+                .description("joy cafe desc")
+                .phoneNumber("01033334444")
+                .address("joy cafe's address")
+                .build();
+
+        cafeRepository.save(cafe);
+
+        try {
+            childService.saveThrowIOExceptionWithNewTx();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 }
