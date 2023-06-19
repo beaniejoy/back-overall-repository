@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ParentService {
     private final ChildService childService;
@@ -153,7 +152,7 @@ public class ParentService {
     }
 
     @Transactional
-    public void callChildServiceWithCustomAspect() {
+    public void callChildServiceWithCustomAspectCase1() {
         Cafe cafe = Cafe.builder()
                 .name("joy's cafe")
                 .description("joy cafe desc")
@@ -164,7 +163,25 @@ public class ParentService {
         cafeRepository.save(cafe);
 
         try {
-            childService.saveThrowIOExceptionWithNewTx();
+            childService.saveWithCustomAspectThrowRuntimeException();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void callChildServiceWithCustomAspectCase2() {
+        Cafe cafe = Cafe.builder()
+                .name("joy's cafe")
+                .description("joy cafe desc")
+                .phoneNumber("01033334444")
+                .address("joy cafe's address")
+                .build();
+
+        cafeRepository.save(cafe);
+
+        try {
+            childService.saveWithCustomAspectThrowRuntimeException();
         } catch (Exception e) {
             log.error(e.getMessage());
         }

@@ -3,6 +3,7 @@ package io.beaniejoy.springdatajpa.tx;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.repository.CafeRepository;
 import io.beaniejoy.springdatajpa.service.CafeService;
+import io.beaniejoy.springdatajpa.service.tx.ChildService;
 import io.beaniejoy.springdatajpa.service.tx.ParentService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.UnexpectedRollbackException;
 
 import java.io.IOException;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class TxNestedServiceTest {
     @Autowired
     private ParentService parentService;
+    @Autowired
+    private ChildService childService;
     @Autowired
     private CafeRepository cafeRepository;
     @Autowired
@@ -190,5 +194,52 @@ class TxNestedServiceTest {
         assertEquals(cafes.size(), 5);
         assertTrue(cafes.stream().anyMatch(res -> res.getName().equals("joy's cafe")), "No joy's cafe");
         assertTrue(cafes.stream().anyMatch(res -> res.getName().equals("beanie's cafe")), "No beanie's cafe");
+    }
+
+
+    @Test
+    @DisplayName("CASE 9 > parent: REQUIRED / child: REQUIRED, custom aspect runtime exception 상황에서 롤백 테스트")
+    public void parent_try_catch_with_tx_all_REQUIRED_and_custom_aspect_unchecked_exception_test() {
+        // rollback exception
+        assertThrows(UnexpectedRollbackException.class, () -> {
+            parentService.callChildServiceWithCustomAspectCase1();
+        });
+
+        List<Cafe> cafes = cafeService.getAllCafes();
+
+        // 결과: 둘 다 롤백
+        assertEquals(cafes.size(), 3);
+        assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("joy's cafe")), "No joy's cafe");
+        assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("beanie's cafe")), "No beanie's cafe");
+    }
+
+    @Test
+    @DisplayName("CASE 10 > parent: REQUIRED / child: REQUIRED, custom aspect checked exception 상황에서 롤백 테스트")
+    public void parent_try_catch_with_tx_all_REQUIRED_and_custom_aspect_checked_exception_test() {
+        // rollback exception
+        assertThrows(UnexpectedRollbackException.class, () -> {
+            parentService.callChildServiceWithCustomAspectCase2();
+        });
+
+        List<Cafe> cafes = cafeService.getAllCafes();
+
+        // 결과: 둘 다 롤백
+        assertEquals(cafes.size(), 3);
+        assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("joy's cafe")), "No joy's cafe");
+        assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("beanie's cafe")), "No beanie's cafe");
+    }
+
+    @Test
+    @DisplayName("CASE 11 > child: REQUIRED, custom aspect exception 상황에서 롤백 테스트")
+    public void child_with_tx_REQUIRED_and_custom_aspect_exception_test() {
+        // 둘 다 RuntimeException 으로 떨어짐
+        assertThrows(RuntimeException.class, () -> {
+            childService.saveWithCustomAspectThrowRuntimeException();
+        });
+
+        // checked exception 에도 롤백이 된다.
+        assertThrows(UndeclaredThrowableException.class, () -> {
+            childService.saveWithCustomAspectThrowCheckedException();
+        });
     }
 }

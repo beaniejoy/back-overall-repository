@@ -1,6 +1,7 @@
 package io.beaniejoy.springdatajpa.service.tx;
 
 import io.beaniejoy.springdatajpa.common.CustomAnnotation;
+import io.beaniejoy.springdatajpa.common.CustomAnnotation2;
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
@@ -101,7 +102,20 @@ public class ChildService {
 
     @Transactional
     @CustomAnnotation
-    public void saveWithCustomAspectThrowRuntimeException() throws IOException {
+    public void saveWithCustomAspectThrowRuntimeException() {
+        Cafe cafe = Cafe.builder()
+                .name("beanie's cafe")
+                .description("beanie cafe desc")
+                .phoneNumber("01023450981")
+                .address("beanie cafe's address")
+                .build();
+
+        cafeRepository.save(cafe);
+    }
+
+    @Transactional
+    @CustomAnnotation2
+    public void saveWithCustomAspectThrowCheckedException() {
         Cafe cafe = Cafe.builder()
                 .name("beanie's cafe")
                 .description("beanie cafe desc")
