@@ -1,4 +1,4 @@
-package io.beaniejoy.springdatajpa.tx;
+package io.beaniejoy.springdatajpa.service.tx;
 
 import io.beaniejoy.springdatajpa.entity.cafe.Cafe;
 import io.beaniejoy.springdatajpa.repository.CafeRepository;

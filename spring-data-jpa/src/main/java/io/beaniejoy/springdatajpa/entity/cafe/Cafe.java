@@ -2,14 +2,17 @@ package io.beaniejoy.springdatajpa.entity.cafe;
 
 import io.beaniejoy.springdatajpa.entity.BaseEntity;
 import io.beaniejoy.springdatajpa.entity.review.Review;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -28,11 +31,13 @@ public class Cafe extends BaseEntity {
 
     private String description;
 
+    @Builder.Default
     @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
-    private List<CafeMenu> cafeMenus;
+    private List<CafeMenu> cafeMenus = new ArrayList<>();
 
     public void updateInfo(String name, String address) {
         this.name = name;
