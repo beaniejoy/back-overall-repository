@@ -33,9 +33,17 @@ class PCServiceTest {
                 .phoneNumber("phone_number_1")
                 .build();
 
-        cafeRepository.save(cafe);
+        Cafe cafe2 = Cafe.builder()
+                .name("test_cafe_2")
+                .address("test_address_2")
+                .description("desc2")
+                .phoneNumber("phone_number_2")
+                .build();
 
-        System.out.println("카페메뉴 구성");
+        Cafe savedCafe = cafeRepository.save(cafe);
+        Cafe savedCafe2 = cafeRepository.save(cafe2);
+
+        System.out.println("카페메뉴 구성" + savedCafe.getId());
         CafeMenu americano = CafeMenu.builder()
                 .name("아메리카노")
                 .price(new BigDecimal("2000"))
@@ -46,8 +54,8 @@ class PCServiceTest {
                 .price(new BigDecimal("3000"))
                 .build();
 
-        americano.updateCafe(cafe);
-        latte.updateCafe(cafe);
+        americano.updateCafe(savedCafe);
+        latte.updateCafe(savedCafe);
 
         cafeMenuRepository.save(americano);
         cafeMenuRepository.save(latte);
