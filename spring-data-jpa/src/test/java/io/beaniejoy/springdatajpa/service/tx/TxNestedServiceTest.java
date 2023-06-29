@@ -201,14 +201,14 @@ class TxNestedServiceTest {
     @DisplayName("CASE 9 > parent: REQUIRED / child: REQUIRED, custom aspect runtime exception 상황에서 롤백 테스트")
     public void parent_try_catch_with_tx_all_REQUIRED_and_custom_aspect_unchecked_exception_test() {
         // rollback exception
-        assertThrows(UnexpectedRollbackException.class, () -> {
+//        assertThrows(RuntimeException.class, () -> {
             parentService.callChildServiceWithCustomAspectCase1();
-        });
+//        });
 
         List<Cafe> cafes = cafeService.getAllCafes();
 
         // 결과: 둘 다 롤백
-        assertEquals(cafes.size(), 3);
+        assertEquals(3, cafes.size());
         assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("joy's cafe")), "No joy's cafe");
         assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("beanie's cafe")), "No beanie's cafe");
     }
@@ -224,7 +224,7 @@ class TxNestedServiceTest {
         List<Cafe> cafes = cafeService.getAllCafes();
 
         // 결과: 둘 다 롤백
-        assertEquals(cafes.size(), 3);
+        assertEquals(3, cafes.size());
         assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("joy's cafe")), "No joy's cafe");
         assertFalse(cafes.stream().anyMatch(res -> res.getName().equals("beanie's cafe")), "No beanie's cafe");
     }

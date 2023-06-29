@@ -13,7 +13,7 @@ import java.io.IOException;
 @Slf4j
 @Aspect
 @Component
-//@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomAspect {
     @Around("@annotation(io.beaniejoy.springdatajpa.common.CustomAnnotation)")
     public Object testAround(ProceedingJoinPoint joinPoint) throws Throwable {

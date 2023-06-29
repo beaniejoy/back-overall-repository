@@ -181,7 +181,7 @@ public class ParentService {
         cafeRepository.save(cafe);
 
         try {
-            childService.saveWithCustomAspectThrowRuntimeException();
+            childService.saveWithCustomAspectThrowCheckedException();
         } catch (Exception e) {
             log.error(e.getMessage());
         }
