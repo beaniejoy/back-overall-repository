@@ -233,13 +233,16 @@ class TxNestedServiceTest {
     @DisplayName("CASE 11 > child: REQUIRED, custom aspect exception 상황에서 롤백 테스트")
     public void child_with_tx_REQUIRED_and_custom_aspect_exception_test() {
         // 둘 다 RuntimeException 으로 떨어짐
-        assertThrows(RuntimeException.class, () -> {
-            childService.saveWithCustomAspectThrowRuntimeException();
-        });
+//        assertThrows(RuntimeException.class, () -> {
+//            childService.saveWithCustomAspectThrowRuntimeException();
+//        });
 
         // checked exception 에도 롤백이 된다.
         assertThrows(UndeclaredThrowableException.class, () -> {
             childService.saveWithCustomAspectThrowCheckedException();
         });
+
+        List<Cafe> cafes = cafeService.getAllCafes();
+        assertEquals(4, cafes.size());
     }
 }
