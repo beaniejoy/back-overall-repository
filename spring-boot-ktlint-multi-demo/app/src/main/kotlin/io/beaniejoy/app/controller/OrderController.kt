@@ -12,9 +12,7 @@ class OrderController(
     private val orderService: OrderService
 ) {
     @GetMapping("/{orderId}")
-    fun getOrder(
-        @PathVariable("orderId") orderId: Long
-    ) {
+    fun getOrder(@PathVariable("orderId") orderId: Long) {
         orderService.getOrder(orderId)
     }
 }

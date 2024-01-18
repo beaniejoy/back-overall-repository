@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-//import org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
+import org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
 
 plugins {
     id("org.springframework.boot") version "3.2.1"
@@ -33,16 +33,14 @@ allprojects {
     }
 
     // report directory location setting
-//    tasks.withType<GenerateReportsTask> {
-//        reportsOutputDirectory.set(
-//            rootProject.layout.buildDirectory.dir("reports/ktlint/${project.name}")
-//        )
-//    }
+    tasks.withType<GenerateReportsTask> {
+        reportsOutputDirectory.set(
+            rootProject.layout.buildDirectory.dir("reports/ktlint/${project.name}")
+        )
+    }
 }
 
 subprojects {
-
-
     apply {
         plugin("java")
         plugin("org.springframework.boot")
@@ -69,7 +67,3 @@ subprojects {
         useJUnitPlatform()
     }
 }
-
-
-
-

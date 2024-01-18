@@ -10,7 +10,7 @@ import java.lang.RuntimeException
 @Component
 class OrderReaderAdapter(
     private val orderRepository: OrderRepository
-): OrderReaderPort {
+) : OrderReaderPort {
     override fun getOrder(orderId: Long): Order {
         return orderRepository.findByIdOrNull(orderId)
             ?: throw RuntimeException("order not found")
