@@ -1,0 +1,19 @@
+# for local test
+version: "3.9"
+services:
+  service-db:
+    image: mysql:8.0.33
+    container_name: service-db
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: beaniejoy
+    ports:
+      - "3306:3306"
+  batch-db:
+    image: mysql:8.0.33
+    container_name: batch-db
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: beaniejoy
+    ports:
+      - "3307:3306"

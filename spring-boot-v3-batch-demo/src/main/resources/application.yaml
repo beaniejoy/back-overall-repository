@@ -1,0 +1,37 @@
+spring:
+  batch:
+    job:
+      enabled: true
+      name: ${job.name:NONE}
+    jdbc:
+      initialize-schema: always
+
+  datasource:
+    service:
+      pool-name: service-db
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/cafe?characterEncoding=utf8&serverTimezone=Asia/Seoul
+      username: root
+      password: beaniejoy
+    batch:
+      pool-name: batch-db
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3307/cafe?characterEncoding=utf8&serverTimezone=Asia/Seoul
+      username: root
+      password: beaniejoy
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+    generate-ddl: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    com.zaxxer.hikari.HikariConfig: DEBUG
