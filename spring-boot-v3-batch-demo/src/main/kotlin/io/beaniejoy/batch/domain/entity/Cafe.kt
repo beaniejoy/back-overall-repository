@@ -7,16 +7,20 @@ import jakarta.persistence.*
 class Cafe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null
+    val id: Long? = null
 
-    private val name: String? = null
+    @Column(name = "name")
+    val name: String? = null
 
-    private val address: String? = null
+    @Column(name = "address")
+    val address: String? = null
 
-    private val phoneNumber: String? = null
+    @Column(name = "phone_number")
+    val phoneNumber: String? = null
 
-    private val description: String? = null
+    @Column(name = "description")
+    val description: String? = null
 
     @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    private val cafeMenus: List<CafeMenu>? = null
+    val cafeMenus: MutableList<CafeMenu> = arrayListOf()
 }

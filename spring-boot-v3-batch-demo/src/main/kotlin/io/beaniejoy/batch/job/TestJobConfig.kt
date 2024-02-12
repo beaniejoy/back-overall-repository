@@ -19,7 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager
 class TestJobConfig(
     private val jobRepository: JobRepository
 ) {
-    companion object: KLogging()
+    companion object : KLogging()
 
     @Bean
     fun testJob(

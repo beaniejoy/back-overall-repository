@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
@@ -30,6 +32,7 @@ class JpaConfig(
     private val hibernateProperties: HibernateProperties
 ) {
 
+    @Primary
     @Bean(SERVICE_ENTITY_MANAGER)
     fun serviceEntityManager(
         @Qualifier(SERVICE_DATASOURCE) serviceDataSource: DataSource
@@ -55,5 +58,13 @@ class JpaConfig(
         return JpaTransactionManager().apply {
             this.entityManagerFactory = serviceEntityManager.`object`
         }
+    }
+
+    // for jdbc
+    @Bean
+    fun jdbcTemplate(
+        @Qualifier(SERVICE_DATASOURCE) serviceDataSource: DataSource
+    ): JdbcTemplate {
+        return JdbcTemplate(serviceDataSource)
     }
 }

@@ -29,6 +29,7 @@ dependencies {
 
     implementation("io.github.microutils:kotlin-logging:3.0.4")
 
+    testImplementation("org.jeasy:easy-random-core:5.0.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.batch:spring-batch-test")
 }
