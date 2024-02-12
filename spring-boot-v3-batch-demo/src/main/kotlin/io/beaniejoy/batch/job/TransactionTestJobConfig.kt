@@ -1,7 +1,5 @@
 package io.beaniejoy.batch.job
 
-import io.beaniejoy.batch.common.constant.DataSourceConstants.BATCH_TRANSACTION_MANAGER
-import io.beaniejoy.batch.common.constant.DataSourceConstants.SERVICE_TRANSACTION_MANAGER
 import io.beaniejoy.batch.domain.entity.Cafe
 import io.beaniejoy.batch.domain.repository.CafeRepository
 import jakarta.persistence.EntityManagerFactory
@@ -12,11 +10,8 @@ import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.launch.support.RunIdIncrementer
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
-import org.springframework.batch.core.step.tasklet.Tasklet
 import org.springframework.batch.item.ItemReader
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
-import org.springframework.batch.repeat.RepeatStatus
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
@@ -52,7 +47,7 @@ class TransactionTestJobConfig(
                 items.forEach { logger.info { it } }
             }
             .build()
-    }   
+    }
 
     private fun itemReader(): ItemReader<Cafe> {
         return JpaPagingItemReaderBuilder<Cafe>()
