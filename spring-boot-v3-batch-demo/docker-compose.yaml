@@ -4,7 +4,7 @@ services:
   service-db:
     image: mysql:8.0.33
     container_name: service-db
-    restart: no
+    restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: beaniejoy
     ports:
@@ -12,7 +12,7 @@ services:
   batch-db:
     image: mysql:8.0.33
     container_name: batch-db
-    restart: no
+    restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: beaniejoy
     ports:

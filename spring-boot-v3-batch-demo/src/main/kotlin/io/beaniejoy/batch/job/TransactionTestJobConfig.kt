@@ -11,7 +11,7 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.item.ItemReader
-import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
+import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
@@ -50,11 +50,12 @@ class TransactionTestJobConfig(
     }
 
     private fun itemReader(): ItemReader<Cafe> {
-        return JpaPagingItemReaderBuilder<Cafe>()
+        return JpaCursorItemReaderBuilder<Cafe>()
             .name("itemReader")
             .entityManagerFactory(entityManagerFactory)
             .queryString("SELECT c FROM Cafe c")
-            .pageSize(100)
+            .currentItemCount(10)
+            .maxItemCount(100)
             .build()
             .also {
                 it.afterPropertiesSet()
