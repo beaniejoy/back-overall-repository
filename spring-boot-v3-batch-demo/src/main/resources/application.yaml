@@ -7,17 +7,17 @@ spring:
       enabled: true
       name: ${job.name:NONE}
     jdbc:
-      initialize-schema: never
+      initialize-schema: always
 
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         show_sql: false
-    generate-ddl: false
+#    generate-ddl: true
 
 logging:
   level:

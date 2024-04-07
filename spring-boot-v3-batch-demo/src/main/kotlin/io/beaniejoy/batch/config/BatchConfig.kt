@@ -3,6 +3,8 @@ package io.beaniejoy.batch.config
 import io.beaniejoy.batch.common.constant.DataSourceConstants.BATCH_DATASOURCE
 import io.beaniejoy.batch.common.constant.DataSourceConstants.BATCH_TRANSACTION_MANAGER
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.support.BeanDefinitionRegistry
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -18,5 +20,12 @@ class BatchConfig {
         @Qualifier(BATCH_DATASOURCE) batchDataSource: DataSource
     ): PlatformTransactionManager {
         return JdbcTransactionManager(batchDataSource)
+    }
+
+    @Bean
+    fun jobRegistryBeanPostProcessorRemover(): BeanDefinitionRegistryPostProcessor {
+        return BeanDefinitionRegistryPostProcessor { registry: BeanDefinitionRegistry ->
+            registry.removeBeanDefinition("jobRegistryBeanPostProcessor")
+        }
     }
 }

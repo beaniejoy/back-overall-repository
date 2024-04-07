@@ -37,9 +37,13 @@ class JpaConfig(
     fun serviceEntityManager(
         @Qualifier(SERVICE_DATASOURCE) serviceDataSource: DataSource
     ): LocalContainerEntityManagerFactoryBean {
-        val mergedJpaProperties = Properties().apply {
+        val ddlAuto: String? = hibernateProperties.ddlAuto
+
+        val mergedJpaProperties = Properties().apply properties@{
             this.putAll(jpaProperties.properties)
-            this[SchemaToolingSettings.HBM2DDL_AUTO] = hibernateProperties.ddlAuto
+            ddlAuto?.also {
+                this[SchemaToolingSettings.HBM2DDL_AUTO] = it
+            }
         }
 
         return LocalContainerEntityManagerFactoryBean().apply {

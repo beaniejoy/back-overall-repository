@@ -3,7 +3,7 @@ version: "3.9"
 services:
   service-db:
     image: mysql:8.0.33
-    container_name: service-db
+    container_name: spring-service-db
     restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: beaniejoy
@@ -11,7 +11,7 @@ services:
       - "3306:3306"
   batch-db:
     image: mysql:8.0.33
-    container_name: batch-db
+    container_name: spring-batch-db
     restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: beaniejoy
