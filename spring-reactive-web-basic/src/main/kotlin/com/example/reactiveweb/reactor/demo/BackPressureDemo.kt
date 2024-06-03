@@ -1,4 +1,4 @@
-package com.example.reactiveweb.demo
+package com.example.reactiveweb.reactor.demo
 
 import com.example.reactiveweb.common.doOnNext
 import com.example.reactiveweb.common.doOnRequest
@@ -13,21 +13,26 @@ import reactor.core.publisher.Flux
  */
 fun main() {
     var count = 0
-    Flux.range(1, 1000)
+    Flux.range(1, 7)
+        .map {
+            logger.info { "map >> $it" }
+            it
+        }
         .doOnNext { logger.doOnNext { it } }
         .doOnRequest { logger.doOnRequest { it } }
         .subscribe(object : BaseSubscriber<Int>() {
             override fun hookOnSubscribe(subscription: Subscription) {
-                request(10)
+                request(3)
             }
 
             override fun hookOnNext(value: Int) {
                 count++
                 logger.onNext { value }
-                if (count == 10) {
-                    Thread.sleep(2000)
-                    request(10)
+                if (count % 3 == 0) {
+                    Thread.sleep(1000)
                     count = 0
+                    logger.info { "newRequest" }
+                    request(3)
                 }
             }
         })

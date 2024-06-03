@@ -1,4 +1,4 @@
-package com.example.reactiveweb.demo.error
+package com.example.reactiveweb.reactor.demo.error
 
 import com.example.reactiveweb.common.doOnNext
 import com.example.reactiveweb.common.logger
@@ -6,8 +6,9 @@ import reactor.core.publisher.Flux
 
 // https://medium.com/@odysseymoon/spring-webflux%EC%97%90%EC%84%9C-error-%EC%B2%98%EB%A6%AC%EC%99%80-retry-%EC%A0%84%EB%9E%B5-a6bd2c024f6f
 fun main() {
-    errorResume()
-    errorContinue()
+//    errorResume()
+//    errorContinue()
+    doOnError()
 }
 
 /**
@@ -41,6 +42,19 @@ fun errorContinue() {
         .flatMap { Flux.just(errorHandlingService.tenTimesExcept(it, 2)) }
         .onErrorContinue { throwable, value ->
             logger.error { "$value >> ${throwable.message}" }
+        }
+        .subscribe {
+            logger.doOnNext { it }
+        }
+}
+
+fun doOnError() {
+    logger.info { "errorContinue" }
+
+    Flux.just(1, 2, 3, 4)
+        .flatMap { Flux.just(errorHandlingService.tenTimesExcept(it, 2)) }
+        .doOnError {
+            logger.error { "doOnError >> ${it.message}" }
         }
         .subscribe {
             logger.doOnNext { it }

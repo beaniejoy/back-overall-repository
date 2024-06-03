@@ -1,4 +1,4 @@
-package com.example.reactiveweb.demo
+package com.example.reactiveweb.reactor.demo
 
 import com.example.reactiveweb.common.logger
 import reactor.core.publisher.Flux

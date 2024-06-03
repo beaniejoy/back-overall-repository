@@ -1,9 +1,9 @@
-package com.example.reactiveweb.demo.error
+package com.example.reactiveweb.reactor.demo.error
 
 class ErrorHandlingService {
 
     fun tenTimesExcept(index: Int, exceptNum: Int): Int {
-        if (index == 2) {
+        if (index == exceptNum) {
             throw RuntimeException("$index 일 때 exception trigger")
         }
 
