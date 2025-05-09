@@ -1,6 +1,5 @@
 package io.beaniejoy.batch.job
 
-import io.beaniejoy.batch.common.constant.DataSourceConstants.BATCH_TRANSACTION_MANAGER
 import mu.KLogging
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -10,14 +9,14 @@ import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.core.step.tasklet.Tasklet
 import org.springframework.batch.repeat.RepeatStatus
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
 
 @Configuration
 class TestJobConfig(
-    private val jobRepository: JobRepository
+    private val jobRepository: JobRepository,
+    private val transactionManager: PlatformTransactionManager
 ) {
     companion object : KLogging()
 
@@ -34,9 +33,7 @@ class TestJobConfig(
     }
 
     @Bean
-    fun simpleStep1(
-        @Qualifier(BATCH_TRANSACTION_MANAGER) transactionManager: PlatformTransactionManager
-    ): Step {
+    fun simpleStep1(): Step {
         val testTasklet = Tasklet { _, _ ->
             logger.info { ">>>>>> this is step1" }
             RepeatStatus.FINISHED
@@ -48,9 +45,7 @@ class TestJobConfig(
     }
 
     @Bean
-    fun simpleStep2(
-        @Qualifier(BATCH_TRANSACTION_MANAGER) transactionManager: PlatformTransactionManager
-    ): Step {
+    fun simpleStep2(): Step {
         val testTasklet = Tasklet { _, _ ->
             logger.info { ">>>>>> this is step2" }
             RepeatStatus.FINISHED

@@ -16,7 +16,7 @@ public class PCChildService {
     private final CafeMenuRepository cafeMenuRepository;
 
     public void callChildMethodWithNoTx() {
-        Cafe cafe = cafeRepository.findById(1L)
+        Cafe cafe = cafeRepository.findById(301L)
                 .orElseThrow(() -> new RuntimeException("cafe not found"));
     }
 }

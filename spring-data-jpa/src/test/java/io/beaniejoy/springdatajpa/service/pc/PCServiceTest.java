@@ -57,7 +57,8 @@ class PCServiceTest {
         americano.updateCafe(savedCafe);
         latte.updateCafe(savedCafe);
 
-        cafeMenuRepository.save(americano);
+        CafeMenu savedCafeMenu = cafeMenuRepository.save(americano);
+        System.out.println("카페메뉴 구성 완료" + savedCafeMenu.getId());
         cafeMenuRepository.save(latte);
     }
 

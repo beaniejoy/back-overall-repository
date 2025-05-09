@@ -24,7 +24,7 @@ public class PCService {
 //                .orElseThrow(() -> new RuntimeException("cafe not found"));
 
         pcChildService.callChildMethodWithNoTx();
-        CafeMenu cafeMenu = cafeMenuRepository.findById(1L)
+        CafeMenu cafeMenu = cafeMenuRepository.findById(1011L)
                 .orElseThrow(() -> new RuntimeException("cafeMenu not found"));
 
         log.info("메소드 진행중 2");

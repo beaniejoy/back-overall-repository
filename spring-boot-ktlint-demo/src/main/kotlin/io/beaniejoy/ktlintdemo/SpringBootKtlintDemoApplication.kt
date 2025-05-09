@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class SpringBootKtlintDemoApplication
 
 fun main(args: Array<String>) {
-
     runApplication<SpringBootKtlintDemoApplication>(*args)
 }
